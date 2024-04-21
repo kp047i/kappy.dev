@@ -18,7 +18,5 @@
   "trailingComma": "es5",
   "useTabs": false,
   "embeddedLanguageFormatting": "auto",
-  "vueIndentScriptAndStyle": false,
-  "filepath": "/Users/kappy/Library/Application Support/Code/User/settings.json",
-  "parser": "json"
+  "vueIndentScriptAndStyle": false
 }
