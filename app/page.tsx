@@ -1,95 +1,46 @@
+"use client";
+
 import Image from "next/image";
-import styles from "./page.module.css";
+import { useViewPort } from "./utils/useViewport";
+import Link from "next/link";
+import { FaGithub } from "react-icons/fa6";
+import { FaXTwitter } from "react-icons/fa6";
 
 export default function Home() {
+  useViewPort();
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <main className="mx-auto my-12 flex max-w-3xl flex-col gap-12 p-4">
+      <section>
+        <h1 className="text-3xl font-bold text-primary-50">kappy.me</h1>
+
+        <div className="flex flex-col items-center justify-center gap-8">
+          <Image
+            src="https://res.cloudinary.com/dlibdyano/image/upload/v1675685454/kp047i/avator.png"
+            alt="kappyこのサイトのロゴ。"
+            width={128}
+            height={128}
+            className="rounded-full"
+          />
+
+          {/* githubとxのアイコンを並べる */}
+          <div className="flex gap-8">
+            <Link href="https://github.com/kp047i">
+              <FaGithub className="h-8 w-8 opacity-70 transition-all duration-200 ease-in-out hover:opacity-100" />
+            </Link>
+            <Link href="https://twitter.com/kp047i" className="h-8 w-8">
+              <FaXTwitter className="h-8 w-8 opacity-70 transition-all duration-200 ease-in-out hover:opacity-100" />
+            </Link>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      <section>
+        <div className="flex flex-col gap-4">
+          <h2 className="text-2xl font-bold text-primary-50">Blog</h2>
+          <p className="text-lg text-primary-50 opacity-70">最新の記事</p>
+        </div>
+      </section>
     </main>
   );
 }
