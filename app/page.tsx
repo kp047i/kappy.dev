@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useViewPort } from "./utils/useViewport";
+import { useViewPort } from "./_utils/useViewport";
 import Link from "next/link";
 import { FaGithub } from "react-icons/fa6";
 import { FaXTwitter } from "react-icons/fa6";
