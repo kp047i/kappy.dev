@@ -26,5 +26,5 @@ export function useViewPort() {
     return () => {
       window.removeEventListener("resize", resizeViewport);
     };
-  });
+  }, []);
 }

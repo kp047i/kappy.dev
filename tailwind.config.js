@@ -1,10 +1,23 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./app/**/*.{js,ts,jsx,tsx,mdx}"],
+  content: ["./app/**/*.{js,ts,jsx,tsx,mdx}", "./mdx-components.tsx"],
   theme: {
     extend: {
       colors: {
         primary: {
+          50: "#fef6f6",
+          100: "#fcebd8",
+          200: "#f8d4b0",
+          300: "#f2a766",
+          400: "#ee8b49",
+          500: "#ea6d25",
+          600: "#db541b",
+          700: "#b63f18",
+          800: "#91321b",
+          900: "#752c19",
+          950: "#3f140b",
+        },
+        secondary: {
           50: "#eff8ff",
           100: "#ddf1ff",
           200: "#b4e4ff",
@@ -15,10 +28,10 @@ module.exports = {
           700: "#0063af",
           800: "#005390",
           900: "#034577",
-          950: "#011526",
+          950: "#011322",
         },
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 };

@@ -1,0 +1,61 @@
+export const metadata = {
+  title: "ブログを作り直しました",
+  slug: "create-blog",
+  publishedAt: "2023-05-04",
+  tags: ["nextjs", "tailwindcss", "mdx"],
+  category: "tech",
+  emoji: "🚀",
+};
+
+過去に[Nuxtでブログ](https://github.com/kp047i/kappy-tech-blog)を作って書くのをやめていましたが、今回App Routerを使ってブログを作り直しました。
+
+## 技術スタック
+
+- FW
+  - Next.js(App Router)
+- スタイリング
+  - Tailwind CSS
+- ホスティング
+  - Vercel
+
+## App Routerを利用した背景
+
+App Routerを業務で使っていたこともあり、App Routerのルーティングの仕組みやco-locationのしやすさに魅力を感じていました。
+
+また、[vercel/og](https://vercel.com/docs/functions/og-image-generation)を使って手軽にOGPを生成できることはわかっていたので、App Routerを採用しました。
+
+## ディレクトリ構成
+
+ディレクトリ構成は以下のようになっています。
+
+``` bash
+├── _components
+├── _utils
+├── blog
+│   ├── [slug]
+│   ├── _component
+│   ├── _const
+│   ├── _posts
+│   ├── page.tsx
+│   ├── type.ts
+│   └── utils.ts
+├── globals.css
+├── layout.tsx
+└── page.tsx
+```
+
+基本的にはco-locationを意識して配置しています。
+
+## ブログの表示
+
+ブログはmdxで記述しています。mdxでの表示に関しては[本家のリファレンス](https://nextjs.org/docs/app/building-your-application/configuring/mdx)を参考にしています。
+
+mdxのメタデータの取り扱いに関しては、mdxからmetadataをexportして、その内容で一覧ページや個別ページにブログの情報を表示させています。
+
+Dynamic Routeを使っているため、ブログの個々の情報を取得する際にはdynamic importを使用していますが、これが適しているかはちょっとわかっていないのが現状です...。
+
+最初はあまり工数をかけたくなかったので、[tailwindlabs/tailwindcss-typography](https://github.com/tailwindlabs/tailwindcss-typography)を使ってサクッとスタイリングしています。
+
+## 今後に関して
+
+プライベートな内容の記事も書いていきつつ、徐々にデザインや機能を改善できたらいいなと思ってます。
