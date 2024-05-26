@@ -25,7 +25,7 @@ export default async function BlogPage({
         <BlogCategory category={post.metadata.category} />
         <p className="mt-8">{post.metadata.description}</p>
       </div>
-      <div className="mt-20 prose prose-md lg:prose-lg prose-headings:text-primary-50 prose-p:mb-12 prose-p:text-primary-50 prose-p:text-opacity-80 prose-a:text-primary-300 prose-li:text-primary-50 prose-li:text-opacity-80">
+      <div className="mt-20 prose prose-md lg:prose-lg prose-headings:text-secondary-950 prose-p:mb-12 prose-p:text-secondary-950 prose-p:text-opacity-80 prose-a:text-primary-700 prose-li:text-secondary-950 prose-li:text-opacity-80">
         {post.content({})}
       </div>
     </article>

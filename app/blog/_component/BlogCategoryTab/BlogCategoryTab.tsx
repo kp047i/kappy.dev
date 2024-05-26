@@ -12,8 +12,8 @@ export function BlogCategoryTab({
         href="/blog"
         className={`${
           selectedCategory === ""
-            ? "text-primary-300"
-            : "text-primary-50 opacity-60 hover:opacity-100"
+            ? "text-primary-700"
+            : "text-secondary-950 opacity-60 hover:opacity-100"
         }`}
       >
         All
@@ -24,8 +24,8 @@ export function BlogCategoryTab({
           href={`/blog?category=${category.key}`}
           className={`${
             selectedCategory === category.key
-              ? "text-primary-300"
-              : "text-primary-50 opacity-60 hover:opacity-100"
+              ? "text-primary-700"
+              : "text-secondary-950 opacity-60 hover:opacity-100"
           }`}
         >
           {category.label}

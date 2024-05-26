@@ -55,7 +55,6 @@ export async function getBlogPostList(category?: string) {
     return posts.filter((post) => post.metadata.category === category);
   }
 
-  console.log(category);
   return posts;
 }
 

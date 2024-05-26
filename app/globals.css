@@ -20,9 +20,9 @@ body {
     font-size: theme("fontSize.base");
     font-weight: theme("fontWeight.medium");
     line-height: 1.5;
-    color: theme("colors.primary.50");
+    color: theme("colors.secondary.950");
     letter-spacing: 0.15em;
-    background-color: theme("colors.secondary.950");
+    background-color: theme("colors.primary.50");
   }
 }
 

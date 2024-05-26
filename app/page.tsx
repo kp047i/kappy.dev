@@ -9,9 +9,9 @@ export default async function Home() {
   const latestPosts = (await getBlogPostList()).slice(0, 3);
 
   return (
-    <div>
+    <div className="space-y-24">
       <section className="space-y-20">
-        <h1 className="text-3xl font-bold text-primary-50">kappy.me</h1>
+        <h1 className="text-3xl font-bold text-secondary-950">kappy.me</h1>
         <div className="flex flex-col items-center justify-center gap-16">
           <Image
             src="https://res.cloudinary.com/dlibdyano/image/upload/v1675685454/kp047i/avator.png"
@@ -34,8 +34,8 @@ export default async function Home() {
 
       <section>
         <div className="flex flex-col gap-8">
-          <h2 className="text-2xl font-bold text-primary-50">Blog</h2>
-          <p className="text-lg text-primary-50 opacity-80">最新の記事</p>
+          <h2 className="text-2xl font-bold text-secondary-950">Blog</h2>
+          <p className="text-lg text-secondary-950 opacity-80">最新の記事</p>
 
           <div>
             {latestPosts.map((post) => (

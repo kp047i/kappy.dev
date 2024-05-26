@@ -8,7 +8,7 @@ export function BlogCategory({ category }: { category: Metadata["category"] }) {
   return (
     <Link
       href={`/blog?category=${category}`}
-      className="inline-flex items-center gap-2 space-x-0 text-primary-300 opacity-80 group"
+      className="inline-flex items-center gap-2 space-x-0 text-primary-700 opacity-80 group"
     >
       {/* ホバー時に開いたフォルダを表示、それ以外は閉じたフォルダ */}
       <FaFolderClosed className="transform group-hover:hidden" />

@@ -3,7 +3,7 @@ import { FaAngleLeft } from "react-icons/fa6";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col gap-12 p-4">
+    <div className="flex flex-col gap-12">
       <div className="space-y-8">
         <Link
           href="/blog"
