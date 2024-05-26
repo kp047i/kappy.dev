@@ -8,7 +8,7 @@ import { Footer } from "./_components/Footer/Footer";
 const noto = Noto_Sans_JP({ weight: ["500", "700"], subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "kappy.me",
+  title: "kappy.dev",
   description: "kappyのポートフォリオ兼ブログサイト",
 };
 

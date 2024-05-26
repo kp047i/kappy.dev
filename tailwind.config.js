@@ -31,6 +31,13 @@ module.exports = {
           950: "#011322",
         },
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            maxWidth: "100ch", // add required value here
+          },
+        },
+      },
     },
   },
   plugins: [require("@tailwindcss/typography")],

@@ -7,7 +7,7 @@ export type BlogCardProps = Pick<Post, "metadata">;
 
 export function BlogCard({ metadata }: BlogCardProps) {
   return (
-    <div className="p-6 space-y-4 transition-allrounded-xl">
+    <div className="space-y-4 transition-allrounded-xl">
       <div className="flex items-center space-x-4">
         <span className="text-3xl">{metadata.emoji}</span>
         <div className="space-y-2">

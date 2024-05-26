@@ -19,13 +19,13 @@ export default async function BlogPage({
         <p className="text-sm text-center opacity-60">
           {post.metadata.publishedAt}
         </p>
-        <h1 className="text-3xl font-bold text-center">
+        <h1 className="text-2xl font-bold text-center lg:text-3xl">
           {post.metadata.title}
         </h1>
         <BlogCategory category={post.metadata.category} />
         <p className="mt-8">{post.metadata.description}</p>
       </div>
-      <div className="mt-20 prose prose-md lg:prose-lg prose-headings:text-secondary-950 prose-p:mb-12 prose-p:text-secondary-950 prose-p:text-opacity-80 prose-a:text-primary-700 prose-li:text-secondary-950 prose-li:text-opacity-80">
+      <div className="mt-20 prose-sm prose lg:prose-lg prose-headings:text-secondary-950 prose-p:mb-12 prose-p:text-secondary-950 prose-p:text-opacity-80 prose-a:text-primary-700 prose-li:text-secondary-950 prose-li:text-opacity-80">
         {post.content({})}
       </div>
     </article>
