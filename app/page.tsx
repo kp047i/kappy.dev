@@ -11,7 +11,7 @@ export default async function Home() {
   return (
     <div className="space-y-24">
       <section className="space-y-20">
-        <h1 className="text-3xl font-bold text-secondary-950">kappy.me</h1>
+        <h1 className="text-3xl font-bold text-secondary-950">kappy.dev</h1>
         <div className="flex flex-col items-center justify-center gap-16">
           <Image
             src="https://res.cloudinary.com/dlibdyano/image/upload/v1675685454/kp047i/avator.png"
