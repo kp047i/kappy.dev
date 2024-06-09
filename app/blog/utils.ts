@@ -1,10 +1,11 @@
 import fs from "fs";
-import { Metadata } from "./type";
-import path from "path";
-import { Post } from "./type";
 import { MDXContent } from "mdx/types";
-import { TAGS } from "./_const/tags";
+import path from "path";
+
 import { CATEGORIES } from "./_const/categories";
+import { TAGS } from "./_const/tags";
+import { Metadata } from "./type";
+import { Post } from "./type";
 
 function getMDXFiles(dir: string) {
   return fs.readdirSync(dir).filter((file) => path.extname(file) === ".mdx");

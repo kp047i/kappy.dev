@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+
 import { getBlogPost } from "../../utils";
 
 export const runtime = "nodejs";

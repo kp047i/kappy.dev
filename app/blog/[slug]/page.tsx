@@ -1,9 +1,10 @@
 import { notFound } from "next/navigation";
-import { getBlogPost, getBlogPostList } from "../utils";
+
 import { BlogCategory } from "../_component/BlogCategory/BlogCategory";
+import { getBlogPost, getBlogPostList } from "../utils";
 
 export async function generateStaticParams() {
-  let posts = await getBlogPostList();
+  const posts = await getBlogPostList();
 
   return posts.map((post) => ({
     slug: post.slug,
@@ -21,7 +22,7 @@ export const generateMetadata = async ({
     return;
   }
 
-  const { title, description, publishedAt, slug } = post.metadata;
+  const { title, description, slug } = post.metadata;
 
   const ogImage = `${process.env.NEXT_PUBLIC_SITE_URL}/api/blog/og${slug}`;
 

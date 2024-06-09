@@ -2,8 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaGithub } from "react-icons/fa6";
 import { FaXTwitter } from "react-icons/fa6";
-import { getBlogPostList } from "./blog/utils";
+
 import { BlogCard } from "./blog/_component/BlogCard/BlogCard";
+import { getBlogPostList } from "./blog/utils";
 
 export default async function Home() {
   const latestPosts = (await getBlogPostList()).slice(0, 3);

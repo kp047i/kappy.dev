@@ -1,4 +1,5 @@
 import Link from "next/link";
+
 import { CATEGORIES } from "../../_const/categories";
 
 export function BlogCategoryTab({
