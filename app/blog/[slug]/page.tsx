@@ -1,6 +1,55 @@
 import { notFound } from "next/navigation";
-import { getBlogPost } from "../utils";
+import { getBlogPost, getBlogPostList } from "../utils";
 import { BlogCategory } from "../_component/BlogCategory/BlogCategory";
+
+export async function generateStaticParams() {
+  let posts = await getBlogPostList();
+
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}
+
+export const generateMetadata = async ({
+  params,
+}: {
+  params: { slug: string };
+}) => {
+  const post = await getBlogPost(params.slug);
+
+  if (!post) {
+    return;
+  }
+
+  const { title, description, publishedAt, slug } = post.metadata;
+
+  const ogImage = `${process.env.NEXT_PUBLIC_SITE_URL}/api/blog/og${slug}`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${slug}`,
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      cardType: "summary_large_image",
+      title,
+      description,
+      image: ogImage,
+      content: "@kp047i",
+    },
+  };
+};
 
 export default async function BlogPage({
   params,
