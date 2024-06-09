@@ -3,8 +3,6 @@ import { getBlogPost } from "../../utils";
 
 export const runtime = "nodejs";
 
-export const contentType = "image/png";
-
 export async function GET(
   request: Request,
   {
@@ -16,7 +14,14 @@ export async function GET(
   const post = await getBlogPost(params.slug);
 
   if (!post) {
-    return null;
+    return Response.json(
+      {
+        error: "Not Found",
+      },
+      {
+        status: 404,
+      }
+    );
   }
 
   const color = ["#f2a766", "#ea6d25", "#db541b"];
