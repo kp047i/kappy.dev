@@ -3,11 +3,6 @@ import { getBlogPost } from "../../utils";
 
 export const runtime = "nodejs";
 
-export const size = {
-  width: 1200,
-  height: 630,
-};
-
 export const contentType = "image/png";
 
 export async function GET(
@@ -228,7 +223,8 @@ export async function GET(
       </div>
     ),
     {
-      ...size,
+      width: 1200,
+      height: 630,
     }
   );
 }
