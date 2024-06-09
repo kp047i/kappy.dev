@@ -24,7 +24,7 @@ export const generateMetadata = async ({
 
   const { title, description, slug } = post.metadata;
 
-  const ogImage = `${process.env.NEXT_PUBLIC_SITE_URL}/api/blog/og${slug}`;
+  const ogImage = `${process.env.NEXT_PUBLIC_SITE_URL}/blog/og/${slug}`;
 
   return {
     title,
