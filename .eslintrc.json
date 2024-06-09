@@ -8,8 +8,7 @@
     "plugin:@typescript-eslint/recommended",
     "next",
     "next/core-web-vitals",
-    "prettier",
-    "plugin:storybook/recommended"
+    "prettier"
   ],
   "plugins": ["react", "import", "@typescript-eslint"],
   "rules": {
