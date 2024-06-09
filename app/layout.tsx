@@ -9,7 +9,7 @@ const noto = Noto_Sans_JP({ weight: ["500", "700"], subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "kappy.dev",
-  description: "kappyのポートフォリオ兼ブログサイト",
+  description: "kappyのブログサイト",
 };
 
 export default function RootLayout({
