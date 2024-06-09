@@ -10,6 +10,19 @@ const noto = Noto_Sans_JP({ weight: ["500", "700"], subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "kappy.dev",
   description: "kappyのブログサイト",
+  openGraph: {
+    title: "kappy.dev",
+    type: "website",
+    url: "https://kappy.dev",
+    images: [
+      {
+        url: "https://res.cloudinary.com/dlibdyano/image/upload/v1675685454/kp047i/avator.png",
+        width: 423,
+        height: 423,
+        alt: "kappy.dev",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
