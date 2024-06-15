@@ -30,9 +30,11 @@ export default async function BlogListPage({
       <h1 className="text-4xl font-bold">Blog</h1>
       <BlogCategoryTab selectedCategory={category} />
 
-      {posts.map((post) => (
-        <BlogCard key={post.slug} metadata={post.metadata} />
-      ))}
+      <div className="space-y-12">
+        {posts.map((post) => (
+          <BlogCard key={post.slug} metadata={post.metadata} />
+        ))}
+      </div>
     </div>
   );
 }

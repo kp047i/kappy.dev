@@ -38,7 +38,7 @@ export default async function Home() {
           <h2 className="text-2xl font-bold text-secondary-950">Blog</h2>
           <p className="text-lg text-secondary-950 opacity-80">最新の記事</p>
 
-          <div>
+          <div className="space-y-12">
             {latestPosts.map((post) => (
               <BlogCard key={post.slug} metadata={post.metadata} />
             ))}

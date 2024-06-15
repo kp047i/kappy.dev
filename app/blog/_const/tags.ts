@@ -12,4 +12,8 @@ export const TAGS: Array<{ label: string; key: string }> = [
     label: "MDX",
     key: "mdx",
   },
+  {
+    label: "TypeScript",
+    key: "typescript",
+  },
 ];
