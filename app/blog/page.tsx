@@ -1,5 +1,5 @@
-import { BlogCard } from "./_component/BlogCard/BlogCard";
-import { BlogCategoryTab } from "./_component/BlogCategoryTab/BlogCategoryTab";
+import { BlogCard } from "./_components/BlogCard/BlogCard";
+import { BlogCategoryTab } from "./_components/BlogCategoryTab/BlogCategoryTab";
 import { CATEGORIES } from "./_const/categories";
 import { getBlogPostList } from "./utils";
 

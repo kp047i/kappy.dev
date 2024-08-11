@@ -3,7 +3,7 @@ import Link from "next/link";
 import { FaGithub } from "react-icons/fa6";
 import { FaXTwitter } from "react-icons/fa6";
 
-import { BlogCard } from "./blog/_component/BlogCard/BlogCard";
+import { BlogCard } from "./blog/_components/BlogCard/BlogCard";
 import { getBlogPostList } from "./blog/utils";
 
 export default async function Home() {

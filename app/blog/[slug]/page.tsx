@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { BlogCategory } from "../_component/BlogCategory/BlogCategory";
+import { BlogCategory } from "../_components/BlogCategory/BlogCategory";
 import { getBlogPost, getBlogPostList } from "../utils";
 
 export async function generateStaticParams() {
