@@ -16,4 +16,8 @@ export const TAGS: Array<{ label: string; key: string }> = [
     label: "TypeScript",
     key: "typescript",
   },
+  {
+    label: "自作キーボード",
+    key: "self-made-keyboard",
+  }
 ];
