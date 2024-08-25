@@ -32,7 +32,7 @@ export async function ContentLinkCard({ url }: { url: string }) {
       <Image
         src={image}
         alt={title}
-        width={160}
+        width={240}
         height={90}
         className="rounded-r-md"
       />

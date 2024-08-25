@@ -56,7 +56,12 @@ export async function getBlogPostList(category?: string) {
     return posts.filter((post) => post.metadata.category === category);
   }
 
-  return posts;
+  return posts.sort((a, b) => {
+    return (
+      new Date(b.metadata.publishedAt).getTime() -
+      new Date(a.metadata.publishedAt).getTime()
+    );
+  });
 }
 
 export async function getBlogPost(slug: string) {

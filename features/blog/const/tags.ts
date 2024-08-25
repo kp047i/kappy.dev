@@ -19,5 +19,9 @@ export const TAGS: Array<{ label: string; key: string }> = [
   {
     label: "自作キーボード",
     key: "self-made-keyboard",
-  }
+  },
+  {
+    label: "torabo-tsuki",
+    key: "torabo-tsuki",
+  },
 ];

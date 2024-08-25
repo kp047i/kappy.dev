@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+
 import { BlogCategory } from "@/features/blog/components/BlogCategory/BlogCategory";
 import { getBlogPostList, getBlogPost } from "@/features/blog/utils";
 
