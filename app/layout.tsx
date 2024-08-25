@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 
-import { ClientLayout } from "./_components/ClientLayout/ClientLayout";
-import { Footer } from "./_components/Footer/Footer";
-import { Header } from "./_components/Header/Header";
+import { ClientLayout } from "../components/ClientLayout/ClientLayout";
+import { Footer } from "../components/Footer/Footer";
+import { Header } from "../components/Header/Header";
 
 const noto = Noto_Sans_JP({ weight: ["500", "700"], subsets: ["latin"] });
 
