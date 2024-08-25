@@ -3,8 +3,8 @@ import Link from "next/link";
 import { FaGithub } from "react-icons/fa6";
 import { FaXTwitter } from "react-icons/fa6";
 
-import { getBlogPostList } from "@/features/blog/utils";
 import { BlogCard } from "@/features/blog/components/BlogCard/BlogCard";
+import { getBlogPostList } from "@/features/blog/utils";
 
 export default async function Home() {
   const latestPosts = (await getBlogPostList()).slice(0, 3);

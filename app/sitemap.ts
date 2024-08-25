@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import { getBlogPostList } from "./blog/utils";
+import { getBlogPostList } from "@/features/blog/utils";
 
 const endpoint = "https://www.kappy.dev";
 
