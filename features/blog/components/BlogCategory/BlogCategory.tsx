@@ -3,7 +3,7 @@ import Link from "next/link";
 import { FaFolderOpen } from "react-icons/fa6";
 import { FaFolderClosed } from "react-icons/fa6";
 
-import { CATEGORIES } from "../../_const/categories";
+import { CATEGORIES } from "../../const/categories";
 
 export function BlogCategory({ category }: { category: Metadata["category"] }) {
   return (

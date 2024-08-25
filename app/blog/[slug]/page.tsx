@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
-
-import { BlogCategory } from "../_components/BlogCategory/BlogCategory";
-import { getBlogPost, getBlogPostList } from "../utils";
+import { BlogCategory } from "@/features/blog/components/BlogCategory/BlogCategory";
+import { getBlogPostList, getBlogPost } from "@/features/blog/utils";
 
 export async function generateStaticParams() {
   const posts = await getBlogPostList();

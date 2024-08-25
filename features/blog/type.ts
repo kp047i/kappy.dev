@@ -1,6 +1,6 @@
 import { MDXContent } from "mdx/types";
 
-import { CATEGORIES } from "./_const/categories";
+import { CATEGORIES } from "./const/categories";
 
 export type Metadata = {
   title: string;

@@ -2,8 +2,8 @@ import fs from "fs";
 import { MDXContent } from "mdx/types";
 import path from "path";
 
-import { CATEGORIES } from "./_const/categories";
-import { TAGS } from "./_const/tags";
+import { CATEGORIES } from "./const/categories";
+import { TAGS } from "./const/tags";
 import { Metadata } from "./type";
 import { Post } from "./type";
 
@@ -41,7 +41,7 @@ async function getMDXData(dir: string): Promise<Post[]> {
 }
 
 async function readMDXFile(fileName: string) {
-  const result = await import(`./_posts/${fileName}`);
+  const result = await import(`./posts/${fileName}`);
   return {
     metadata: result.metadata as Metadata,
     content: result.default as MDXContent,
@@ -50,7 +50,7 @@ async function readMDXFile(fileName: string) {
 
 export async function getBlogPostList(category?: string) {
   const posts = await getMDXData(
-    path.resolve(process.cwd(), "app/blog/_posts")
+    path.resolve(process.cwd(), "features/blog/posts")
   );
   if (category) {
     return posts.filter((post) => post.metadata.category === category);

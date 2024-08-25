@@ -1,7 +1,7 @@
-import { BlogCard } from "./_components/BlogCard/BlogCard";
-import { BlogCategoryTab } from "./_components/BlogCategoryTab/BlogCategoryTab";
-import { CATEGORIES } from "./_const/categories";
-import { getBlogPostList } from "./utils";
+import { BlogCard } from "@/features/blog/components/BlogCard/BlogCard";
+import { BlogCategoryTab } from "@/features/blog/components/BlogCategoryTab/BlogCategoryTab";
+import { CATEGORIES } from "@/features/blog/const/categories";
+import { getBlogPostList } from "@/features/blog/utils";
 
 export default async function BlogListPage({
   searchParams,

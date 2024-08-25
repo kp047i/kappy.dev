@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { CATEGORIES } from "../../_const/categories";
+import { CATEGORIES } from "../../const/categories";
 
 export function BlogCategoryTab({
   selectedCategory,
