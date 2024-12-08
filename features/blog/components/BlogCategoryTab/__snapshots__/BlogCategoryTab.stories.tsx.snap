@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`blog/components/BlogCategoryTab Default play-test 1`] = `
+<nav class="flex justify-center space-x-4">
+  <a class="text-secondary-950 opacity-60 hover:opacity-100"
+     href="/blog"
+  >
+    All
+  </a>
+  <a class="text-primary-700"
+     href="/blog?category=tech"
+  >
+    Tech
+  </a>
+  <a class="text-secondary-950 opacity-60 hover:opacity-100"
+     href="/blog?category=life"
+  >
+    Life
+  </a>
+  <a class="text-secondary-950 opacity-60 hover:opacity-100"
+     href="/blog?category=other"
+  >
+    Other
+  </a>
+</nav>
+`;
