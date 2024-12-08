@@ -24,4 +24,8 @@ export const TAGS: Array<{ label: string; key: string }> = [
     label: "torabo-tsuki",
     key: "torabo-tsuki",
   },
+  {
+    label: "ハッカソン",
+    key: "hackathon",
+  }
 ];
