@@ -5,7 +5,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  pageExtensions: ["tsx", "mdx"],
+  pageExtensions: ["tsx", "mdx", "ts"],
 };
 
 const withMDX = createMDX({
