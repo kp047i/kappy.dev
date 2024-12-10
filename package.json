@@ -61,9 +61,7 @@
     "stylelint-config-recess-order": "^5.1.1",
     "stylelint-config-standard": "^36.0.1",
     "tailwindcss": "^3.4.16",
-    "typescript": "^5.7.2",
-    "vitest": "^2.1.8",
-    "wait-on": "^8.0.1"
+    "typescript": "^5.7.2"
   },
   "packageManager": "pnpm@8.15.5+sha256.4b4efa12490e5055d59b9b9fc9438b7d581a6b7af3b5675eb5c5f447cee1a589",
   "volta": {
