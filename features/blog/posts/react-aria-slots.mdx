@@ -1,0 +1,228 @@
+import { ContentLinkCard } from "../components/ContentLinkCard/ContentLinkCard";
+
+export const metadata = {
+  title: "React AriaにおけるSlotsについて",
+  slug: "react-aria-slots",
+  publishedAt: "2024-12-15",
+  tags: ["react", "react-aria"],
+  category: "tech",
+  emoji: "🎰",
+};
+
+React AriaはAdobeが提供している、HeadlessなUIコンポーネントやHooksを提供するライブラリです。アクセシビリティや様々なデバイスの動作が考慮されており、開発者はアプリケーションの開発やデザインシステムの構築に注力しやすくなります。React Ariaのドキュメントを見ていくとコンポーネント内で`slot`というプロパティが使われていることがありますが、私が最初React Ariaを使い始めた時はどのようなものかよくわかりませんでした。改めて調べてみたので、React AriaにおけるSlotsについてまとめてみます。
+
+## Slotsとは
+
+React AriaにおいてSlotsはコンポーネントに対して識別可能なプロパティを与えることで、同じコンポーネントでも各々に異なる動作やスタイルを適用することを可能にする仕組みです。[公式のドキュメント](https://react-spectrum.adobe.com/react-aria/advanced.html#slots)では以下のような例が挙げられています。
+
+```tsx
+function Stepper({ children }) {
+  let [value, setValue] = React.useState(0);
+
+  return (
+    <ButtonContext.Provider
+      value={{
+        slots: {
+          increment: {
+            onPress: () => setValue(value + 1),
+          },
+          decrement: {
+            onPress: () => setValue(value - 1),
+          },
+        },
+      }}
+    >
+      {children}
+    </ButtonContext.Provider>
+  );
+}
+
+<Stepper>
+  <Button slot="increment">⬆</Button>
+  <Button slot="decrement">⬇</Button>
+</Stepper>;
+```
+
+このようにすることで、`Stepper`コンポーネント内で`slot`に応じて異なる動作を実装することができます。`Button`コンポーネントは`slot`プロパティを持っており、`Stepper`コンポーネント内で`slot`に応じた動作を実装することができます。ProviderにはButtonコンポーネントが受け取れるpropsを指定できるので、classNameやstyleを`slot`に応じて変更することも可能です。
+
+例えば、別のページではボタンの中身を+や-に変更することも容易です。（この例だとあまり恩恵は感じにくいかもしれませんが...。）
+
+また、React Ariaの開発者はコンポーネントがどのイベントを識別するかに利用するし、セマンティックを目的として識別するとも話しています。
+
+<div className="flex justify-center">
+
+<blockquote className="twitter-tweet">
+  <p lang="en" dir="ltr">
+    Could be events, but could also be semantics. For example, there are slots
+    for the label and description of a menu item that receive ids used in the
+    aria-labelledby attribute.{" "}
+    <a href="https://t.co/0sdbCRA7kl">https://t.co/0sdbCRA7kl</a>
+    <br></br>They can also be used in your own styling by targeting the `slot`
+    DOM…
+  </p>
+  &mdash; Devon Govett (@devongovett){" "}
+  <a href="https://twitter.com/devongovett/status/1754003760039317553?ref_src=twsrc%5Etfw">
+    February 4, 2024
+  </a>
+</blockquote>
+<script
+  async
+  src="https://platform.twitter.com/widgets.js"
+  charset="utf-8"
+></script>
+
+</div>
+
+これはMenuItemコンポーネント内にlabelやdescriptionといったslotを持たせることで、aria-labelledby属性に使用するidを指定することができるため、アクセシビリティを向上させることができます。
+
+```tsx
+<MenuTrigger>
+  <Button>open</Button>
+  <Popover>
+    <Menu>
+      <MenuItem textValue="Copy">
+        <Text slot="label">Copy</Text>
+        <Text slot="description">Copy the selected text</Text>
+        <Keyboard>⌘C</Keyboard>
+      </MenuItem>
+      <MenuItem textValue="Cut">
+        <Text slot="label">Cut</Text>
+        <Text slot="description">Cut the selected text</Text>
+        <Keyboard>⌘X</Keyboard>
+      </MenuItem>
+      <MenuItem textValue="Paste">
+        <Text slot="label">Paste</Text>
+        <Text slot="description">Paste the copied text</Text>
+        <Keyboard>⌘V</Keyboard>
+      </MenuItem>
+    </Menu>
+  </Popover>
+</MenuTrigger>
+```
+
+もし、このslotがなかった場合にはErrorが発生します。
+
+![MenuItem内のTextコンポーネントにslotがない場合のエラー。以下のようなエラー内容が表示される。Unhandled Runtime Error
+Error: A slot prop is required. Valid slot names are "label"、"description".](/react-aria-slots/slot-required-error.png)
+
+## React Aria ComponentsでのSlotsの利用
+
+上記の通り、再利用性を高める目的で自分たちでSlotsの実装をすることもできますし、React Aria Componentsを利用するときにSlotsが求められる場面が他にもあるので、いくつか紹介します。
+
+### GridList
+
+[GridList](https://react-spectrum.adobe.com/react-aria/GridList.html)は、アイテムのリストをグリッド形式で表示するコンポーネントです。アイテムのリストを表示する際に、`dragAndDropHooks`というプロパティを指定することで、アイテムのドラッグアンドドロップを実装す流ことが可能です。その際、slotに`drag`を指定することで、React Ariaがaria-labelを設定してくれます。
+
+```tsx
+<GridList
+  items={initialList}
+  dragAndDropHooks={dragAndDropHooks}
+  aria-label="List of items"
+>
+  {(item) => (
+    <GridListItem textValue={item.name}>
+      {(props) => (
+        <>
+          {props.allowsDragging && (
+            <Button slot="drag">
+              <GiHamburgerMenu />
+            </Button>
+          )}
+          {item.name}
+        </>
+      )}
+    </GridListItem>
+  )}
+</GridList>
+```
+
+もし、このslotがなかった場合にはconsoleにwarningが表示されます。
+
+![GridListItem内のButtonコンポーネントにslotがない場合の警告。以下のような警告内容が表示される。GridList.mjs:303 Draggable items in a GridList must contain a Button slot="drag" element so that keyboard and screen reader users can drag them.](/react-aria-slots/drag-slot-required-warning.png)
+
+### Dialog
+
+[Dialog](https://react-spectrum.adobe.com/react-aria/Dialog.html#dialog)は、モーダルダイアログを表示するコンポーネントです。Dialog内のHeadingコンポーネントには`slot="title"`、Buttonコンポーネントには`slot="close"`を指定することが可能です。
+
+```tsx
+<DialogTrigger>
+  <Button>Sign up…</Button>
+  <Modal>
+    <Dialog>
+      <form>
+        <Heading slot="title">Sign up</Heading>
+        <TextField autoFocus>
+          <Label>First Name</Label>
+          <Input />
+        </TextField>
+        <TextField>
+          <Label>Last Name</Label>
+          <Input />
+        </TextField>
+        <Button slot="close" style={{ marginTop: 8 }}>
+          Submit
+        </Button>
+      </form>
+    </Dialog>
+  </Modal>
+</DialogTrigger>
+```
+
+### Disclosure
+
+[Disclosure](https://react-spectrum.adobe.com/react-aria/Disclosure.html)は、開閉可能なセクションを表示するコンポーネントです。Disclosure内のButtonコンポーネントには`slot="trigger"`を指定することで要素の開閉を制御することができます。
+
+```tsx
+<Disclosure>
+  <Heading>
+    <Button slot="trigger">
+      <svg viewBox="0 0 24 24">
+        <path d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+      </svg>
+      System Requirements
+    </Button>
+  </Heading>
+  <DisclosurePanel>
+    <p>Details about system requirements here.</p>
+  </DisclosurePanel>
+</Disclosure>
+```
+
+他にも、RadioGroupやDateFieldのようなformに用いるコンポーネントでは内部のTextコンポーネントのslotに`errorMessage`や`description`を指定することで、エラーメッセージや補助テキストを表示することができます。
+
+## スタイリング
+
+Slotsを利用することで、コンポーネントのスタイリングを柔軟に行うことができます。例えば、`slot`に応じてスタイルを変更することができます。
+
+```tsx
+<NumberField>
+  <Label>Width</Label>
+  <Group>
+    <Input />
+    <Button slot="increment">+</Button>
+    <Button slot="decrement">-</Button>
+  </Group>
+</NumberField>
+```
+
+```css
+.react-aria-NumberField {
+  [slot="increment"] {
+    border-radius: 4px 4px 0 0;
+  }
+
+  [slot="decrement"] {
+    border-radius: 0 0 4px 4px;
+  }
+}
+```
+
+## まとめ
+
+React AriaのSlotsは、コンポーネント内で異なる動作やスタイルを適用することを可能にする仕組みです。また、アクセシビリティを向上させるためにも利用されています。React Aria Componentsを利用する際には、どのようなSlotsが使えるかを確認しておくと便利な場面が存在します。
+
+## 余談
+
+人生初のOSSコントリビュートはReact Ariaでした。小さい変更だけど嬉しかった。
+
+<ContentLinkCard url="https://github.com/adobe/react-spectrum/pull/7014" />
