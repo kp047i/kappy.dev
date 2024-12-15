@@ -27,5 +27,13 @@ export const TAGS: Array<{ label: string; key: string }> = [
   {
     label: "ハッカソン",
     key: "hackathon",
+  },
+  {
+    label: "React",
+    key: "react",
+  },
+  {
+    label: "React Aria",
+    key: "react-aria",
   }
 ];
