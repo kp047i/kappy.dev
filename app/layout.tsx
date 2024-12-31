@@ -12,6 +12,10 @@ const noto = Noto_Sans_JP({ weight: ["500", "700"], subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "kappy.dev",
   description: "kappyのブログサイト",
+  metadataBase: new URL("https://kappy.dev"),
+  applicationName: "kappy.dev",
+  keywords: ["kappy", "ブログ", "Webエンジニア", "プログラミング", "フロントエンド"],
+  robots: "index, follow",
   openGraph: {
     title: "kappy.dev",
     type: "website",

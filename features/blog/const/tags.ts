@@ -35,5 +35,9 @@ export const TAGS: Array<{ label: string; key: string }> = [
   {
     label: "React Aria",
     key: "react-aria",
+  },
+  {
+    label: "振り返り",
+    key: "retrospective",
   }
 ];

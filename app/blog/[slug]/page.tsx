@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { BlogCategory } from "@/features/blog/components/BlogCategory/BlogCategory";
@@ -15,7 +16,7 @@ export const generateMetadata = async ({
   params,
 }: {
   params: { slug: string };
-}) => {
+}): Promise<Metadata | undefined> => {
   const post = await getBlogPost(params.slug);
 
   if (!post) {
@@ -27,12 +28,16 @@ export const generateMetadata = async ({
   const ogImage = `${process.env.NEXT_PUBLIC_SITE_URL}/blog/og/${slug}`;
 
   return {
-    title,
+    title: {
+      template: `kappy.dev | ${title}`,
+      default: title,
+    },
     description,
     openGraph: {
       title,
       description,
       url: `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${slug}`,
+      type: "article",
       images: [
         {
           url: ogImage,
@@ -43,11 +48,20 @@ export const generateMetadata = async ({
       ],
     },
     twitter: {
-      cardType: "summary_large_image",
       title,
       description,
-      image: ogImage,
-      content: "@kp047i",
+      card: "summary_large_image",
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+      creator: "@kp047i",
+      creatorId: "kp047i",
+      site: "@kp047i",
     },
   };
 };
