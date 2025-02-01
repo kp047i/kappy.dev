@@ -2,7 +2,7 @@ import Rss from "rss";
 
 import { getBlogPostList } from "../../features/blog/utils";
 
-export const revalidate = 60 * 60 * 24 * 1;
+export const revalidate = 86400;
 
 export async function GET() {
   const posts = await getBlogPostList();
