@@ -3,11 +3,12 @@ import { BlogCategoryTab } from "@/features/blog/components/BlogCategoryTab/Blog
 import { CATEGORIES } from "@/features/blog/const/categories";
 import { getBlogPostList } from "@/features/blog/utils";
 
-export default async function BlogListPage({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined };
-}) {
+export default async function BlogListPage(
+  props: {
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+  }
+) {
+  const searchParams = await props.searchParams;
   let category = "";
 
   if (searchParams.category && typeof searchParams.category === "string") {

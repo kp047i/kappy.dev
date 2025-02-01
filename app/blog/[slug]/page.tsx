@@ -12,11 +12,12 @@ export async function generateStaticParams() {
   }));
 }
 
-export const generateMetadata = async ({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata | undefined> => {
+export const generateMetadata = async (
+  props: {
+    params: Promise<{ slug: string }>;
+  }
+): Promise<Metadata | undefined> => {
+  const params = await props.params;
   const post = await getBlogPost(params.slug);
 
   if (!post) {
@@ -66,11 +67,12 @@ export const generateMetadata = async ({
   };
 };
 
-export default async function BlogPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default async function BlogPage(
+  props: {
+    params: Promise<{ slug: string }>;
+  }
+) {
+  const params = await props.params;
   const post = await getBlogPost(params.slug);
 
   if (!post) {

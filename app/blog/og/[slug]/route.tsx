@@ -6,12 +6,11 @@ export const runtime = "nodejs";
 
 export async function GET(
   request: Request,
-  {
-    params,
-  }: {
-    params: { slug: string };
+  props: {
+    params: Promise<{ slug: string }>;
   }
 ) {
+  const params = await props.params;
   const post = await getBlogPost(params.slug);
 
   if (!post) {
