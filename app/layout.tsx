@@ -14,7 +14,13 @@ export const metadata: Metadata = {
   description: "kappyのブログサイト",
   metadataBase: new URL("https://kappy.dev"),
   applicationName: "kappy.dev",
-  keywords: ["kappy", "ブログ", "Webエンジニア", "プログラミング", "フロントエンド"],
+  keywords: [
+    "kappy",
+    "ブログ",
+    "Webエンジニア",
+    "プログラミング",
+    "フロントエンド",
+  ],
   robots: "index, follow",
   openGraph: {
     title: "kappy.dev",
