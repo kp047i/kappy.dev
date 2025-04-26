@@ -39,5 +39,9 @@ export const TAGS: Array<{ label: string; key: string }> = [
   {
     label: "振り返り",
     key: "retrospective",
+  },
+  {
+    label: "旅行",
+    key: "trip"
   }
 ];
