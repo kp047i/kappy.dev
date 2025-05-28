@@ -1,5 +1,5 @@
-import { BlogCard } from "@/features/blog/components/BlogCard/BlogCard";
 import { BlogCategoryTab } from "@/features/blog/components/BlogCategoryTab/BlogCategoryTab";
+import { BlogSearchAndFilterList } from "@/features/blog/components/BlogSearchAndFilterList"; // Import the new component
 import { CATEGORIES } from "@/features/blog/const/categories";
 import { getBlogPostList } from "@/features/blog/utils";
 
@@ -31,11 +31,8 @@ export default async function BlogListPage(
       <h1 className="text-4xl font-bold">Blog</h1>
       <BlogCategoryTab selectedCategory={category} />
 
-      <div className="space-y-12">
-        {posts.map((post) => (
-          <BlogCard key={post.slug} metadata={post.metadata} />
-        ))}
-      </div>
+      {/* Replace direct mapping with BlogSearchAndFilterList */}
+      <BlogSearchAndFilterList initialPosts={posts} />
     </div>
   );
 }
