@@ -1,5 +1,5 @@
-import { Meta, StoryObj } from "@storybook/react";
-import { within, expect } from "@storybook/test";
+import { Meta, StoryObj } from "@storybook/nextjs";
+import { within, expect } from "storybook/test";
 
 import { BlogCard, BlogCardProps } from "./BlogCard";
 
