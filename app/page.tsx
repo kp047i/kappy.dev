@@ -12,15 +12,10 @@ export default async function Home() {
   return (
     <div className="space-y-24">
       <section className="space-y-20">
-        <h1 className="text-3xl font-bold text-secondary-950">kappy.dev</h1>
-        <div className="flex flex-col items-center justify-center gap-16">
-          <Image
-            src="https://res.cloudinary.com/dlibdyano/image/upload/v1675685454/kp047i/avator.png"
-            alt="kappyこのサイトのロゴ。"
-            width={128}
-            height={128}
-            className="rounded-full"
-          />
+        <div className="space-y-6">
+          <p className="text-lg leading-relaxed text-secondary-950 opacity-80">
+            仙台在住のWebエンジニアです。ReactやTypeScriptが好きで、地域や学び、ズレに興味があります。
+          </p>
 
           <div className="flex gap-8">
             <Link href="https://github.com/kp047i">
