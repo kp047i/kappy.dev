@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ReactNode } from "react";
 
 export function Header() {
   return (
@@ -16,14 +17,35 @@ export function Header() {
           kappy.dev
         </span>
       </Link>
-      <ul className="flex gap-2">
+      <nav className="flex gap-2">
         <Link
           href="/blog"
-          className="cursor-pointer p-1 transition-all duration-200 ease-in-out opacity-70 hover:opacity-100"
+          className="cursor-pointer rounded-md px-2 py-1 text-sm font-medium text-zinc-700 transition-colors duration-200 ease-in-out hover:bg-zinc-100 hover:text-zinc-900"
         >
           Blog
         </Link>
-      </ul>
+        <Link
+          href="/about"
+          className="cursor-pointer rounded-md px-2 py-1 text-sm font-medium text-zinc-700 transition-colors duration-200 ease-in-out hover:bg-zinc-100 hover:text-zinc-900"
+        >
+          About
+        </Link>
+      </nav>
     </header>
+  );
+}
+
+type HeaderLinkItemProps = {
+  children: ReactNode;
+};
+
+function HeaderLinkItem({ children }: HeaderLinkItemProps) {
+  return (
+    <Link
+      href="/about"
+      className="cursor-pointer rounded-md px-2 py-1 text-sm font-medium text-zinc-700 transition-colors duration-200 ease-in-out hover:bg-zinc-100 hover:text-zinc-900"
+    >
+      {children}
+    </Link>
   );
 }

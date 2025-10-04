@@ -3,11 +3,9 @@ import { BlogCategoryTab } from "@/features/blog/components/BlogCategoryTab/Blog
 import { CATEGORIES } from "@/features/blog/const/categories";
 import { getBlogPostList } from "@/features/blog/utils";
 
-export default async function BlogListPage(
-  props: {
-    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-  }
-) {
+export default async function BlogListPage(props: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   const searchParams = await props.searchParams;
   let category = "";
 
@@ -28,7 +26,7 @@ export default async function BlogListPage(
 
   return (
     <div className="flex flex-col gap-12">
-      <h1 className="text-4xl font-bold">Blog</h1>
+      <h1 className="text-2xl font-bold">Blog</h1>
       <BlogCategoryTab selectedCategory={category} />
 
       <div className="space-y-12">
