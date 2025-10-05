@@ -26,10 +26,6 @@ test.describe("テーマトグル", () => {
       test.skip();
     }
 
-    await page.addInitScript(() => {
-      window.localStorage.removeItem("theme");
-    });
-
     await page.goto("/");
 
     const darkButton = page.getByRole("button", {
