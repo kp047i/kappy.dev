@@ -10,15 +10,8 @@ const config: TestRunnerConfig = {
     }
 
     const innerHTML = await elementHandler.innerHTML();
-
-    // Remove theme-related scripts to make snapshots more stable across environments
-    const cleanedHTML = innerHTML.replace(
-      /<script nonce>[\s\S]*?<\/script>/g,
-      "<script nonce><!-- theme script removed for stable snapshots --></script>"
-    );
-
     // @ts-ignore
-    expect(cleanedHTML).toMatchSnapshot();
+    expect(innerHTML).toMatchSnapshot();
   },
 };
 
