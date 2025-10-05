@@ -9,6 +9,8 @@ jobs:
     name: Storybook Tests
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    env:
+      PLAYWRIGHT_BROWSERS_PATH: 0
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -34,10 +36,13 @@ jobs:
             ${{ runner.os }}-pnpm-store-
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium chromium-headless-shell
       - name: Build Storybook
         run: pnpm build-storybook --quiet
       - name: Storybook interaction tests
         run: |
+          pnpm exec playwright install --with-deps chromium-headless-shell
           pnpm exec concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
             "pnpm dlx http-server storybook-static --port 6006 --silent" \
             "pnpm exec wait-on http://127.0.0.1:6006 && pnpm test-storybook --url http://127.0.0.1:6006"
