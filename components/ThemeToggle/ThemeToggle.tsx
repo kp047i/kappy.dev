@@ -2,7 +2,7 @@
 
 import clsx from "clsx";
 import { useTheme } from "next-themes";
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { FiMoon, FiSun } from "react-icons/fi";
 
 const BUTTON_BASE =
@@ -10,22 +10,36 @@ const BUTTON_BASE =
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <div className="flex items-center gap-1 rounded-lg border border-secondary-100/80 bg-overlay-100/90 p-1 opacity-0 dark:border-base-800/60 dark:bg-base-800/60">
+        <span className="h-9 w-9 rounded-md border border-transparent" />
+        <span className="h-9 w-9 rounded-md border border-transparent" />
+      </div>
+    );
+  }
 
   return (
-    <div className="flex gap-1 items-center p-1 rounded-lg border shadow-sm backdrop-blur border-secondary-100/80 bg-overlay-100/90 dark:border-base-800/60 dark:bg-base-800/60">
+    <div className="flex items-center gap-1 rounded-lg border border-secondary-100/80 bg-overlay-100/90 p-1 shadow-sm backdrop-blur dark:border-base-800/60 dark:bg-base-800/60">
       <ThemeToggleButton
         label="ライトモードに切り替える"
         isActive={theme === "light"}
         onClick={() => setTheme("light")}
       >
-        <FiSun className="w-4 h-4" />
+        <FiSun className="h-4 w-4" />
       </ThemeToggleButton>
       <ThemeToggleButton
         label="ダークモードに切り替える"
         isActive={theme === "dark"}
         onClick={() => setTheme("dark")}
       >
-        <FiMoon className="w-4 h-4" />
+        <FiMoon className="h-4 w-4" />
       </ThemeToggleButton>
     </div>
   );

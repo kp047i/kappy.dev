@@ -11,6 +11,28 @@ import { ThemeToggle } from "../components/ThemeToggle/ThemeToggle";
 
 const noto = Noto_Sans_JP({ weight: ["500", "700"], subsets: ["latin"] });
 
+const themeInitScript = `
+(function () {
+  try {
+    var storageKey = 'theme';
+    var documentElement = document.documentElement;
+    var storedTheme = localStorage.getItem(storageKey);
+    var systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var resolvedTheme = storedTheme === 'light' || storedTheme === 'dark'
+      ? storedTheme
+      : systemPrefersDark
+        ? 'dark'
+        : 'light';
+
+    documentElement.classList.remove('light', 'dark');
+    documentElement.classList.add(resolvedTheme);
+    documentElement.style.colorScheme = resolvedTheme === 'dark' ? 'dark' : 'light';
+  } catch (error) {
+    // no-op
+  }
+})();
+`;
+
 export const metadata: Metadata = {
   title: "kappy.dev",
   description: "kappyのブログサイト",
@@ -49,8 +71,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja">
+    <html lang="ja" suppressHydrationWarning>
       <head>
+        <script
+          dangerouslySetInnerHTML={{ __html: themeInitScript }}
+        />
         <link
           href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.9.0/themes/prism-tomorrow.min.css"
           rel="stylesheet"
