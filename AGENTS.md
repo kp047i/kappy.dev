@@ -1,5 +1,8 @@
 # Repository Guidelines
 
+## エージェントへの追加指示
+- すべての回答・コミュニケーションは日本語で行ってください。
+
 ## プロジェクト構成とモジュール整理
 - `app/` には App Router のルート、レイアウト、メタデータ生成関数、共有 CSS を配置します。
 - `features/blog/` はブログ機能の中枢で、MDX 記事は `features/blog/posts/`、関連アセットは `public/` に置きます。
