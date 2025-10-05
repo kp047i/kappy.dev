@@ -1,0 +1,43 @@
+name: Storybook Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  storybook:
+    name: Storybook Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.13.0
+      - name: Enable Corepack
+        run: corepack enable
+      - name: Install pnpm
+        run: |
+          corepack prepare pnpm@8.15.5 --activate
+          pnpm --version
+          which pnpm
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build Storybook
+        run: pnpm build-storybook --quiet
+      - name: Storybook interaction tests
+        run: |
+          pnpm exec concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+            "pnpm dlx http-server storybook-static --port 6006 --silent" \
+            "pnpm exec wait-on http://127.0.0.1:6006 && pnpm test-storybook --url http://127.0.0.1:6006"
