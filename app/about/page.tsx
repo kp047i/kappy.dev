@@ -1,5 +1,5 @@
-import Image from "next/image";
 import type { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "About | kappy.dev",
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="space-y-16">
-      <section className="rounded-3xl border border-zinc-200/60 bg-zinc-50/60 p-8 shadow-sm sm:p-12">
+      <section className="rounded-3xl border border-secondary-100/60 bg-primary-50/80 p-8 shadow-sm transition-colors dark:border-base-800/50 dark:bg-base-800/70 dark:shadow-none sm:p-12">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-12">
           <figure className="mx-auto flex flex-col items-center gap-4 text-center lg:mx-0 lg:text-left">
             <Image
@@ -22,11 +22,8 @@ export default function AboutPage() {
               priority
             />
           </figure>
-          <div className="space-y-5 text-base leading-relaxed text-zinc-700">
-            <span className="inline-flex items-center gap-2 bg-primary-50 text-xs font-semibold uppercase tracking-[0.2em] text-primary-700">
-              About
-            </span>
-            <h1 className="text-2xl font-bold text-zinc-900">
+          <div className="space-y-5 text-base leading-relaxed text-base-900 dark:text-base-50">
+            <h1 className="text-2xl font-bold text-secondary-950 dark:text-base-50">
               こんにちは、三浦鷹将 / kappyです。
             </h1>
             <p>
@@ -41,7 +38,9 @@ export default function AboutPage() {
       </section>
 
       <section className="space-y-8">
-        <h2 className="text-xl font-semibold text-zinc-900">関心・興味</h2>
+        <h2 className="text-xl font-semibold text-secondary-950 dark:text-base-50">
+          関心・興味
+        </h2>
         <ol className="space-y-8">
           {[
             {
@@ -64,14 +63,14 @@ export default function AboutPage() {
               key={area.title}
               className="flex flex-col gap-4 sm:flex-row sm:gap-8"
             >
-              <span className="text-sm font-semibold uppercase tracking-[0.3em] text-primary-500">
+              <span className="text-sm font-semibold uppercase tracking-[0.3em] text-primary-500 dark:text-primary-200">
                 {String(index + 1).padStart(2, "0")}
               </span>
               <div className="space-y-3">
-                <h3 className="text-lg font-semibold text-zinc-900">
+                <h3 className="text-lg font-semibold text-secondary-950 dark:text-base-50">
                   {area.title}
                 </h3>
-                <p className="text-sm leading-relaxed text-zinc-600">
+                <p className="text-sm leading-relaxed text-base-900 dark:text-base-100">
                   {area.description}
                 </p>
               </div>

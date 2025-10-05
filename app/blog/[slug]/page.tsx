@@ -82,16 +82,18 @@ export default async function BlogPage(
   return (
     <article>
       <div className="space-y-4">
-        <p className="text-sm text-center opacity-60">
+        <p className="text-sm text-center opacity-60 dark:text-base-100">
           {post.metadata.publishedAt}
         </p>
-        <h1 className="text-2xl font-bold text-center lg:text-3xl">
+        <h1 className="text-center text-2xl font-bold text-secondary-950 dark:text-base-50 lg:text-3xl">
           {post.metadata.title}
         </h1>
         <BlogCategory category={post.metadata.category} />
-        <p className="mt-8">{post.metadata.description}</p>
+        <p className="mt-8 text-secondary-950 dark:text-base-100">
+          {post.metadata.description}
+        </p>
       </div>
-      <div className="mt-20 prose-sm prose lg:prose-lg prose-headings:text-secondary-950 prose-p:mb-12 prose-p:text-secondary-950 prose-p:text-opacity-80 prose-a:text-primary-700 prose-li:text-secondary-950 prose-li:text-opacity-80">
+      <div className="prose custom-prose prose-sm mt-20 lg:prose-lg prose-p:mb-12 prose-img:rounded-2xl prose-blockquote:border-l-4 prose-blockquote:border-primary-200 prose-blockquote:pl-4 dark:prose-a:text-primary-300 dark:prose-blockquote:border-primary-400/60 dark:prose-pre:bg-base-900 dark:prose-pre:text-base-50 dark:[&_p]:!text-base-50 dark:[&_li]:!text-base-50 dark:[&_strong]:!text-base-50 dark:[&_em]:!text-base-50">
         {post.content({})}
       </div>
     </article>

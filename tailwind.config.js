@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: "class",
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -9,6 +10,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        base: {
+          50: "#f1f5f9",
+          100: "#e2e8f0",
+          700: "#374151",
+          800: "#1f2937",
+          900: "#111827",
+          950: "#030712",
+        },
         primary: {
           50: "#fefafa",
           100: "#fcebd8",
@@ -34,6 +43,10 @@ module.exports = {
           800: "#005390",
           900: "#034577",
           950: "#011322",
+        },
+        overlay: {
+          100: "#ffffff",
+          900: "#171923",
         },
       },
       typography: {

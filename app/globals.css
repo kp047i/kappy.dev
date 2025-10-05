@@ -16,17 +16,53 @@ body {
 }
 
 @layer base {
+  html {
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
   body {
     font-size: theme("fontSize.base");
     font-weight: theme("fontWeight.medium");
     line-height: 1.5;
-    color: theme("colors.secondary.950");
     letter-spacing: 0.15em;
-    background-color: theme("colors.primary.50");
+
+    @apply transition-colors duration-300 bg-primary-50 text-secondary-950 dark:bg-base-800 dark:text-base-50;
   }
 }
 
 a {
   color: inherit;
   text-decoration: none;
+}
+
+@layer components {
+  .prose.custom-prose {
+    --tw-prose-body: theme("colors.base.900") !important;
+    --tw-prose-headings: theme("colors.secondary.950") !important;
+    --tw-prose-bold: theme("colors.base.900") !important;
+    --tw-prose-links: theme("colors.primary.700") !important;
+    --tw-prose-bullets: theme("colors.base.800") !important;
+    --tw-prose-hr: theme("colors.secondary.200") !important;
+    --tw-prose-quotes: theme("colors.base.800") !important;
+    --tw-prose-code: theme("colors.primary.700") !important;
+    --tw-prose-th-borders: theme("colors.secondary.200") !important;
+    --tw-prose-td-borders: theme("colors.secondary.200") !important;
+  }
+
+  .dark .prose.custom-prose {
+    --tw-prose-body: theme("colors.base.50") !important;
+    --tw-prose-headings: theme("colors.base.50") !important;
+    --tw-prose-bold: theme("colors.base.50") !important;
+    --tw-prose-links: theme("colors.primary.300") !important;
+    --tw-prose-bullets: theme("colors.base.100") !important;
+    --tw-prose-hr: theme("colors.base.700") !important;
+    --tw-prose-quotes: theme("colors.base.100") !important;
+    --tw-prose-code: theme("colors.primary.200") !important;
+    --tw-prose-th-borders: theme("colors.base.700") !important;
+    --tw-prose-td-borders: theme("colors.base.700") !important;
+  }
 }
