@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Script from "next/script";
 import { FaAngleLeft } from "react-icons/fa6";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -21,10 +20,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           {children}
         </div>
       </div>
-      <Script
-        src="https://platform.twitter.com/widgets.js"
-        strategy="lazyOnload"
-      />
     </>
   );
 }
