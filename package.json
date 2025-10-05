@@ -9,7 +9,7 @@
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test-storybook": "test-storybook",
+    "test-storybook": "storybook build && test-storybook",
     "test-e2e": "pnpm exec playwright test"
   },
   "dependencies": {

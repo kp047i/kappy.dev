@@ -9,9 +9,14 @@ const config: TestRunnerConfig = {
       throw new Error("Unable to find the #storybook-root element");
     }
 
-    const innerHTML = await elementHandler.innerHTML();
+    const cleanedHTML = await elementHandler.evaluate((root) => {
+      const clone = root.cloneNode(true) as HTMLElement;
+      clone.querySelectorAll("script").forEach((script) => script.remove());
+      return clone.innerHTML;
+    });
+
     // @ts-ignore
-    expect(innerHTML).toMatchSnapshot();
+    expect(cleanedHTML).toMatchSnapshot();
   },
 };
 
