@@ -25,6 +25,8 @@ jobs:
         run: pnpm exec playwright install --with-deps
       - name: Playwright E2E
         run: pnpm exec playwright test
+        env:
+          CI: true
       - name: Build Storybook
         run: pnpm build-storybook --quiet
       - name: Storybook interaction tests
