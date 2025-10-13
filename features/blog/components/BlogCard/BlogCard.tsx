@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { Post } from "../../type";
 import { BlogCategory } from "../BlogCategory/BlogCategory";
+import { BlogTag } from "../BlogTag/BlogTag";
 
 export type BlogCardProps = Pick<Post, "metadata">;
 
@@ -23,6 +24,13 @@ export function BlogCard({ metadata }: BlogCardProps) {
         </div>
       </div>
       <p className="text-base-800 dark:text-base-100">{metadata.description}</p>
+      {metadata.tags.length > 0 ? (
+        <div className="flex flex-wrap gap-2">
+          {metadata.tags.map((tag) => (
+            <BlogTag key={tag} tag={tag} />
+          ))}
+        </div>
+      ) : null}
       <div className="flex items-end justify-between space-y-2 text-sm font-medium text-primary-700 dark:text-primary-300">
         <BlogCategory category={metadata.category} />
         <div>

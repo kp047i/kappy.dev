@@ -7,6 +7,11 @@ import { TAGS } from "./const/tags";
 import { Metadata } from "./type";
 import { Post } from "./type";
 
+type BlogFilterOptions = {
+  category?: string;
+  tag?: string;
+};
+
 function getMDXFiles(dir: string) {
   return fs.readdirSync(dir).filter((file) => path.extname(file) === ".mdx");
 }
@@ -48,20 +53,40 @@ async function readMDXFile(fileName: string) {
   };
 }
 
-export async function getBlogPostList(category?: string) {
+export async function getBlogPostList({
+  category,
+  tag,
+}: BlogFilterOptions = {}) {
   const posts = await getMDXData(
     path.resolve(process.cwd(), "features/blog/posts")
   );
-  if (category) {
-    return posts.filter((post) => post.metadata.category === category);
-  }
+  const validCategories = new Set(
+    CATEGORIES.map((categoryOption) => categoryOption.key)
+  );
+  const validTags = new Set(TAGS.map((tagOption) => tagOption.key));
 
-  return posts.sort((a, b) => {
-    return (
-      new Date(b.metadata.publishedAt).getTime() -
-      new Date(a.metadata.publishedAt).getTime()
-    );
-  });
+  const normalizedCategory =
+    category && validCategories.has(category) ? category : undefined;
+  const normalizedTag = tag && validTags.has(tag) ? tag : undefined;
+
+  return posts
+    .filter((post) => {
+      if (normalizedCategory && post.metadata.category !== normalizedCategory) {
+        return false;
+      }
+
+      if (normalizedTag && !post.metadata.tags.includes(normalizedTag)) {
+        return false;
+      }
+
+      return true;
+    })
+    .sort((a, b) => {
+      return (
+        new Date(b.metadata.publishedAt).getTime() -
+        new Date(a.metadata.publishedAt).getTime()
+      );
+    });
 }
 
 export async function getBlogPost(slug: string) {
