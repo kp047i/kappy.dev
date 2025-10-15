@@ -20,6 +20,13 @@ exports[`blog/components/BlogCard Default play-test 1`] = `
   <p class="text-base-800 dark:text-base-100">
     Description
   </p>
+  <div class="flex flex-wrap gap-2">
+    <a class="inline-flex items-center rounded-full border border-primary-200 px-3 py-1 font-medium text-primary-700 transition-colors hover:bg-primary-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 dark:border-primary-300/40 dark:text-primary-200 dark:hover:bg-primary-300/10 dark:focus-visible:ring-primary-300/60 text-xs"
+       href="/blog?tag=react"
+    >
+      #React
+    </a>
+  </div>
   <div class="flex items-end justify-between space-y-2 text-sm font-medium text-primary-700 dark:text-primary-300">
     <a class="group inline-flex items-center gap-2 text-primary-700 opacity-80 transition-colors hover:opacity-100 dark:text-primary-300"
        href="/blog?category=tech"

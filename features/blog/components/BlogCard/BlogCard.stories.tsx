@@ -17,7 +17,7 @@ const defaultArgs: BlogCardProps = {
     emoji: "📝",
     publishedAt: "2022-01-01",
     category: "tech",
-    tags: ["React"],
+    tags: ["react"],
     slug: "slug",
   },
 };

@@ -24,3 +24,28 @@ exports[`blog/components/BlogCategoryTab Default play-test 1`] = `
   </a>
 </nav>
 `;
+
+exports[`blog/components/BlogCategoryTab WithSelectedTag play-test 1`] = `
+<nav class="flex justify-center space-x-4">
+  <a class="text-sm font-medium transition-colors text-secondary-950 opacity-60 hover:opacity-100 dark:text-base-100 dark:hover:text-base-50"
+     href="/blog?tag=react"
+  >
+    All
+  </a>
+  <a class="text-sm font-medium transition-colors text-primary-700 dark:text-primary-200"
+     href="/blog?category=tech&tag=react"
+  >
+    Tech
+  </a>
+  <a class="text-sm font-medium transition-colors text-secondary-950 opacity-60 hover:opacity-100 dark:text-base-100 dark:hover:text-base-50"
+     href="/blog?category=life&tag=react"
+  >
+    Life
+  </a>
+  <a class="text-sm font-medium transition-colors text-secondary-950 opacity-60 hover:opacity-100 dark:text-base-100 dark:hover:text-base-50"
+     href="/blog?category=other&tag=react"
+  >
+    Other
+  </a>
+</nav>
+`;
