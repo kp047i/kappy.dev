@@ -1,0 +1,117 @@
+export const metadata = {
+  title: "ダークテーマ導入の舞台裏とテストづくりのメモ",
+  slug: "dark-theme-implementation",
+  publishedAt: "2025-05-09",
+  tags: ["frontend"],
+  category: "tech",
+  emoji: "🌗",
+};
+
+Next.js で運営しているこのサイトダークテーマを導入しました。
+ただトグルを置いただけでは、ライトモードのときにリロードで一瞬画面が白くフラッシュしたり、Hydration エラーが出たりと課題がありました。ここでは、実装を固めるまでにやったことついてまとめます。
+
+## きっかけと課題の棚卸し
+
+既存の構成でも `next-themes` を使ったテーマ切り替えはできていましたが、以下のような問題がありました。
+
+- ライトモードでリロードすると、クライアントがマウントするまで `dark` クラスが外れずチラつく
+- Hydration のタイミングで `aria-pressed` の型が食い違い、ログにエラーが出る
+- Storybook ではテーマトグルのプレースホルダーがなく、ヘッダーのレイアウトが跳ねる
+
+このあたりをまとめて解消するのが今回のゴールです。
+
+## 初期表示でチラつかせない
+
+まず手を付けたのは HTML レベルでテーマクラスを揃えることでした。`app/layout.tsx` で生成している `themeInitScript` を `<head>` 内の `<Script strategy="beforeInteractive">` で読み込み、サーバーが返す HTML 自体に `light` / `dark` を付けてから Hydration してもらう流れにしています。`beforeInteractive` を指定するとブラウザが初回ペイントする前に確実に実行されるので、ライトモードでのチラつきも抑えられました。
+
+```tsx
+// app/layout.tsx
+const themeInitScript = `
+(function () {
+  try {
+    var storageKey = 'theme';
+    var documentElement = document.documentElement;
+    var storedTheme = localStorage.getItem(storageKey);
+    var systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var resolvedTheme = storedTheme === 'light' || storedTheme === 'dark'
+      ? storedTheme
+      : systemPrefersDark
+        ? 'dark'
+        : 'light';
+
+    documentElement.classList.remove('light', 'dark');
+    documentElement.classList.add(resolvedTheme);
+    documentElement.style.colorScheme = resolvedTheme;
+  } catch (error) {
+    // no-op
+  }
+})();
+`;
+```
+
+サーバーサイドでもクラスの差分に寛容になるよう `suppressHydrationWarning` を付けつつ、スクリプトが先に走るので実際には差分が消える構成です。`colorScheme` の指定はブラウザのシステム UI（フォームコントロールやスクロールバーなど）の配色にも効いてくるので、`resolvedTheme` と揃えておくと画面全体の一体感が出ました。システムのテーマ設定を初期値にしたい、という要件も `prefers-color-scheme` を見ることでそのままクリアできました。
+
+## トグルはマウント完了まで待つ
+
+もうひとつの鍵は `ThemeToggle`。`next-themes` の `useTheme()` はクライアントマウント前は値が未確定なので、プレースホルダーを返しておくように変更しました。これでヘッダーの幅が SSR と CSR で揺らがず、`aria-pressed` も真偽値で落ち着きます。
+
+```tsx
+// components/ThemeToggle/ThemeToggle.tsx
+const { theme, setTheme } = useTheme();
+const [mounted, setMounted] = useState(false);
+
+useEffect(() => {
+  setMounted(true);
+}, []);
+
+if (!mounted) {
+  return (
+    <div className="flex items-center gap-1 rounded-lg border ... opacity-0">
+      <span className="h-9 w-9 rounded-md border border-transparent" />
+      <span className="h-9 w-9 rounded-md border border-transparent" />
+    </div>
+  );
+}
+```
+
+`aria-pressed={isActive}` を boolean のまま渡せるので、Hydration エラーの原因だった文字列との差異も解消できました。
+
+## Storybook でも同じ UX を確認する
+
+仕上げとして、トグルの動きや `.prose` の配色を Storybook 上で確認できるようにしました。`ThemeToggle.stories.tsx` では `play` 関数を使い、ライト→ダークのクリックで `aria-pressed` が切り替わることを検証しています。`test-storybook` は Storybook に同梱されている Playwright ベースの自動 UI テストなので、手元で確認した振る舞いを CI でも再現できます。
+
+一方で `test-storybook` では `themeInitScript` が `<script>` として出力されるため、スナップショット比較が毎回ズレてしまいました。そこで `.storybook/test-runner.ts` 側で `<script>` 要素を一度削除してからスナップショット化する処理を挟み、コンポーネント本体だけを比較するようにしています。
+
+```ts
+// .storybook/test-runner.ts
+const cleanedHTML = await elementHandler.evaluate((root) => {
+  const clone = root.cloneNode(true) as HTMLElement;
+  clone.querySelectorAll("script").forEach((script) => script.remove());
+  return clone.innerHTML;
+});
+```
+
+## E2E でテーマの持ち越しを確認
+
+UI の確認だけでなく、Playwright で本番に近い挙動をテストしています。ポイントは 2 つです。
+
+1. OS のダーク／ライト設定を切り替えたプロジェクトを用意し、初回アクセス時に `<html>` が期待通りのクラスになるか確かめる
+2. ライトモードからダークモードへトグルしてリロードしたあとも `localStorage.theme` と `documentElement.classList` が同期しているか検証する
+
+```ts
+// e2e/theme.spec.ts
+await darkButton.click();
+await expect(page.locator("html")).toHaveClass(/dark/);
+
+const storedTheme = await page.evaluate(() =>
+  window.localStorage.getItem("theme")
+);
+expect(storedTheme).toBe("dark");
+
+await page.reload();
+await expect(page.locator("html")).toHaveClass(/dark/);
+```
+
+## まとめ
+
+今回はNext.js + `next-themes` でダークテーマを導入しました。もしもっと良いアプローチがあれば、ぜひ教えてください！
