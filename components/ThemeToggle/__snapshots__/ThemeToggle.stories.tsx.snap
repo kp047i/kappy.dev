@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Components/ThemeToggle DarkMode play-test 1`] = `
 <div class="flex items-center gap-1 rounded-lg border border-secondary-100/80 bg-overlay-100/90 p-1 shadow-sm backdrop-blur dark:border-base-800/60 dark:bg-base-800/60">

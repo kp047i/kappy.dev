@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`blog/components/BlogCard Default play-test 1`] = `
 <div class="space-y-4 rounded-xl transition-colors duration-200">

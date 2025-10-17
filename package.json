@@ -2,6 +2,7 @@
   "name": "kappy.dev",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,7 +11,7 @@
     "storybook": "storybook dev -p 6006",
     "storybook:ci": "storybook dev -p 6006 --ci --no-open --disable-telemetry",
     "build-storybook": "storybook build",
-    "test:storybook": "storybook build && test-storybook",
+    "test:storybook": "vitest --project=storybook",
     "test:e2e": "pnpm exec playwright test",
     "test": "pnpm lint && pnpm build && pnpm build-storybook && pnpm test:storybook && pnpm test:e2e"
   },
@@ -39,7 +40,7 @@
     "@storybook/addon-docs": "^9.2.0-alpha.1",
     "@storybook/addon-links": "^9.2.0-alpha.1",
     "@storybook/addon-onboarding": "^9.2.0-alpha.1",
-    "@storybook/nextjs": "^9.2.0-alpha.1",
+    "@storybook/addon-vitest": "^9.2.0-alpha.1",
     "@storybook/test-runner": "^0.23.0",
     "@tailwindcss/typography": "^0.5.16",
     "@types/jsdom": "^21.1.7",
@@ -66,7 +67,12 @@
     "stylelint-config-standard": "^36.0.1",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.3",
-    "wait-on": "^9.0.1"
+    "wait-on": "^9.0.1",
+    "@storybook/nextjs-vite": "^9.2.0-alpha.1",
+    "vitest": "^3.2.4",
+    "@vitest/browser": "^3.2.4",
+    "playwright": "^1.56.1",
+    "@vitest/coverage-v8": "^3.2.4"
   },
   "packageManager": "pnpm@8.15.5+sha256.4b4efa12490e5055d59b9b9fc9438b7d581a6b7af3b5675eb5c5f447cee1a589",
   "volta": {

@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { within, expect } from "storybook/test";
 
 import { BlogCard, BlogCardProps } from "./BlogCard";
