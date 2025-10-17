@@ -43,5 +43,9 @@ export const TAGS: Array<{ label: string; key: string }> = [
   {
     label: "旅行",
     key: "trip"
-  }
+  },
+  {
+    label: "フロントエンド",
+    key: "frontend",
+  },
 ];

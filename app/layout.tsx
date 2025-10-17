@@ -1,6 +1,7 @@
 import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 import { Noto_Sans_JP } from "next/font/google";
+import Script from "next/script";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
 
@@ -26,7 +27,7 @@ const themeInitScript = `
 
     documentElement.classList.remove('light', 'dark');
     documentElement.classList.add(resolvedTheme);
-    documentElement.style.colorScheme = resolvedTheme === 'dark' ? 'dark' : 'light';
+    documentElement.style.colorScheme = resolvedTheme;
   } catch (error) {
     // no-op
   }
@@ -73,9 +74,9 @@ export default function RootLayout({
   return (
     <html lang="ja" suppressHydrationWarning>
       <head>
-        <script
-          dangerouslySetInnerHTML={{ __html: themeInitScript }}
-        />
+        <Script id="theme-init" strategy="beforeInteractive">
+          {themeInitScript}
+        </Script>
         <link
           href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.9.0/themes/prism-tomorrow.min.css"
           rel="stylesheet"
