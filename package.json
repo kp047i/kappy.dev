@@ -10,8 +10,9 @@
     "storybook": "storybook dev -p 6006",
     "storybook:ci": "storybook dev -p 6006 --ci --no-open --disable-telemetry",
     "build-storybook": "storybook build",
-    "test-storybook": "node scripts/test-storybook.mjs",
-    "test-e2e": "pnpm exec playwright test"
+    "test:storybook": "storybook build && test-storybook",
+    "test:e2e": "pnpm exec playwright test",
+    "test": "pnpm lint && pnpm build && pnpm build-storybook && pnpm test:storybook && pnpm test:e2e"
   },
   "dependencies": {
     "@mapbox/rehype-prism": "^0.9.0",
