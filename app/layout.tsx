@@ -1,5 +1,5 @@
 import { Analytics } from "@vercel/analytics/react";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Noto_Sans_JP } from "next/font/google";
 import Script from "next/script";
 import { ThemeProvider } from "next-themes";
@@ -47,10 +47,6 @@ export const metadata: Metadata = {
     "フロントエンド",
   ],
   robots: "index, follow",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f1f5f9" },
-    { media: "(prefers-color-scheme: dark)", color: "#030712" },
-  ],
   openGraph: {
     title: "kappy.dev",
     type: "website",
@@ -65,6 +61,13 @@ export const metadata: Metadata = {
     ],
   },
 };
+
+export const generateViewport = (): Viewport => ({
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f1f5f9" },
+    { media: "(prefers-color-scheme: dark)", color: "#030712" },
+  ],
+});
 
 export default function RootLayout({
   children,
