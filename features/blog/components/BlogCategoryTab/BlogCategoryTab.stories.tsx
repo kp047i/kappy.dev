@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { expect, within } from "storybook/test";
 
 import { BlogCategoryTab } from "./BlogCategoryTab";
@@ -12,6 +12,7 @@ type Story = StoryObj<typeof BlogCategoryTab>;
 
 const defaultArgs = {
   selectedCategory: "tech",
+  selectedTag: "",
 };
 
 export const Default: Story = {
@@ -30,5 +31,21 @@ export const Default: Story = {
 
     const otherLink = canvas.getByText("Other");
     expect(otherLink).toHaveAttribute("href", "/blog?category=other");
+  },
+};
+
+export const WithSelectedTag: Story = {
+  args: {
+    selectedCategory: "tech",
+    selectedTag: "react",
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const allLink = canvas.getByText("All");
+    expect(allLink).toHaveAttribute("href", "/blog?tag=react");
+
+    const techLink = canvas.getByText("Tech");
+    expect(techLink).toHaveAttribute("href", "/blog?category=tech&tag=react");
   },
 };

@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { BlogCategory } from "@/features/blog/components/BlogCategory/BlogCategory";
+import { BlogTag } from "@/features/blog/components/BlogTag/BlogTag";
 import { getBlogPostList, getBlogPost } from "@/features/blog/utils";
 
 export async function generateStaticParams() {
@@ -88,7 +89,16 @@ export default async function BlogPage(
         <h1 className="text-center text-2xl font-bold text-secondary-950 dark:text-base-50 lg:text-3xl">
           {post.metadata.title}
         </h1>
-        <BlogCategory category={post.metadata.category} />
+        <div className="flex flex-col items-center gap-4">
+          <BlogCategory category={post.metadata.category} />
+          {post.metadata.tags.length > 0 ? (
+            <div className="flex flex-wrap justify-center gap-2">
+              {post.metadata.tags.map((tag) => (
+                <BlogTag key={tag} tag={tag} size="md" />
+              ))}
+            </div>
+          ) : null}
+        </div>
         <p className="mt-8 text-secondary-950 dark:text-base-100">
           {post.metadata.description}
         </p>

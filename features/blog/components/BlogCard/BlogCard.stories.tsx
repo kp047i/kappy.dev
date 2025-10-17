@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/nextjs";
+import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { within, expect } from "storybook/test";
 
 import { BlogCard, BlogCardProps } from "./BlogCard";
@@ -17,7 +17,7 @@ const defaultArgs: BlogCardProps = {
     emoji: "📝",
     publishedAt: "2022-01-01",
     category: "tech",
-    tags: ["React"],
+    tags: ["react"],
     slug: "slug",
   },
 };

@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`blog/components/BlogCategory Default play-test 1`] = `
 <a class="group inline-flex items-center gap-2 text-primary-700 opacity-80 transition-colors hover:opacity-100 dark:text-primary-300"
