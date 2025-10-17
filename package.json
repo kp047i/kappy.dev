@@ -71,7 +71,7 @@
     "@storybook/nextjs-vite": "^9.2.0-alpha.1",
     "vitest": "^3.2.4",
     "@vitest/browser": "^3.2.4",
-    "playwright": "^1.56.1",
+    "playwright": "^1.55.1",
     "@vitest/coverage-v8": "^3.2.4"
   },
   "packageManager": "pnpm@8.15.5+sha256.4b4efa12490e5055d59b9b9fc9438b7d581a6b7af3b5675eb5c5f447cee1a589",
