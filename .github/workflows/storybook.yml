@@ -40,9 +40,7 @@ jobs:
         run: pnpm exec playwright install --with-deps chromium chromium-headless-shell
       - name: Build Storybook
         run: pnpm build-storybook --quiet
-      - name: Storybook interaction tests
-        run: |
-          pnpm exec playwright install --with-deps chromium-headless-shell
-          pnpm exec concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
-            "pnpm dlx http-server storybook-static --port 6006 --silent" \
-            "pnpm exec wait-on http://127.0.0.1:6006 && pnpm test-storybook --url http://127.0.0.1:6006"
+      - name: Storybook Vitest tests
+        env:
+          CI: true
+        run: pnpm run test:storybook
