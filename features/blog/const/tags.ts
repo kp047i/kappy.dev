@@ -48,4 +48,8 @@ export const TAGS: Array<{ label: string; key: string }> = [
     label: "フロントエンド",
     key: "frontend",
   },
+  {
+    label: "コミュニティ",
+    key: "community",
+  },
 ];
