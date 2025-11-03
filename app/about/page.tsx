@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="space-y-16">
-      <section className="p-8 rounded-3xl border shadow-sm transition-colors border-secondary-100/60 bg-primary-50/80 dark:border-base-800/50 dark:bg-base-800/70 dark:shadow-none sm:p-12">
+      <section className="rounded-3xl transition-colors border-secondary-100/60 bg-primary-50/80 dark:border-base-800/50 dark:bg-base-800/70 dark:shadow-none">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-12">
           <figure className="flex flex-col gap-4 items-center mx-auto text-center lg:mx-0 lg:text-left">
             <Image
@@ -29,7 +29,8 @@ export default function AboutPage() {
               こんにちは、三浦鷹将 / kappyです。
             </h1>
             <p>
-              宮城でWebエンジニアをしています。React, TypeScriptが好きです。
+              宮城でWebエンジニアをしています。React,
+              TypeScriptが好きです。TSKaigiのスタッフを2024年からしています。
             </p>
             <p>
               最近は「学び」や「問い」をテーマに、チームや個人がよりよく学び合える土台をつくることに関心があります。
@@ -40,12 +41,12 @@ export default function AboutPage() {
                 {
                   href: "https://x.com/kp047i",
                   label: "X (旧Twitter)",
-                  icon: <FaXTwitter aria-hidden className="h-4 w-4" />,
+                  icon: <FaXTwitter aria-hidden className="w-4 h-4" />,
                 },
                 {
                   href: "https://github.com/kp047i",
                   label: "GitHub",
-                  icon: <FaGithub aria-hidden className="h-4 w-4" />,
+                  icon: <FaGithub aria-hidden className="w-4 h-4" />,
                 },
               ].map((item) => (
                 <a
@@ -53,7 +54,7 @@ export default function AboutPage() {
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-primary-200 bg-primary-50 px-4 py-2 text-sm font-medium text-primary-900 shadow-sm transition-colors hover:border-primary-300 hover:bg-primary-100 hover:text-primary-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 dark:border-base-700 dark:bg-base-900 dark:text-base-50 dark:hover:border-primary-300 dark:hover:bg-base-800 dark:hover:text-primary-200"
+                  className="inline-flex gap-2 justify-center items-center px-4 py-2 text-sm font-medium rounded-full border shadow-sm transition-colors border-primary-200 bg-primary-50 text-primary-900 hover:border-primary-300 hover:bg-primary-100 hover:text-primary-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 dark:border-base-700 dark:bg-base-900 dark:text-base-50 dark:hover:border-primary-300 dark:hover:bg-base-800 dark:hover:text-primary-200"
                 >
                   {item.icon}
                   <span>{item.label}</span>
@@ -78,12 +79,7 @@ export default function AboutPage() {
             {
               title: "学びの土台づくり",
               description:
-                "チームや学習コミュニティが自走できるように、問いの立て方やふりかえりの枠組みをデザインしています。",
-            },
-            {
-              title: "ファシリテーション",
-              description:
-                "場づくりのファシリテーターとして、対話が深まる構造や余白を設計し、一人ひとりの声が届く状態を目指しています。",
+                "クライアント／チームが、自ら問いを立て、学びを循環させる構造を獲得できるよう、ふりかえりの枠組みや場のデザインやファシリテーションを行っています。",
             },
           ].map((area, index) => (
             <li
