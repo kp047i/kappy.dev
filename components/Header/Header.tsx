@@ -7,9 +7,12 @@ type HeaderProps = {
 };
 
 export function Header({ actionSlot }: HeaderProps) {
+  const navLinkClass =
+    "cursor-pointer rounded-md text-sm font-medium  opacity-70 transition-all duration-200 ease-in-out hover:opacity-100 dark:text-base-50";
+
   return (
-    <header className="flex items-center justify-between p-4 lg:p-8">
-      <Link href="/" className="group flex cursor-pointer items-center gap-3">
+    <header className="flex justify-between items-center p-4 lg:p-8">
+      <Link href="/" className="flex gap-3 items-center cursor-pointer group">
         <Image
           src="https://res.cloudinary.com/dlibdyano/image/upload/v1675685454/kp047i/avator.png"
           alt="kappyこのサイトのロゴ。"
@@ -21,16 +24,16 @@ export function Header({ actionSlot }: HeaderProps) {
           kappy.dev
         </span>
       </Link>
-      <nav className="flex items-center gap-3">
+      <nav className="flex gap-3 items-center">
         <Link
           href="/blog"
-          className="cursor-pointer rounded-md px-2 py-1 text-sm font-medium text-base-800 transition-colors duration-200 ease-in-out hover:bg-primary-50 hover:text-secondary-950 dark:text-base-100 dark:hover:bg-base-800/70 dark:hover:text-base-50"
+          className={navLinkClass}
         >
           Blog
         </Link>
         <Link
           href="/about"
-          className="cursor-pointer rounded-md px-2 py-1 text-sm font-medium text-base-800 transition-colors duration-200 ease-in-out hover:bg-primary-50 hover:text-secondary-950 dark:text-base-100 dark:hover:bg-base-800/70 dark:hover:text-base-50"
+          className={navLinkClass}
         >
           About
         </Link>
