@@ -52,4 +52,8 @@ export const TAGS: Array<{ label: string; key: string }> = [
     label: "コミュニティ",
     key: "community",
   },
+  {
+    label: "生成AI",
+    key: "generative-ai"
+  }
 ];
