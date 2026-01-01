@@ -42,7 +42,7 @@ export const TAGS: Array<{ label: string; key: string }> = [
   },
   {
     label: "旅行",
-    key: "trip"
+    key: "trip",
   },
   {
     label: "フロントエンド",
@@ -54,6 +54,10 @@ export const TAGS: Array<{ label: string; key: string }> = [
   },
   {
     label: "生成AI",
-    key: "generative-ai"
-  }
+    key: "generative-ai",
+  },
+  {
+    label: "探究",
+    key: "inquiry",
+  },
 ];

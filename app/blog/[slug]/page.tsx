@@ -13,11 +13,9 @@ export async function generateStaticParams() {
   }));
 }
 
-export const generateMetadata = async (
-  props: {
-    params: Promise<{ slug: string }>;
-  }
-): Promise<Metadata | undefined> => {
+export const generateMetadata = async (props: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata | undefined> => {
   const params = await props.params;
   const post = await getBlogPost(params.slug);
 
@@ -68,11 +66,9 @@ export const generateMetadata = async (
   };
 };
 
-export default async function BlogPage(
-  props: {
-    params: Promise<{ slug: string }>;
-  }
-) {
+export default async function BlogPage(props: {
+  params: Promise<{ slug: string }>;
+}) {
   const params = await props.params;
   const post = await getBlogPost(params.slug);
 
@@ -99,9 +95,9 @@ export default async function BlogPage(
             </div>
           ) : null}
         </div>
-        <div className="prose custom-prose prose-sm mt-8 text-secondary-950 dark:text-base-100 lg:prose-lg dark:[&_p]:!text-base-50 dark:[&_li]:!text-base-50 dark:[&_strong]:!text-base-50 dark:[&_em]:!text-base-50">
-          <p>{post.metadata.description}</p>
-        </div>
+      </div>
+      <div className="prose custom-prose prose-sm mt-20 text-secondary-950 dark:text-base-100 lg:prose-lg dark:[&_p]:!text-base-50 dark:[&_li]:!text-base-50 dark:[&_strong]:!text-base-50 dark:[&_em]:!text-base-50">
+        <p>{post.metadata.description}</p>
       </div>
       <div className="prose custom-prose prose-sm mt-20 lg:prose-lg prose-p:mb-12 prose-img:rounded-2xl prose-blockquote:border-l-4 prose-blockquote:border-primary-200 prose-blockquote:pl-4 dark:prose-a:text-primary-300 dark:prose-blockquote:border-primary-400/60 dark:prose-pre:bg-base-900 dark:prose-pre:text-base-50 dark:[&_p]:!text-base-50 dark:[&_li]:!text-base-50 dark:[&_strong]:!text-base-50 dark:[&_em]:!text-base-50">
         {post.content({})}
