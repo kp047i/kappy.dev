@@ -80,10 +80,6 @@ export default function RootLayout({
         <Script id="theme-init" strategy="beforeInteractive">
           {themeInitScript}
         </Script>
-        <link
-          href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.9.0/themes/prism-tomorrow.min.css"
-          rel="stylesheet"
-        />
       </head>
       <body
         className={`${noto.className} mx-auto flex min-h-screen max-w-3xl flex-col`}
