@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 import createMDX from "@next/mdx";
 import remarkGfm from "remark-gfm";
-import rehypePrism from "@mapbox/rehype-prism";
+import rehypePrettyCode from "rehype-pretty-code";
 
 const nextConfig = {
   images: {
@@ -14,7 +14,19 @@ const withMDX = createMDX({
   extension: /\.mdx?$/,
   options: {
     remarkPlugins: [remarkGfm],
-    rehypePlugins: [rehypePrism],
+    rehypePlugins: [
+      [
+        rehypePrettyCode,
+        {
+          theme: {
+            light: "github-light",
+            dark: "github-dark",
+          },
+          keepBackground: true,
+          defaultLang: "plaintext",
+        },
+      ],
+    ],
   },
 });
 
