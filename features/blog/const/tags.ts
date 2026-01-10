@@ -60,4 +60,12 @@ export const TAGS: Array<{ label: string; key: string }> = [
     label: "探究",
     key: "inquiry",
   },
+  {
+    label: "自己ケア",
+    key: "self-care",
+  },
+  {
+    label: "リフレーミング",
+    key: "reframing",
+  },
 ];
