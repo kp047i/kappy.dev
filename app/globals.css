@@ -26,11 +26,11 @@ body {
 
   body {
     font-size: theme("fontSize.base");
-    font-weight: theme("fontWeight.medium");
+    font-weight: theme("fontWeight.normal");
     line-height: 1.5;
     letter-spacing: 0.15em;
 
-    @apply transition-colors duration-300 bg-primary-50 text-secondary-950 dark:bg-base-800 dark:text-base-50;
+    @apply transition-colors duration-300 bg-primary-50 text-secondary-950 dark:bg-base-800 dark:text-base-200;
   }
 }
 
@@ -54,13 +54,13 @@ a {
   }
 
   .dark .prose.custom-prose {
-    --tw-prose-body: theme("colors.base.50") !important;
-    --tw-prose-headings: theme("colors.base.50") !important;
-    --tw-prose-bold: theme("colors.base.50") !important;
+    --tw-prose-body: theme("colors.base.200") !important;
+    --tw-prose-headings: theme("colors.base.200") !important;
+    --tw-prose-bold: theme("colors.base.200") !important;
     --tw-prose-links: theme("colors.primary.300") !important;
-    --tw-prose-bullets: theme("colors.base.100") !important;
+    --tw-prose-bullets: theme("colors.base.200") !important;
     --tw-prose-hr: theme("colors.base.700") !important;
-    --tw-prose-quotes: theme("colors.base.100") !important;
+    --tw-prose-quotes: theme("colors.base.200") !important;
     --tw-prose-code: theme("colors.primary.200") !important;
     --tw-prose-th-borders: theme("colors.base.700") !important;
     --tw-prose-td-borders: theme("colors.base.700") !important;

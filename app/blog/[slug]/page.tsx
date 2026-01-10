@@ -79,16 +79,16 @@ export default async function BlogPage(props: {
   return (
     <article>
       <div className="space-y-4">
-        <p className="text-sm text-center opacity-60 dark:text-base-100">
+        <p className="text-sm opacity-60 dark:text-base-100">
           {post.metadata.publishedAt}
         </p>
-        <h1 className="text-center text-2xl font-bold text-secondary-950 dark:text-base-50 lg:text-3xl">
+        <h1 className="text-left text-2xl font-bold text-secondary-950 dark:text-base-50 lg:text-3xl">
           {post.metadata.title}
         </h1>
-        <div className="flex flex-col items-center gap-4">
+        <div className="flex flex-col gap-4">
           <BlogCategory category={post.metadata.category} />
           {post.metadata.tags.length > 0 ? (
-            <div className="flex flex-wrap justify-center gap-2">
+            <div className="flex flex-wrap gap-2">
               {post.metadata.tags.map((tag) => (
                 <BlogTag key={tag} tag={tag} size="md" />
               ))}
@@ -96,10 +96,10 @@ export default async function BlogPage(props: {
           ) : null}
         </div>
       </div>
-      <div className="prose custom-prose prose-sm mt-20 text-secondary-950 dark:text-base-100 lg:prose-lg dark:[&_p]:!text-base-50 dark:[&_li]:!text-base-50 dark:[&_strong]:!text-base-50 dark:[&_em]:!text-base-50">
+      <div className="prose custom-prose prose-sm mt-20 text-secondary-950 dark:text-base-100 lg:prose-lg dark:[&_p]:!text-base-200 dark:[&_li]:!text-base-200 dark:[&_strong]:!text-base-200 dark:[&_em]:!text-base-200">
         <p>{post.metadata.description}</p>
       </div>
-      <div className="prose custom-prose prose-sm mt-20 lg:prose-lg prose-p:mb-12 prose-img:rounded-2xl prose-blockquote:border-l-4 prose-blockquote:border-primary-200 prose-blockquote:pl-4 dark:prose-a:text-primary-300 dark:prose-blockquote:border-primary-400/60 dark:prose-pre:bg-base-900 dark:prose-pre:text-base-50 dark:[&_p]:!text-base-50 dark:[&_li]:!text-base-50 dark:[&_strong]:!text-base-50 dark:[&_em]:!text-base-50">
+      <div className="prose custom-prose prose-sm mt-20 lg:prose-lg prose-p:mb-12 prose-img:rounded-2xl prose-blockquote:border-l-4 prose-blockquote:border-primary-200 prose-blockquote:pl-4 dark:prose-a:text-primary-300 dark:prose-blockquote:border-primary-400/60 dark:prose-pre:bg-base-900 dark:prose-pre:text-base-50 dark:[&_p]:!text-base-200 dark:[&_li]:!text-base-200 dark:[&_strong]:!text-base-200 dark:[&_em]:!text-base-200">
         {post.content({})}
       </div>
     </article>

@@ -10,7 +10,7 @@ import { Footer } from "../components/Footer/Footer";
 import { Header } from "../components/Header/Header";
 import { ThemeToggle } from "../components/ThemeToggle/ThemeToggle";
 
-const noto = Noto_Sans_JP({ weight: ["500", "700"], subsets: ["latin"] });
+const noto = Noto_Sans_JP({ weight: ["400", "500", "700"], subsets: ["latin"] });
 
 const themeInitScript = `
 (function () {
