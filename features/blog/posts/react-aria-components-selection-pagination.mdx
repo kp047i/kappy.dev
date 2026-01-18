@@ -1,0 +1,84 @@
+import { ReactAriaExampleTable } from "../components/ReactAriaExampleTable/ReactAriaExampleTable";
+
+export const metadata = {
+  title: "React Aria ComponentsでSelectionとPaginationでハマらないようにするためのポイント",
+  slug: "react-aria-components-selection-pagination",
+  publishedAt: "2026-01-18",
+  tags: ["react", "react-aria"],
+  category: "tech",
+  emoji: "🎲",
+};
+
+[React Aria Components](https://react-aria.adobe.com/)は、アクセシビリティを重要視して設計されたHeadless UIライブラリです。
+Design Systemを自前で構築したい場合や、大規模アプリケーションでは非常に強力な選択肢になります。
+
+しかし、実際にReact Ariaを採用し、使ううえで気をつけておいたほうが良いポイントがあります。
+
+それがSelectionとページネーションの統合です。
+
+## SelectionはSetではなく'all'になることがある
+
+React AriaのSelection型は次のように定義されています。
+
+``` typescript
+type Selection = 'all' | Set<Key>;
+```
+
+- 行を個別に選ぶ → ```Set<Key>```
+- よくある「全選択」のチェックボックスを押す → 'all'
+
+React Ariaは、全行のIDをSetに詰めることはしません。
+概念的に「すべて選ばれている」という状態を 'all' で表現します。
+
+これは、大量データや未ロードデータを想定した合理的な設計ですが、
+Paginationと組み合わさると急に話がややこしくなります。
+
+## ページネーションの全件選択時のメンタルモデル
+
+ページネーション付きテーブルにおける「全選択」の挙動には、主に2つのUXパターンが存在します。
+
+- 現在のページのみ選択
+  - ヘッダーのチェックボックスを押すと、現在表示されているページ（例：50件）のみが選択されます。
+- データセット全体の選択
+  - ヘッダーのチェックボックスを押すと、読み込まれていないも含めデータセット全体が選択されます。
+
+## React Ariaの全件選択
+
+React AriaにおけるSelectionの'all'はデータセット全体の選択をするという思想になっています。
+
+> Some components support a checkbox to select all items in the collection, or a keyboard shortcut like ⌘ Cmd + A. This represents a selection of all items in the collection, regardless of whether or not all items have been loaded from the network. For example, when using a component with infinite scrolling support, the user will be unaware that all items are not yet loaded because it loads more transparently to them as they scroll down. For this reason, it makes sense for select all to represent all items, not just the loaded ones.
+
+つまり「全選択」は、画面にすでに読み込まれている項目だけでなく、未読込の項目も含めたすべての項目を対象にすべきだということです。
+無限スクロールのように、未読込の項目がユーザーに意識されないUIでは、ユーザーの期待としても『全選択＝存在する全件』になるため、その挙動が合理的だ、という主張をしています。
+
+[Selection – V3](https://react-spectrum.adobe.com/v3/selection.html#select-all)
+
+下のテーブルはReact AriaのTableコンポーネントのサンプルです。全件選択した状態でページを移動すると全件選択が保持されていることがわかると思います。
+
+<ReactAriaExampleTable />
+
+## 実装パターン
+
+私が考えている実装パターンとしては2つあると思います。
+
+### React Ariaのデータセット全体の選択にそのまま則る
+
+このパターンだと、全件選択されたら別ページのデータも選択するようになります。React Ariaの挙動に従うのでコードをカスタマイズすることが減ります。
+
+ただ、例えば、ユーザーがそのページのデータだけ消したかったのに、すべて消してしまう可能性があるため、全体が何件あり何件選択されているかを明示的に表示したほうが良いです。
+
+また、APIもIDの配列だけでなく全件選択されているという情報から処理を行うように設計する必要もあるかもしれません。
+
+### ページ内のみ選択する
+
+このパターンだと、ページ内のみ選択するようになります。Gmailのようなパターンです。
+
+こちらのパターンに慣れているユーザーのほうがもしかしたら多いのかなと思いますが、全件選択されたときの挙動を自分たちでカスタマイズする必要があります。
+また、その際にページネーションをまたいだ選択維持についても考慮する必要があるため、このあたりは事前に検討しておく必要があります。
+
+## まとめ
+
+React Ariaはアクセシビリティにもかなり配慮されているため、すごく便利なライブラリです。ただ、以下のようなことは検討が必要です。
+
+- 全件選択はページ内のみ選択するか、データセット全体を選択するか
+- ページネーションをまたいだ選択維持を行うか
