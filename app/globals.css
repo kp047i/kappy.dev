@@ -77,7 +77,7 @@ a {
 
   .dark .prose pre {
     background-color: var(--shiki-dark-bg, theme("colors.base.800")) !important;
-    border-color: theme("colors.base.700");
+    border: 1px solid theme("colors.base.700");
   }
 
   .prose pre code {
