@@ -41,9 +41,9 @@ a {
 
 @layer components {
   .prose.custom-prose {
-    --tw-prose-body: theme("colors.base.900") !important;
+    --tw-prose-body: theme("colors.base.800") !important;
     --tw-prose-headings: theme("colors.secondary.950") !important;
-    --tw-prose-bold: theme("colors.base.900") !important;
+    --tw-prose-bold: theme("colors.base.800") !important;
     --tw-prose-links: theme("colors.primary.700") !important;
     --tw-prose-bullets: theme("colors.base.800") !important;
     --tw-prose-hr: theme("colors.secondary.200") !important;
@@ -71,26 +71,34 @@ a {
     @apply rounded-lg;
 
     /* rehype-pretty-code のインラインスタイルを尊重 */
-    background-color: var(--shiki-light-bg) !important;
+    background-color: var(--shiki-light-bg, theme("colors.base.50")) !important;
+    border: 1px solid theme("colors.secondary.100");
   }
 
   .dark .prose pre {
-    background-color: var(--shiki-dark-bg) !important;
+    background-color: var(--shiki-dark-bg, theme("colors.base.800")) !important;
+    border-color: theme("colors.base.700");
   }
 
   .prose pre code {
     @apply block overflow-x-auto;
 
+    color: theme("colors.base.800");
     background: transparent !important;
   }
 
-  /* rehype-pretty-code が生成する span の色を適用 */
-  .prose pre code span {
-    color: var(--shiki-light) !important;
+  .dark .prose pre code {
+    color: theme("colors.base.200");
   }
 
-  .dark .prose pre code span {
-    color: var(--shiki-dark) !important;
+
+  /* Prism系の記号トークンが薄い場合の補正 */
+  .prose pre code .token.punctuation {
+    color: theme("colors.base.800");
+  }
+
+  .dark .prose pre code .token.punctuation {
+    color: theme("colors.base.200");
   }
 
   .prose pre code[data-line-numbers] {
@@ -123,7 +131,7 @@ a {
   }
 
   .prose pre code > [data-highlighted-line] {
-    @apply bg-primary-100 dark:bg-primary-900/30;
+    @apply bg-primary-100 dark:bg-primary-800/30;
   }
 
   .prose pre code > [data-highlighted-chars] {
