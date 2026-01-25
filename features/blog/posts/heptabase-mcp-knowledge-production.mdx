@@ -1,0 +1,96 @@
+import { ContentLinkCard } from "../components/ContentLinkCard/ContentLinkCard";
+export const metadata = {
+  title: "Heptabase MCPを活用した知的生産",
+  description:
+    "AIで調べたことや対話したことをジャーナルに溜め、概念抽出→カード化→関連探索→ホワイトボード整理→執筆まで回す流れをまとめました。",
+  slug: "heptabase-mcp-knowledge-production",
+  publishedAt: "2026-01-25",
+  tags: ["heptabase", "mcp"],
+  category: "tech",
+  emoji: "🧭",
+};
+
+## はじめに
+
+### Heptabaseとは
+
+Heptabaseは、「学習と研究」に特化した視覚的ノートアプリです。 最大の特徴は、付箋のような「カード」を「ホワイトボード」に配置して、情報の関係性を可視化できる点にあります。
+
+[Heptabase](https://heptabase.com/)
+
+詳しくは以下の記事をご覧ください。
+
+<ContentLinkCard url="https://qiita.com/YUM_3/items/7d656e175302ee0a1142" />
+
+## Heptabase MCPとは
+
+Heptabaseの[MCP(Model Context Protocol)](https://modelcontextprotocol.io/docs/getting-started/intro)は、ChatGPT や Claude などの外部 AI サービスが単なるチャット相手にとどまらず、Heptabaseスペース内のノートやホワイトボードを直接読み取り・検索・書き込みできるようになります。その結果としてAIとのやり取りや思考の過程を自然にHeptabaseに蓄積して長期的なナレッジに変換できます。
+
+### なぜMCPを使うのか
+
+Heptabase内にもチャット機能がありますが、プレミアムプランでないと制限があったり、自分でAPIキーを発行する必要があります。ただでさえHeptabaseは有料なので、すでにChatGPTやClaudeを使っている人にとっては、AIに2重に課金するのは気が引けてしまいます。
+
+そこでMCPを使うことで、すでに活用しているAIツールでHeptabaseの内容を読み書きできます！
+
+※ChatGPTとの接続にはPersonal Plusプラン以上が必要です（Team Planは対象外）
+
+<ContentLinkCard url="https://support.heptabase.com/en/articles/12679581-how-to-use-heptabase-mcp" />
+
+### Heptabase MCPでできること
+
+一部のHeptabase MCPの機能を紹介します。
+
+#### append_to_journal
+
+- 今日のジャーナル（日記）に情報を追加
+- ジャーナルがない場合は作成
+- 一日の振り返りとかをジャーナルに書き込むことができる
+
+#### save_to_note_card
+
+- AIの回答や会話を新しいカードとして保存
+
+#### get_journal_range
+
+- 特定の期間のジャーナルをまとめて確認
+- 開始日と終了日を指定できる
+- 1回のリクエストで約3ヶ月分対応可能
+
+#### search_whiteboards
+
+- ホワイトボードを名前やキーワードで検索できる
+- ホワイトボードの内のカードがどのように配置されているかという文脈を持たせられる
+
+#### semantic_search_objects
+
+- 過去に書いた内容を検索できる
+- キーワード検索とセマンティック検索で関連するオブジェクトを見つけ出せる
+
+
+## Heptabase MCPを活用した知的生産サイクル
+
+### 1. ジャーナルに情報やアイデアの蓄積
+
+ここがなんだかんだ難しいところで、癖付いていないとなかなかメモするみたいなことができないと思います。ただ、私はChatGPTでDeep Researchさせたり、記事の内容をまとめてもらったり、振り返りをすることが多いので、一日の終りにそれらを`append_to_journal`でジャーナルに書き込んでいます。
+
+
+
+### 2. 1日や1週間の終わりにジャーナルにメモした内容からカードを作成
+
+`get_journal_range`で一日や一週間のジャーナルをまとめて確認できるので、それらをもとにカードを作成します。ChatGPTに概念ごとにまとめてもらったり、自分の意見を抽出してそれらを`save_to_note_card`でカードとして保存します。
+
+### 3. カードをホワイトボードに配置
+
+`search_whiteboards`でホワイトボードを検索できるので、それらをもとにカードを配置します。
+
+カードを配置するときは既存で配置しているカードとの関係性を意識しながら配置することで、より理解を深めることができます。
+
+### 4. 自分の考えやカードを元に記事を書く
+
+ジャーナルからまとめた自分の考えや、カードから抽出した自分の意見を元に記事を書きます。
+
+![Heptabase MCPを活用した知的生産サイクル](/heptabase-mcp-knowledge-production/cycle.png)
+
+## まとめ
+
+Heptabase MCPを活用した知的生産サイクルをまとめました。これらのサイクルを繰り返すことで、アウトプットに繋がったり、自分の考えを整理することができます。今まではAIに調査してもらったことをメモしたりカード化するのが大変だったのですがMCPを使うことで、すごく体験が良くなりました。気になった方はぜひ試してみてください！

@@ -68,4 +68,12 @@ export const TAGS: Array<{ label: string; key: string }> = [
     label: "リフレーミング",
     key: "reframing",
   },
+  {
+    label: "Heptabase",
+    key: "heptabase",
+  },
+  {
+    label: "MCP",
+    key: "mcp",
+  },
 ];
