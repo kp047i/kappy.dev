@@ -24,8 +24,15 @@ export async function ContentLinkCard({ url }: { url: string }) {
   const titleMatch = html.match(/<title[^>]*>([^<]*)<\/title>/i);
   const title = titleMatch?.[1]?.trim();
 
-  const image =
+  const imageRaw =
     extractMetaContent(html, "og:image") ?? extractMetaContent(html, "twitter:image");
+
+  // HTMLエンティティをデコード（&amp; -> &, &quot; -> " など）
+  const image = imageRaw
+    ?.replace(/&amp;/g, "&")
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">");
 
   const shortUrl = new URL(url).hostname;
 
@@ -47,7 +54,7 @@ export async function ContentLinkCard({ url }: { url: string }) {
         <p className="text-sm font-semibold text-secondary-950 transition-colors group-hover:text-secondary-900 dark:text-base-50 dark:group-hover:text-base-100">
           {title}
         </p>
-        <p className="text-xs font-medium uppercase tracking-[0.2em] text-secondary-500 transition-colors group-hover:text-secondary-600 dark:text-base-200 dark:group-hover:text-base-100">
+        <p className="text-xs font-medium tracking-[0.2em] text-secondary-500 transition-colors group-hover:text-secondary-600 dark:text-base-200 dark:group-hover:text-base-100">
           {shortUrl}
         </p>
       </div>
