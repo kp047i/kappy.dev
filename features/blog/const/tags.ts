@@ -76,4 +76,12 @@ export const TAGS: Array<{ label: string; key: string }> = [
     label: "MCP",
     key: "mcp",
   },
+  {
+    label: "oxfmt",
+    key: "oxfmt",
+  },
+  {
+    label: "Emacs",
+    key: "emacs",
+  },
 ];

@@ -1,0 +1,55 @@
+import { ContentLinkCard } from "../components/ContentLinkCard/ContentLinkCard";
+
+export const metadata = {
+  title: "Oxc製の爆速フォーマッタ「oxfmt」をEmacsに導入する",
+  description:
+    "oxfmtとApheleiaでEmacsの保存時整形を実現したときのメモです。",
+  slug: "emacs-oxfmt-apheleia-format-on-save",
+  publishedAt: "2026-02-01",
+  tags: ["emacs", "oxfmt"],
+  category: "tech",
+  emoji: "⚡️",
+};
+
+JavaScript/TypeScriptの開発で、Prettierの「Format on Save（保存時整形）」はもはや必須だと思っています。
+
+今回は、Rust製のフォーマッタ「oxfmt」をEmacsに導入した設定を紹介します。
+
+## oxfmtとは？
+
+[oxfmt](https://github.com/oxc-project/oxfmt)は、Oxcプロジェクトが開発しているPrettier互換のフォーマッタです。
+
+公式ベンチマークでは、特定条件下で Prettier より大幅に高速な結果が示されており、保存時整形の体感待ち時間を大きく減らせると思われます。
+
+> Our benchmarks show Oxfmt to be approximately 30x faster than Prettier and 2x faster than Biome.
+
+## ツールのインストール
+
+`oxfmt`をグローバルにインストールします。
+
+```bash
+npm install -g oxfmt
+```
+
+## Emacs側の設定
+
+[apheleia](https://github.com/radian-software/apheleia)を使いました。apheleiaにはoxfmtのformatter定義が標準で用意されているので、設定ファイルに以下のように書きます。
+
+```elisp
+(use-package apheleia
+  :ensure t
+  :config
+  (apheleia-global-mode +1)
+  ;; typescript-ts-mode など、使っている各モードにoxfmtを割り当て
+  (setf (alist-get 'typescript-ts-mode apheleia-mode-alist) 'oxfmt)
+  (setf (alist-get 'tsx-ts-mode apheleia-mode-alist) 'oxfmt)
+  (setf (alist-get 'js-mode apheleia-mode-alist) 'oxfmt)
+  (setf (alist-get 'js-json-mode apheleia-mode-alist) 'oxfmt))
+```
+
+私はTypeScript/TSX中心なので上のモードだけ割り当てましたが、必要に応じて追加してください。
+
+
+## まとめ
+
+使ってみた感想としては、Prettier互換なので設定移行のストレスが少なく、速度も速いので、非常におすすめです。
