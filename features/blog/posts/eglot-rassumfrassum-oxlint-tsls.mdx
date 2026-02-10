@@ -1,0 +1,73 @@
+export const metadata = {
+  title:
+    "emacsでoxlintとTSLSを共存させる",
+  description:
+    "EglotでTSLSとoxlintを同時に使うために、LSPマルチプレクサ「rassumfrassum」を導入した設定メモです。",
+  slug: "eglot-rassumfrassum-oxlint-tsls",
+  publishedAt: "2026-02-09",
+  tags: ["emacs", "eglot", "oxlint"],
+  category: "tech",
+  emoji: "🔀",
+};
+
+Emacs 29から標準搭載されたLSPクライアント「Eglot」はシンプルで軽量、設定も最小限で済む優れたパッケージですが、惜しいなと思う一つの制限があります。
+
+**1つのバッファに1つのLSPサーバーしか接続できない**ことです。
+
+型チェックは typescript-language-server（TSLS）でやりながら、診断はoxlint 等のlinterを使いたい場合の方法を解説します。
+
+## LSPマルチプレクサ「rassumfrassum」とは
+
+[rassumfrassum](https://github.com/joaotavora/rassumfrassum)は、Eglotの作者である João Távora 氏が開発しているLSPマルチプレクサです。
+
+複数のLSPサーバーを束ねて、Eglotからは**1つのサーバーに見える**ようにプロキシしてくれます。これにより、補完も型チェックもリントも、すべて1つの接続で完結させられます。
+
+## セットアップ
+
+Python環境が必要なので `pip` でインストールします。
+
+```bash
+pip install rassumfrassum
+```
+
+### トラブルシューティング：RelativePatternエラー
+
+初期設定中、以下のエラーでクラッシュすることがありました。（emacs 29.4）
+
+```
+wrong-type-argument char-or-string-p (:baseUri "..." :pattern "**/.oxlintrc.json")
+```
+
+これは oxlint が送る最新のファイル監視仕様（`RelativePattern`）に、古いEglotが対応できていないことが原因です。
+
+解決策は簡単で、**Eglotを最新版（ELPA版など）にアップデートする**だけです。これで新しい仕様を正しく解釈できるようになります。
+
+## Emacs設定（leaf.elベース）
+
+`init.el` の設定例です。`rass` コマンドを経由して、`--` で区切りながら2つのサーバーを並べて記述します。
+
+```elisp
+(leaf eglot
+  :ensure t
+  :hook ((typescript-ts-mode . eglot-ensure)
+         (tsx-ts-mode . eglot-ensure)
+         (js-mode . eglot-ensure))
+  :config
+  (with-eval-after-load 'eglot
+    (add-to-list 'eglot-server-programs
+                 '((typescript-ts-mode tsx-ts-mode js-mode) .
+                   ("rass" "--"
+                    "typescript-language-server" "--stdio"
+                    "--"
+                    "oxlint" "--lsp")))))
+```
+
+rassumfrassumがこれらを別々のプロセスとして起動し、レスポンスをマージしてEglotに返してくれます。
+
+![emacs上でTSLSとoxlintを共存させた様子](/eglot-rassumfrassum-oxlint-tsls/emacs.png)
+
+## まとめ
+
+oxlintの診断速度はESLintよりも速いことが多く、これがTSLSの堅牢な型チェックと共存することで、開発中のフィードバックループが劇的に速くなります。
+
+Eglotの「1サーバー制限」に悩まされていた方は、ぜひこの「マルチプレクサ」構成を試してみてください。

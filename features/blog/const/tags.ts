@@ -84,4 +84,12 @@ export const TAGS: Array<{ label: string; key: string }> = [
     label: "Emacs",
     key: "emacs",
   },
+  {
+    label: "Eglot",
+    key: "eglot",
+  },
+  {
+    label: "oxlint",
+    key: "oxlint",
+  },
 ];
