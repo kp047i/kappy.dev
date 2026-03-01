@@ -3,7 +3,6 @@ import "../app/globals.css";
 import type { Decorator, Preview } from "@storybook/nextjs-vite";
 import { ThemeProvider, useTheme } from "next-themes";
 import React, { useEffect } from "react";
-import type { ReactNode } from "react";
 
 const withThemeProvider: Decorator = (Story, context) => {
   const theme = context.globals.theme as "light" | "dark";

@@ -1,7 +1,5 @@
 /** @type {import('next').NextConfig} */
 import createMDX from "@next/mdx";
-import remarkGfm from "remark-gfm";
-import rehypePrettyCode from "rehype-pretty-code";
 
 const nextConfig = {
   images: {
@@ -13,10 +11,11 @@ const nextConfig = {
 const withMDX = createMDX({
   extension: /\.mdx?$/,
   options: {
-    remarkPlugins: [remarkGfm],
+    // Next.js 16 + Turbopack requires serializable plugin config (use package names, not imported functions).
+    remarkPlugins: ["remark-gfm"],
     rehypePlugins: [
       [
-        rehypePrettyCode,
+        "rehype-pretty-code",
         {
           theme: {
             light: "github-light",
