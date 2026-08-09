@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ImageResponse } from "next/og";
 
 import { getBlogPost } from "@/features/blog/utils";
@@ -81,10 +82,11 @@ export async function GET(
           }}
         >
           kappy.dev
-          <img
+          <Image
             width={40}
             height={40}
             src="https://res.cloudinary.com/dlibdyano/image/upload/v1675685454/kp047i/avator.png"
+            alt="kappy's avatar"
             style={{
               borderRadius: "50%",
             }}
