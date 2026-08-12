@@ -6,6 +6,7 @@ const nextConfig = {
     unoptimized: true,
   },
   pageExtensions: ["tsx", "mdx", "ts"],
+  reactCompiler: true,
 };
 
 const withMDX = createMDX({
