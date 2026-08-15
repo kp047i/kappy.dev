@@ -122,7 +122,7 @@ function SelectionCheckbox({ label, ...props }: SelectionCheckboxProps) {
       aria-label={label}
       {...props}
       className={({ isDisabled }) =>
-        clsx("group inline-flex items-center justify-center not-prose", {
+        clsx("not-prose group inline-flex items-center justify-center", {
           "opacity-40": isDisabled,
         })
       }
@@ -181,11 +181,12 @@ export function ReactAriaExampleTable() {
     <section className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="space-y-1 text-sm text-secondary-900 dark:text-base-100">
-          <p className="font-semibold not-prose">
+          <p className="not-prose font-semibold">
             選択中:{" "}
-            {selectedKeys === "all" ? EXAMPLE_ROWS.length : selectedKeys.size} / {EXAMPLE_ROWS.length}件
+            {selectedKeys === "all" ? EXAMPLE_ROWS.length : selectedKeys.size} /{" "}
+            {EXAMPLE_ROWS.length}件
           </p>
-          <p className="text-xs text-secondary-700 dark:text-base-300 not-prose">
+          <p className="dark:text-base-300 not-prose text-xs text-secondary-700">
             このページ: {selectedInPageCount} / {currentPageIds.length}件
           </p>
         </div>
@@ -203,7 +204,7 @@ export function ReactAriaExampleTable() {
           >
             前へ
           </button>
-          <span className="px-2 text-secondary-700 dark:text-base-200 not-prose">
+          <span className="not-prose px-2 text-secondary-700 dark:text-base-200">
             {currentPage} / {totalPages} ページ
           </span>
           <button
@@ -243,25 +244,22 @@ export function ReactAriaExampleTable() {
           className="w-full min-w-[720px] border-separate border-spacing-0 text-left"
         >
           <TableHeader>
-            <Column className="w-12 border-b border-secondary-200 px-3 py-3 text-secondary-700 dark:border-base-700 dark:text-base-300 not-prose">
-              <SelectionCheckbox
-                slot="selection"
-                label="全件を選択"
-              />
+            <Column className="dark:text-base-300 not-prose w-12 border-b border-secondary-200 px-3 py-3 text-secondary-700 dark:border-base-700">
+              <SelectionCheckbox slot="selection" label="全件を選択" />
             </Column>
             <Column
               isRowHeader
-              className="border-b border-secondary-200 px-3 py-3 text-xs font-semibold text-secondary-700 dark:border-base-700 dark:text-base-300 not-prose"
+              className="dark:text-base-300 not-prose border-b border-secondary-200 px-3 py-3 text-xs font-semibold text-secondary-700 dark:border-base-700"
             >
               タイトル
             </Column>
-            <Column className="border-b border-secondary-200 px-3 py-3 text-xs font-semibold text-secondary-700 dark:border-base-700 dark:text-base-300 not-prose">
+            <Column className="dark:text-base-300 not-prose border-b border-secondary-200 px-3 py-3 text-xs font-semibold text-secondary-700 dark:border-base-700">
               担当
             </Column>
-            <Column className="border-b border-secondary-200 px-3 py-3 text-xs font-semibold text-secondary-700 dark:border-base-700 dark:text-base-300 not-prose">
+            <Column className="dark:text-base-300 not-prose border-b border-secondary-200 px-3 py-3 text-xs font-semibold text-secondary-700 dark:border-base-700">
               状態
             </Column>
-            <Column className="border-b border-secondary-200 px-3 py-3 text-xs font-semibold text-secondary-700 dark:border-base-700 dark:text-base-300 not-prose">
+            <Column className="dark:text-base-300 not-prose border-b border-secondary-200 px-3 py-3 text-xs font-semibold text-secondary-700 dark:border-base-700">
               更新日
             </Column>
           </TableHeader>
@@ -277,22 +275,22 @@ export function ReactAriaExampleTable() {
                   "dark:data-[selected]:bg-primary-900/30"
                 )}
               >
-                <Cell className="w-12 border-t border-secondary-100 px-3 py-2 dark:border-base-700 not-prose">
+                <Cell className="not-prose w-12 border-t border-secondary-100 px-3 py-2 dark:border-base-700">
                   <SelectionCheckbox
                     slot="selection"
                     label={`${item.title} を選択`}
                   />
                 </Cell>
-                <Cell className="border-t border-secondary-100 px-3 py-2 text-sm font-medium text-secondary-950 dark:border-base-700 dark:text-base-100 not-prose">
+                <Cell className="not-prose border-t border-secondary-100 px-3 py-2 text-sm font-medium text-secondary-950 dark:border-base-700 dark:text-base-100">
                   {item.title}
                 </Cell>
-                <Cell className="border-t border-secondary-100 px-3 py-2 text-sm text-secondary-800 dark:border-base-700 dark:text-base-200 not-prose">
+                <Cell className="not-prose border-t border-secondary-100 px-3 py-2 text-sm text-secondary-800 dark:border-base-700 dark:text-base-200">
                   {item.owner}
                 </Cell>
-                <Cell className="border-t border-secondary-100 px-3 py-2 text-sm text-secondary-800 dark:border-base-700 dark:text-base-200 not-prose">
+                <Cell className="not-prose border-t border-secondary-100 px-3 py-2 text-sm text-secondary-800 dark:border-base-700 dark:text-base-200">
                   {item.status}
                 </Cell>
-                <Cell className="border-t border-secondary-100 px-3 py-2 text-sm text-secondary-800 dark:border-base-700 dark:text-base-200 not-prose">
+                <Cell className="not-prose border-t border-secondary-100 px-3 py-2 text-sm text-secondary-800 dark:border-base-700 dark:text-base-200">
                   {item.updatedAt}
                 </Cell>
               </Row>

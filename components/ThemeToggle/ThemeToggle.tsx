@@ -19,28 +19,28 @@ export function ThemeToggle() {
 
   if (!mounted) {
     return (
-      <div className="flex gap-1 items-center p-1 rounded-lg opacity-0 dark:border-base-800/60 dark:bg-base-800/60">
-        <span className="w-9 h-9 rounded-md border border-transparent" />
-        <span className="w-9 h-9 rounded-md border border-transparent" />
+      <div className="flex items-center gap-1 rounded-lg p-1 opacity-0 dark:border-base-800/60 dark:bg-base-800/60">
+        <span className="h-9 w-9 rounded-md border border-transparent" />
+        <span className="h-9 w-9 rounded-md border border-transparent" />
       </div>
     );
   }
 
   return (
-    <div className="flex gap-1 items-center p-1 rounded-lg backdrop-blur dark:border-base-800/60 dark:bg-base-800/60">
+    <div className="flex items-center gap-1 rounded-lg p-1 backdrop-blur dark:border-base-800/60 dark:bg-base-800/60">
       <ThemeToggleButton
         label="ライトモードに切り替える"
         isActive={theme === "light"}
         onClick={() => setTheme("light")}
       >
-        <FiSun className="w-4 h-4" />
+        <FiSun className="h-4 w-4" />
       </ThemeToggleButton>
       <ThemeToggleButton
         label="ダークモードに切り替える"
         isActive={theme === "dark"}
         onClick={() => setTheme("dark")}
       >
-        <FiMoon className="w-4 h-4" />
+        <FiMoon className="h-4 w-4" />
       </ThemeToggleButton>
     </div>
   );
@@ -66,7 +66,7 @@ function ThemeToggleButton({
       className={clsx(
         BUTTON_BASE,
         isActive
-          ? "text-white shadow-sm bg-primary-500"
+          ? "bg-primary-500 text-white shadow-sm"
           : "text-base-800 hover:bg-primary-50 hover:text-secondary-950 dark:text-base-100 dark:hover:bg-base-800 dark:hover:text-base-50"
       )}
       aria-pressed={isActive}

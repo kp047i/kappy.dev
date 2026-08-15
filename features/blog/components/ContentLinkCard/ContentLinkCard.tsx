@@ -25,7 +25,8 @@ export async function ContentLinkCard({ url }: { url: string }) {
   const title = titleMatch?.[1]?.trim();
 
   const imageRaw =
-    extractMetaContent(html, "og:image") ?? extractMetaContent(html, "twitter:image");
+    extractMetaContent(html, "og:image") ??
+    extractMetaContent(html, "twitter:image");
 
   // HTMLエンティティをデコード（&amp; -> &, &quot; -> " など）
   const image = imageRaw
@@ -47,7 +48,7 @@ export async function ContentLinkCard({ url }: { url: string }) {
       rel="noopener noreferrer"
       className={clsx(
         cardBaseClass,
-        "border-secondary-100/70 bg-primary-50/80 hover:bg-primary-100 dark:border-base-700/80 dark:bg-base-800/70 dark:hover:border-base-600/80"
+        "dark:hover:border-base-600/80 border-secondary-100/70 bg-primary-50/80 hover:bg-primary-100 dark:border-base-700/80 dark:bg-base-800/70"
       )}
     >
       <div className="flex h-full flex-1 flex-col justify-between gap-3 p-5">

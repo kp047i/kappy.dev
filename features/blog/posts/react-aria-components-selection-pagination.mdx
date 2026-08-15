@@ -22,11 +22,11 @@ Design Systemを自前で構築したい場合や、大規模アプリケーシ�
 
 React AriaのSelection型は次のように定義されています。
 
-``` typescript
+```typescript
 type Selection = 'all' | Set<Key>;
 ```
 
-- 行を個別に選ぶ → ```Set<Key>```
+- 行を個別に選ぶ → `Set<Key>`
 - よくある「全選択」のチェックボックスを押す → 'all'
 
 React Ariaは、全行のIDをSetに詰めることはしません。

@@ -12,15 +12,15 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="space-y-16">
-      <section className="rounded-3xl transition-colors border-secondary-100/60 bg-primary-50/80 dark:border-base-800/50 dark:bg-base-800/70 dark:shadow-none">
+      <section className="rounded-3xl border-secondary-100/60 bg-primary-50/80 transition-colors dark:border-base-800/50 dark:bg-base-800/70 dark:shadow-none">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-12">
-          <figure className="flex flex-col gap-4 items-center mx-auto text-center lg:mx-0 lg:text-left">
+          <figure className="mx-auto flex flex-col items-center gap-4 text-center lg:mx-0 lg:text-left">
             <Image
               src="https://res.cloudinary.com/dlibdyano/image/upload/v1675685454/kp047i/avator.png"
               alt="三浦鷹将（kappy）のポートレート"
               width={160}
               height={160}
-              className="rounded-3xl ring-4 ring-white shadow-md"
+              className="rounded-3xl shadow-md ring-4 ring-white"
               priority
             />
           </figure>
@@ -41,12 +41,12 @@ export default function AboutPage() {
                 {
                   href: "https://x.com/kp047i",
                   label: "X (旧Twitter)",
-                  icon: <FaXTwitter aria-hidden className="w-4 h-4" />,
+                  icon: <FaXTwitter aria-hidden className="h-4 w-4" />,
                 },
                 {
                   href: "https://github.com/kp047i",
                   label: "GitHub",
-                  icon: <FaGithub aria-hidden className="w-4 h-4" />,
+                  icon: <FaGithub aria-hidden className="h-4 w-4" />,
                 },
               ].map((item) => (
                 <a
@@ -54,7 +54,7 @@ export default function AboutPage() {
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex gap-2 justify-center items-center px-4 py-2 text-sm font-medium rounded-full border shadow-sm transition-colors border-primary-200 bg-primary-50 text-primary-900 hover:border-primary-300 hover:bg-primary-100 hover:text-primary-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 dark:border-base-700 dark:bg-base-900 dark:text-base-50 dark:hover:border-primary-300 dark:hover:bg-base-800 dark:hover:text-primary-200"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-primary-200 bg-primary-50 px-4 py-2 text-sm font-medium text-primary-900 shadow-sm transition-colors hover:border-primary-300 hover:bg-primary-100 hover:text-primary-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 dark:border-base-700 dark:bg-base-900 dark:text-base-50 dark:hover:border-primary-300 dark:hover:bg-base-800 dark:hover:text-primary-200"
                 >
                   {item.icon}
                   <span>{item.label}</span>

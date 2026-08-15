@@ -1,40 +1,38 @@
 React Aria Table実装におけるSelection挙動とPagination統合の包括的技術レポート
+
 1. エグゼクティブサマリー
-現代のウェブアプリケーション開発において、データグリッド（Tableコンポーネント）は情報の密度と操作性が求められる中心的なUI要素である。Adobeが提供するReact Ariaは、アクセシビリティ（a11y）と柔軟なカスタマイズ性を最優先した「ヘッドレス（Headless）」なUIプリミティブとして、多くのデザインシステムや大規模アプリケーションで採用が進んでいる。しかし、その「意見を持たない（Unopinionated）」という設計哲学ゆえに、実装者にはアーキテクチャレベルでの深い理解と、複雑な状態管理の設計責任が委ねられている。
-本レポートは、React Ariaを用いてTableコンポーネントを実装する際に、開発者が最も頻繁に直面し、かつ解決が困難な課題である**「Selection（選択機能）の挙動」と「Pagination（ページネーション）の統合」**について、技術的観点から徹底的に分析したものである。特に、React Aria特有の仕様である「Select All（全選択）」時の内部状態（'all'文字列リテラル）と、ユーザーが期待する「ページ内全選択」というメンタルモデルの乖離に着目し、その解決策を提示する。
-分析の結果、React Ariaの標準フックをそのまま利用するだけでは、ページネーションを伴うテーブルにおいて一般的なUX要件（ページを跨ぐ選択の維持、あるいはページ単位での一括選択）を満たすことが困難であることが判明した。本稿では、react-statelyの状態管理ロジックを解剖し、ビジネス要件に応じた3つの実装パターン（Global Select、Page Select、Hybrid）を詳述する。これにより、エンジニアリングチームは予期せぬバグやUXの破綻を防ぎ、アクセシビリティ準拠と高度な機能を両立させた堅牢なデータグリッドを構築することが可能となる。
+   現代のウェブアプリケーション開発において、データグリッド（Tableコンポーネント）は情報の密度と操作性が求められる中心的なUI要素である。Adobeが提供するReact Ariaは、アクセシビリティ（a11y）と柔軟なカスタマイズ性を最優先した「ヘッドレス（Headless）」なUIプリミティブとして、多くのデザインシステムや大規模アプリケーションで採用が進んでいる。しかし、その「意見を持たない（Unopinionated）」という設計哲学ゆえに、実装者にはアーキテクチャレベルでの深い理解と、複雑な状態管理の設計責任が委ねられている。
+   本レポートは、React Ariaを用いてTableコンポーネントを実装する際に、開発者が最も頻繁に直面し、かつ解決が困難な課題である**「Selection（選択機能）の挙動」と「Pagination（ページネーション）の統合」**について、技術的観点から徹底的に分析したものである。特に、React Aria特有の仕様である「Select All（全選択）」時の内部状態（'all'文字列リテラル）と、ユーザーが期待する「ページ内全選択」というメンタルモデルの乖離に着目し、その解決策を提示する。
+   分析の結果、React Ariaの標準フックをそのまま利用するだけでは、ページネーションを伴うテーブルにおいて一般的なUX要件（ページを跨ぐ選択の維持、あるいはページ単位での一括選択）を満たすことが困難であることが判明した。本稿では、react-statelyの状態管理ロジックを解剖し、ビジネス要件に応じた3つの実装パターン（Global Select、Page Select、Hybrid）を詳述する。これにより、エンジニアリングチームは予期せぬバグやUXの破綻を防ぎ、アクセシビリティ準拠と高度な機能を両立させた堅牢なデータグリッドを構築することが可能となる。
 2. React AriaとHeadless UIのアーキテクチャ概論
-2.1 ヘッドレスUIの哲学と責務の分離
-React Ariaを採用する上で最初に理解すべきは、それがMaterial UIやAnt Designのような「完成されたコンポーネントライブラリ」ではないという点である。React Ariaは、UIの見た目（スタイリング）を一切提供せず、機能（Behavior）、アクセシビリティ（Accessibility）、そして状態（State）のみを提供する。
-このアーキテクチャは、以下の3つのレイヤーで構成されている。
-パッケージ
-役割
-責務
-react-stately
-脳（State）
-データの保持、選択状態の管理、コレクションの操作ロジック。UIには依存しない純粋なフック群。
-react-aria
-神経（Behavior）
-ブラウザイベントのハンドリング、ARIA属性の生成、フォーカス管理。DOMプロパティを返すフック群。
-Design System
-皮膚（Render）
-開発者が実装するレイヤー。Tailwind CSSやCSS-in-JSを用いてスタイリングを行い、上記フックを統合する。
+   2.1 ヘッドレスUIの哲学と責務の分離
+   React Ariaを採用する上で最初に理解すべきは、それがMaterial UIやAnt Designのような「完成されたコンポーネントライブラリ」ではないという点である。React Ariaは、UIの見た目（スタイリング）を一切提供せず、機能（Behavior）、アクセシビリティ（Accessibility）、そして状態（State）のみを提供する。
+   このアーキテクチャは、以下の3つのレイヤーで構成されている。
+   パッケージ
+   役割
+   責務
+   react-stately
+   脳（State）
+   データの保持、選択状態の管理、コレクションの操作ロジック。UIには依存しない純粋なフック群。
+   react-aria
+   神経（Behavior）
+   ブラウザイベントのハンドリング、ARIA属性の生成、フォーカス管理。DOMプロパティを返すフック群。
+   Design System
+   皮膚（Render）
+   開発者が実装するレイヤー。Tailwind CSSやCSS-in-JSを用いてスタイリングを行い、上記フックを統合する。
 
 Tableコンポーネントにおいて、この分離は特に重要である。例えば、行がクリックされたときに「選択状態にする」という判断はreact-statelyが行い、その結果として「スクリーンリーダーに選択を通知する」という処理はreact-ariaが担当し、「背景色を青くする」という処理は開発者が実装する。この境界線を理解していないと、状態と表示の不整合が発生しやすくなる 1。
 2.2 Collection Interfaceとデータの抽象化
 React AriaおよびReact Statelyは、テーブルを単なる「配列のリスト」としてではなく、Collectionという抽象化されたインターフェースとして扱う。Collectionは、リスト、ツリー、グリッドなどの反復可能なデータ構造を統一的に扱うための仕組みであり、キーボードナビゲーションやアクセシビリティの基盤となっている。
 useTableStateフックは、渡されたデータ（childrenまたは動的なitems）を解析し、ノード（Node）のグラフとして内部に保持する。このノードには、一意のkeyが割り当てられる。Selection機能は、このkeyの集合（Set）として管理される。
-重要なのは、**「Collectionは現在メモリ上に存在し、レンダリング対象となっているデータセットである」**という点である。クライアントサイドで全てのデータを持っている場合、Collectionは全データと等価である。しかし、サーバーサイドページネーションや無限スクロール（Infinite Scroll）を採用している場合、Collectionは「現在ロードされているデータ（部分集合）」に過ぎない。この「全データ」と「ロード済みデータ（Collection）」の不一致が、後述するSelection問題の根本原因となる 2。
-3. Selection（選択機能）の内部メカニズムと落とし穴
+重要なのは、**「Collectionは現在メモリ上に存在し、レンダリング対象となっているデータセットである」**という点である。クライアントサイドで全てのデータを持っている場合、Collectionは全データと等価である。しかし、サーバーサイドページネーションや無限スクロール（Infinite Scroll）を採用している場合、Collectionは「現在ロードされているデータ（部分集合）」に過ぎない。この「全データ」と「ロード済みデータ（Collection）」の不一致が、後述するSelection問題の根本原因となる 2。3. Selection（選択機能）の内部メカニズムと落とし穴
 React AriaにおけるSelectionは、SelectionManagerというクラスによって管理されており、非常に柔軟かつ強力な機能を持つ一方で、初見の開発者を混乱させる特有の仕様が存在する。
 3.1 Selection Stateの二面性：Set vs String
 通常、複数の項目が選択された状態を管理する場合、開発者は「選択されたIDの配列（Array）」や「IDの集合（Set）」をイメージする。しかし、React AriaのSelection型は以下のように定義されている。
 
 TypeScript
 
-
 type Selection = 'all' | Set<Key>;
-
 
 この定義が示す通り、選択状態には二つのモードが存在する。
 個別選択モード (Set<Key>):
@@ -52,32 +50,28 @@ type Selection = 'all' | Set<Key>;
 
 JavaScript
 
-
 // ❌ 間違った実装例
 const onSelectionChange = (keys) => {
-  // keysが 'all' の場合、Array.from() は失敗するか、意図しない挙動になる
-  const selectedIds = Array.from(keys); 
-  performBulkDelete(selectedIds);
+// keysが 'all' の場合、Array.from() は失敗するか、意図しない挙動になる
+const selectedIds = Array.from(keys);
+performBulkDelete(selectedIds);
 };
-
 
 開発者は必ず、keys === 'all' のケースを分岐処理しなければならない。
 
 JavaScript
 
-
 // ✅ 正しい実装例
 const onSelectionChange = (keys) => {
-  if (keys === 'all') {
-    // 全選択時のロジック（除外リストの管理などが必要になる場合がある）
-    handleSelectAll();
-  } else {
-    // 個別選択時のロジック
-    const selectedIds = Array.from(keys);
-    handleSelection(selectedIds);
-  }
+if (keys === 'all') {
+// 全選択時のロジック（除外リストの管理などが必要になる場合がある）
+handleSelectAll();
+} else {
+// 個別選択時のロジック
+const selectedIds = Array.from(keys);
+handleSelection(selectedIds);
+}
 };
-
 
 3.3 Selection Behavior: Toggle vs Replace
 React Ariaは、選択の挙動に関して2つのパターンを提供している。これはselectionBehaviorプロパティで制御される。
@@ -91,8 +85,7 @@ replace
 クリックすると、以前の選択が解除され、その行のみが選択される。Ctrlキーなどを併用することで複数選択が可能。
 OSのファイルエクスプローラーやデスクトップアプリケーション。マウス操作時のデフォルト（場合による）。
 
-注意点: 一般的な業務システムのデータグリッドでは、各行にチェックボックスを表示し、クリックでON/OFFを切り替える挙動（Toggle）が期待されることが多い。しかし、React Ariaのデフォルト（特にデスクトップ環境）はreplace挙動になることがあるため、明示的にselectionBehavior="toggle"を指定しないと、「行をクリックしたら他の選択が消えた」というバグ報告につながる 6。
-4. PaginationとSelectionの衝突：「All」とは何か？
+注意点: 一般的な業務システムのデータグリッドでは、各行にチェックボックスを表示し、クリックでON/OFFを切り替える挙動（Toggle）が期待されることが多い。しかし、React Ariaのデフォルト（特にデスクトップ環境）はreplace挙動になることがあるため、明示的にselectionBehavior="toggle"を指定しないと、「行をクリックしたら他の選択が消えた」というバグ報告につながる 6。4. PaginationとSelectionの衝突：「All」とは何か？
 「Pagination（ページネーション）」と「Select All（全選択）」を組み合わせたとき、ユーザーのメンタルモデルとReact Ariaのデータモデルの間には決定的な不一致が発生する。これが本レポートの核心部分である。
 4.1 ユーザーの期待値：Gmailパターン vs Dataパターン
 ページネーション付きテーブルにおける「全選択チェックボックス」の挙動には、主に2つのUXパターンが存在する 7。
@@ -123,8 +116,7 @@ onSelectionChangeで'all'が返ってくるため、開発者は「10件（ペ�
 個別選択の場合: selectedKeysにID A, B（1ページ目の項目）が入っていたとする。2ページ目に遷移してデータが K, L に入れ替わったとき、SelectionManagerは「存在しないキー」を選択状態として保持し続けることができるか？
 基本的には保持される（Setの中にキーが残る）。
 しかし、UI上は表示されないため、ユーザーは「自分が何を選択中なのか」を見失うリスクがある。
-また、API設計によっては「存在しないキー」が自動的にクリーンアップされる場合もあるため、selectedKeysの状態をテーブルの外側（親コンポーネントやGlobal State）に持ち上げる（Lift State Up）設計が推奨される 4。
-5. 実装戦略とコードレシピ
+また、API設計によっては「存在しないキー」が自動的にクリーンアップされる場合もあるため、selectedKeysの状態をテーブルの外側（親コンポーネントやGlobal State）に持ち上げる（Lift State Up）設計が推奨される 4。5. 実装戦略とコードレシピ
 上述の課題を解決し、要件に応じたテーブルを実装するための3つの戦略を提示する。
 戦略A：Global Select（Adobe推奨/標準準拠）
 「全選択」＝「データベース上の全件選択」とするパターン。SaaSの管理画面などで、一括削除や一括更新を行いたい場合に適している。
@@ -139,12 +131,11 @@ SelectionManagerは内部的に「全選択モード」かつ「除外キーセ�
 APIペイロード例：
 JSON
 {
-    "action": "delete",
-    "scope": "all_matching_filter",
-    "filter": { "status": "active" },
-    "exclude_ids": ["5", "12"]
+"action": "delete",
+"scope": "all_matching_filter",
+"filter": { "status": "active" },
+"exclude_ids": ["5", "12"]
 }
-
 
 このパターンの欠点は、バックエンドAPIが複雑な「除外ロジック」に対応している必要がある点である 10。
 戦略B：Page Select（ユーザー期待値重視）
@@ -157,7 +148,6 @@ selectedKeysをControlled Componentとして扱い、親コンポーネントで
 ヘッダーセル内に、通常のCheckboxコンポーネントを配置し、そのisSelectedとisIndeterminateを自分で計算する。
 
 TypeScript
-
 
 // 概念実証コード（TypeScript）
 
@@ -173,20 +163,21 @@ const isIndeterminate = selectedInPageCount > 0 && selectedInPageCount < current
 
 // 4. ハンドラーの実装
 const handleSelectPage = () => {
-  const newSelection = new Set(selectedKeys);
-  
-  if (isAllSelected) {
-    // ページ内全解除
-    currentPageIds.forEach(id => newSelection.delete(id));
-  } else {
-    // ページ内全選択（未選択のものだけ追加）
-    currentPageIds.forEach(id => newSelection.add(id));
-  }
-  
-  setSelectedKeys(newSelection);
+const newSelection = new Set(selectedKeys);
+
+if (isAllSelected) {
+// ページ内全解除
+currentPageIds.forEach(id => newSelection.delete(id));
+} else {
+// ページ内全選択（未選択のものだけ追加）
+currentPageIds.forEach(id => newSelection.add(id));
+}
+
+setSelectedKeys(newSelection);
 };
 
 // 5. レンダリング
+
 <Table>
   <TableHeader>
     <Column>
@@ -203,7 +194,6 @@ const handleSelectPage = () => {
   {/*... */}
 </Table>
 
-
 メリットとデメリット
 メリット: ユーザーのメンタルモデルと一致する。APIには常にIDリストを送信すればよいため、バックエンド実装がシンプルになる。
 デメリット: ページ数が多い場合、ユーザーが全ページを手動でめくって選択する必要がある。「全5000件を一括削除」のような機能は別途UI（ボタンなど）を用意する必要がある。また、アクセシビリティ対応（aria-labelなど）を自前で記述する責任が生じる 13。
@@ -214,8 +204,7 @@ const handleSelectPage = () => {
 UI: 「このページの10件が選択されています。データセット内の全1000件を選択する」
 リンクがクリックされたら、selectedKeysを'all'（文字列）に切り替える。
 テーブルのUIは'all'モードに応答し、全行チェック済み表示になる。
-API送信時は、'all'かどうかでペイロード構造を切り替える（戦略Aと同じAPIロジックが必要）。
-6. 技術的詳細：PaginationにおけるStateの永続化と罠
+API送信時は、'all'かどうかでペイロード構造を切り替える（戦略Aと同じAPIロジックが必要）。6. 技術的詳細：PaginationにおけるStateの永続化と罠
 ページネーションの実装において、React StatelyのuseAsyncListを使用する場合と、TanStack Query (React Query) などの外部ライブラリを使用する場合で、注意点が異なる。
 6.1 useAsyncList と Cache Invalidation
 react-statelyのuseAsyncListは、リストデータのロード、ソート、ページネーションを管理する便利なフックである。しかし、これは「表示用データ」の管理に特化している側面が強い。
@@ -234,8 +223,7 @@ P2で2件選択。
 ユーザーは「自分が何を選んだか」を確認する方法がない（現在表示されていないため）。
 この状態で一括操作を実行するのは危険である。
 推奨UIパターン:
-ページを跨ぐ選択を許可する場合は、テーブルの外側に「現在5件選択中（内訳を表示）」というフローティングバーやサマリー表示を実装し、選択済みアイテムのリストを確認・解除できるドロワーなどを提供すべきである。React AriaはこのUIを提供しないため、自前で実装する必要がある。
-7. アクセシビリティ（A11y）への配慮
+ページを跨ぐ選択を許可する場合は、テーブルの外側に「現在5件選択中（内訳を表示）」というフローティングバーやサマリー表示を実装し、選択済みアイテムのリストを確認・解除できるドロワーなどを提供すべきである。React AriaはこのUIを提供しないため、自前で実装する必要がある。7. アクセシビリティ（A11y）への配慮
 React Ariaを採用する最大の動機であるアクセシビリティについても、独自実装を行う際には細心の注意が必要である。
 7.1 スクリーンリーダーへの通知
 Select Allの通知: 標準のuseTableSelectAllCheckboxを使わない場合（戦略B）、チェックボックスに適切なaria-labelを付与する必要がある。単に「Select All」ではなく、「Select all rows on current page（現在のページの行をすべて選択）」のように、範囲を明確にするラベルが望ましい 13。
@@ -244,8 +232,7 @@ Select Allの通知: 標準のuseTableSelectAllCheckboxを使わない場合（�
 しかし、フォーカスしていた行がDOMから消滅するため、明示的にフォーカス管理を行わないとフォーカスロスト（document.bodyへの移動）が発生し、スクリーンリーダーユーザーを迷子にさせるリスクがある。
 React AriaのuseEffectなどで、データロード完了後に適切な要素へフォーカスを戻す処理を検討すべきである。
 7.2 aria-current の活用
-ページネーションコンポーネント自体（番号付きリンクなど）には、現在のページを示すために aria-current="page" 属性を付与することがWAI-ARIAのベストプラクティスである。aria-selected="true" は選択可能なアイテム（タブやグリッドの行）に使われるものであり、ページネーションの現在地表示に使うべきではない 16。
-8. 結論と推奨事項
+ページネーションコンポーネント自体（番号付きリンクなど）には、現在のページを示すために aria-current="page" 属性を付与することがWAI-ARIAのベストプラクティスである。aria-selected="true" は選択可能なアイテム（タブやグリッドの行）に使われるものであり、ページネーションの現在地表示に使うべきではない 16。8. 結論と推奨事項
 React AriaでのTable実装におけるSelectionとPaginationの統合は、単なるプロパティ設定では完了しない高度なアーキテクチャ設計課題である。
 推奨チェックリスト
 要件定義の明確化:
@@ -288,20 +275,18 @@ Selectionモードのステート遷移図（概念）
 
 コード スニペット
 
-
 graph TD
-    A -->|行クリック| B
-    B -->|行クリック| B
-    B -->|全選択クリック| C{実装パターンは?}
-    
+A -->|行クリック| B
+B -->|行クリック| B
+B -->|全選択クリック| C{実装パターンは?}
+
     C -->|戦略A: Default| D[Global All ('all' string)]
     C -->|戦略B: Custom| E
-    
+
     D -->|1行解除| F[Global All with Exclusions]
     E -->|ページ遷移| G
-    
-    G -->|新規ページで全選択| H
 
+    G -->|新規ページで全選択| H
 
 以上。
 引用文献

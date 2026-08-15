@@ -28,11 +28,15 @@ export const Default: Story = {
     const canvas = within(canvasElement);
 
     await expect(canvas.getByText(defaultArgs.metadata.title)).toBeVisible();
-    await expect(canvas.getByText(defaultArgs.metadata.description)).toBeVisible();
+    await expect(
+      canvas.getByText(defaultArgs.metadata.description)
+    ).toBeVisible();
     if (defaultArgs.metadata.emoji) {
       await expect(canvas.getByText(defaultArgs.metadata.emoji)).toBeVisible();
     }
-    await expect(canvas.getByText(defaultArgs.metadata.publishedAt)).toBeVisible();
+    await expect(
+      canvas.getByText(defaultArgs.metadata.publishedAt)
+    ).toBeVisible();
 
     const link = canvas.getByText("続きを読む");
     expect(link).toHaveAttribute("href", `/blog/${defaultArgs.metadata.slug}`);

@@ -14,7 +14,11 @@ const eslintConfig = [
       "import/order": [
         "error",
         {
-          groups: [["builtin", "external"], ["parent", "sibling", "index"], "internal"],
+          groups: [
+            ["builtin", "external"],
+            ["parent", "sibling", "index"],
+            "internal",
+          ],
           "newlines-between": "always",
           alphabetize: {
             order: "asc",

@@ -1,0 +1,15 @@
+# 生成物
+.next
+out
+build
+storybook-static
+coverage
+next-env.d.ts
+
+# テスト成果物
+playwright-report
+blob-report
+test-results
+
+# パッケージマネージャが管理するファイル
+pnpm-lock.yaml

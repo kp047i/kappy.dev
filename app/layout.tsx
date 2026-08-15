@@ -10,7 +10,10 @@ import { Footer } from "../components/Footer/Footer";
 import { Header } from "../components/Header/Header";
 import { ThemeToggle } from "../components/ThemeToggle/ThemeToggle";
 
-const noto = Noto_Sans_JP({ weight: ["400", "500", "700"], subsets: ["latin"] });
+const noto = Noto_Sans_JP({
+  weight: ["400", "500", "700"],
+  subsets: ["latin"],
+});
 
 const themeInitScript = `
 (function () {
@@ -92,7 +95,7 @@ export default function RootLayout({
         >
           <ClientLayout>
             <Header actionSlot={<ThemeToggle />} />
-            <main className="flex flex-col flex-grow gap-12 p-4 my-20">
+            <main className="my-20 flex flex-grow flex-col gap-12 p-4">
               {children}
             </main>
             <Footer />

@@ -13,11 +13,15 @@ Next.js 15 (App Router) + TypeScript + Tailwind CSS で構築された個人ブ�
 ```bash
 pnpm dev              # 開発サーバー起動 (port 3000)
 pnpm build            # 本番ビルド
-pnpm lint             # ESLint (TypeScript + Tailwind クラス順序)
+pnpm lint             # ESLint
+pnpm lint:css         # stylelint
+pnpm typecheck        # tsc --noEmit (build より速いので普段はこちら)
+pnpm format           # Prettier で整形
+pnpm format:check     # 整形済みか検査 (CI と同じ)
 pnpm storybook        # Storybook 起動 (port 6006)
 pnpm test:storybook   # Storybook の Vitest テスト実行
 pnpm test:e2e         # Playwright E2E テスト実行
-pnpm exec prettier --write .  # フォーマット
+pnpm test             # 上記をまとめて実行 (CI 相当)
 ```
 
 ## Architecture
@@ -47,7 +51,9 @@ pnpm exec prettier --write .  # フォーマット
 - TypeScript strict モード
 - インデント: スペース 2 個、ダブルクォート、セミコロンあり、trailing comma (ES5)
 - コンポーネント/ディレクトリ: PascalCase、ヘルパー関数: camelCase、MDX スラッグ: kebab-case
-- Tailwind ユーティリティクラスは Prettier プラグインで自動ソート
+- Tailwind ユーティリティクラスは `prettier-plugin-tailwindcss` で自動ソート
+- MDX だけ `embeddedLanguageFormatting: "off"` を指定している。記事中のコードサンプルは
+  説明用に省略記号を含むことがあり、Tailwind のクラスソートで壊れるため
 - `tailwind.config.js` のカラーパレットトークン (primary/secondary/base/overlay) に従う
 
 ### コメントの書き方

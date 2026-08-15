@@ -35,6 +35,8 @@
       "Bash(pnpm lint)",
       "Bash(pnpm typecheck)",
       "Bash(pnpm lint:css)",
+      "Bash(pnpm format)",
+      "Bash(pnpm format:check)",
       "Bash(pnpm build)",
       "Bash(pnpm build-storybook*)",
       "Bash(pnpm test:storybook*)",

@@ -40,7 +40,9 @@ export default async function BlogListPage(props: {
 
   return (
     <div className="flex flex-col gap-12">
-      <h1 className="text-2xl font-bold text-secondary-950 dark:text-base-50">Blog</h1>
+      <h1 className="text-2xl font-bold text-secondary-950 dark:text-base-50">
+        Blog
+      </h1>
       <div className="space-y-6">
         <BlogCategoryTab selectedCategory={category} selectedTag={tag} />
         <BlogTagList selectedCategory={category} selectedTag={tag} />
