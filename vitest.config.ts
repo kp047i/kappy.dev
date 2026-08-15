@@ -8,13 +8,6 @@ const dirname =
     ? __dirname
     : path.dirname(fileURLToPath(import.meta.url));
 
-// 解決できない `next/config` をスタブに差し替える。
-// 詳細は .storybook/next-config-stub.ts のコメントを参照。
-const nextConfigAlias = {
-  find: /^next\/config$/,
-  replacement: path.join(dirname, ".storybook/next-config-stub.ts"),
-};
-
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
   test: {
@@ -26,9 +19,6 @@ export default defineConfig({
           // See options at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon#storybooktest
           storybookTest({ configDir: path.join(dirname, ".storybook") }),
         ],
-        resolve: {
-          alias: [nextConfigAlias],
-        },
         test: {
           name: "storybook",
           browser: {

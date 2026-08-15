@@ -78,19 +78,14 @@ pnpm exec prettier --write .  # フォーマット
 - `hooks/session-start.sh` — Claude Code on the web のセッション開始時に `pnpm install` と Playwright ブラウザの解決を行う。ローカルの Claude Code では何もしない
 - `settings.json` — 上記フックの登録、Write/Edit 後の prettier 自動整形、頻出コマンド (lint / build / test / git) の権限許可
 
-## Storybook と Next.js 16 の互換パッチ
+## Storybook
 
-`@storybook/nextjs-vite` (9.2.0-alpha 系) は Next.js 16 と噛み合わない箇所が 2 つあり、
-それぞれ暫定対応を入れている。`@storybook/nextjs-vite` 側が修正されたら両方とも削除できる。
-
-- **`next/config` の削除** — Next.js 16 で削除された `next/config` を、
-  `@storybook/nextjs-vite` の preview モジュールが静的 import している。
-  安定版最新の 10.5.8 でも prerelease の 10.6.0-alpha.5 でも未修正なので、
-  Storybook を上げても解決しない。`.storybook/next-config-stub.ts` を用意し、
-  `.storybook/main.ts` の `viteFinal` と `vitest.config.ts` でエイリアスしている
-- **SWC の `disablePageConfig`** — 依存の `vite-plugin-storybook-nextjs` v2 が Next.js 16 の
-  SWC が受け付けないオプションを渡す。v3.3.2 で修正済みかつ peer は Storybook 9 系も
-  許容するため、`package.json` の `pnpm.overrides` で v3 系に固定して回避している
+- Storybook 10 系を使う。Next.js 16 対応は 10 系で入っており、9 系では
+  `next/config` の解決エラーと SWC の `disablePageConfig` で
+  `build-storybook` / `test:storybook` が動かない
+- `pnpm test:storybook` は `@storybook/addon-vitest` (Vitest browser mode) で走る。
+  `.storybook/test-runner.ts` と `scripts/test-storybook.mjs` は旧テストランナーの
+  残骸で、どの npm script からも参照されていない
 
 <!-- BEGIN:nextjs-agent-rules -->
 
