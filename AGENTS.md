@@ -1,4 +1,4 @@
-#  Repository Guidelines
+# Repository Guidelines
 
 ## Language
 
@@ -50,6 +50,12 @@ pnpm exec prettier --write .  # フォーマット
 - Tailwind ユーティリティクラスは Prettier プラグインで自動ソート
 - `tailwind.config.js` のカラーパレットトークン (primary/secondary/base/overlay) に従う
 
+### コメントの書き方
+
+- コードコメントには、そのコードが何をしているかを書く
+- 「特定バージョンで削除された API」「ライブラリ側がまだ未対応」といった、時間が経つと古くなる外部事情はコードコメントに書かない。バージョン番号や依存パッケージの対応状況は AGENTS.md 側にまとめ、コメントからはそちらを参照させる
+- 「上流」「本家」のような曖昧な指示語は使わず、対象のパッケージ名やリポジトリを具体的に書く
+
 ## Commit Convention
 
 `type(scope): summary` 形式 (例: `feat(blog): 新しい記事を追加`, `fix(ui): ダークモード修正`)
@@ -75,13 +81,16 @@ pnpm exec prettier --write .  # フォーマット
 ## Storybook と Next.js 16 の互換パッチ
 
 `@storybook/nextjs-vite` (9.2.0-alpha 系) は Next.js 16 と噛み合わない箇所が 2 つあり、
-それぞれ暫定対応を入れている。上流が直ったら両方とも削除できる。
+それぞれ暫定対応を入れている。`@storybook/nextjs-vite` 側が修正されたら両方とも削除できる。
 
-- **`next/config` の削除** — Storybook の preview モジュールが削除済みの `next/config` を
-  静的 import している (10.6.0-alpha 時点でも未修正)。`.storybook/next-config-stub.ts` を
-  用意し、`.storybook/main.ts` の `viteFinal` と `vitest.config.ts` でエイリアスしている
+- **`next/config` の削除** — Next.js 16 で削除された `next/config` を、
+  `@storybook/nextjs-vite` の preview モジュールが静的 import している。
+  安定版最新の 10.5.8 でも prerelease の 10.6.0-alpha.5 でも未修正なので、
+  Storybook を上げても解決しない。`.storybook/next-config-stub.ts` を用意し、
+  `.storybook/main.ts` の `viteFinal` と `vitest.config.ts` でエイリアスしている
 - **SWC の `disablePageConfig`** — 依存の `vite-plugin-storybook-nextjs` v2 が Next.js 16 の
-  SWC が受け付けないオプションを渡す。`package.json` の `pnpm.overrides` で v3 系に固定して回避
+  SWC が受け付けないオプションを渡す。v3.3.2 で修正済みかつ peer は Storybook 9 系も
+  許容するため、`package.json` の `pnpm.overrides` で v3 系に固定して回避している
 
 <!-- BEGIN:nextjs-agent-rules -->
 

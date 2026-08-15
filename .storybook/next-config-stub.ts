@@ -1,13 +1,12 @@
 /**
- * Next.js 16 で削除された `next/config` (Runtime Configuration) の代替スタブ。
+ * `next/config` のスタブ。
  *
- * `@storybook/nextjs-vite` は Next.js 16 対応を謳っているものの、内部の
- * preview モジュールが `import { setConfig } from "next/config"` を静的に
- * 残しているため、そのままだと Storybook のビルドと Vitest の依存最適化が
- * 解決エラーで落ちる (10.6.0-alpha 時点でも未修正)。
+ * Storybook のフレームワークパッケージがこのモジュールを静的 import するが、
+ * 使用中の Next.js には存在せず、そのままでは Storybook のビルドと Vitest の
+ * 依存最適化が解決エラーで落ちる。このプロジェクトは Runtime Configuration を
+ * 使っていないため、値を保持するだけの実装で足りる。
  *
- * このプロジェクトは App Router のみで Runtime Configuration を使っていないため、
- * 値を保持するだけの最小実装で十分。上流が修正されたらエイリアスごと削除できる。
+ * 背景と削除条件は AGENTS.md の「Storybook と Next.js 16 の互換パッチ」を参照。
  */
 type RuntimeConfig = Record<string, unknown>;
 

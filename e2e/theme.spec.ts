@@ -50,8 +50,25 @@ test.describe("テーマトグル", () => {
   });
 });
 
+/**
+ * 外部ホストから読み込んだリソース由来のコンソールエラーかどうか。
+ *
+ * 判定できない location (空文字や http 以外のスキーム) はアプリ由来として扱う。
+ * ビルドツールがバンドルに独自スキームの sourceURL を付けた場合でも、
+ * 検出したいエラーを取りこぼさないようにするため。
+ */
+function isExternalResourceError(location: string, origin: string): boolean {
+  if (!location.startsWith("http://") && !location.startsWith("https://")) {
+    return false;
+  }
+  return new URL(location).origin !== origin;
+}
+
 test.describe("ハイドレーション安定性", () => {
-  test("ブログ記事でコンソールエラーが発生しない", async ({ page, baseURL }) => {
+  test("ブログ記事でコンソールエラーが発生しない", async ({
+    page,
+    baseURL,
+  }) => {
     const origin = new URL(baseURL ?? "http://127.0.0.1:3000").origin;
     const errorMessages: string[] = [];
 
@@ -60,11 +77,10 @@ test.describe("ハイドレーション安定性", () => {
         return;
       }
 
-      // 記事ページは Prism の CSS や Cloudinary の画像、Vercel Analytics など
-      // 外部オリジンのリソースを読み込む。これらの取得失敗はハイドレーションとは
-      // 無関係なので検証対象から外し、外部通信ができない環境でも結果を安定させる。
-      const source = message.location().url;
-      if (source && !source.startsWith(origin)) {
+      // 記事ページは外部ホストの CSS・画像・計測スクリプトを読み込む。
+      // その取得失敗はハイドレーションと無関係なので検証対象から外し、
+      // 外部通信ができない環境でも結果が変わらないようにする。
+      if (isExternalResourceError(message.location().url, origin)) {
         return;
       }
 

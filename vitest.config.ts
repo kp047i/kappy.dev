@@ -8,8 +8,8 @@ const dirname =
     ? __dirname
     : path.dirname(fileURLToPath(import.meta.url));
 
-// Next.js 16 で削除された `next/config` を @storybook/nextjs-vite が
-// 静的 import しているため、スタブに差し替える。詳細は下記を参照。
+// 解決できない `next/config` をスタブに差し替える。
+// 詳細は .storybook/next-config-stub.ts のコメントを参照。
 const nextConfigAlias = {
   find: /^next\/config$/,
   replacement: path.join(dirname, ".storybook/next-config-stub.ts"),
