@@ -83,9 +83,12 @@ pnpm exec prettier --write .  # フォーマット
 - Storybook 10 系を使う。Next.js 16 対応は 10 系で入っており、9 系では
   `next/config` の解決エラーと SWC の `disablePageConfig` で
   `build-storybook` / `test:storybook` が動かない
-- `pnpm test:storybook` は `@storybook/addon-vitest` (Vitest browser mode) で走る。
-  `.storybook/test-runner.ts` と `scripts/test-storybook.mjs` は旧テストランナーの
-  残骸で、どの npm script からも参照されていない
+- `pnpm test:storybook` は `@storybook/addon-vitest` (Vitest browser mode) で走る
+- コンポーネントの検証はストーリーの `play` 関数に書く。表示されるテキストや
+  リンク先など、意味のある単位で assert する
+- DOM 全文のスナップショットは採用しない。Tailwind のユーティリティクラスまで
+  含めて記録されるため、スタイルを少し触っただけで差分が出て、中身を読まずに
+  更新されるだけになる。見た目の退行を検出したい場合はビジュアルリグレッションを使う
 
 <!-- BEGIN:nextjs-agent-rules -->
 
