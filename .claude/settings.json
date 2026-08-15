@@ -33,6 +33,8 @@
     "allow": [
       "Bash(pnpm install)",
       "Bash(pnpm lint)",
+      "Bash(pnpm typecheck)",
+      "Bash(pnpm lint:css)",
       "Bash(pnpm build)",
       "Bash(pnpm build-storybook*)",
       "Bash(pnpm test:storybook*)",

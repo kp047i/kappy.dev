@@ -1,13 +1,13 @@
-name: Lint
+name: Build
 
 on:
   pull_request:
 
 jobs:
-  lint:
-    name: Lint
+  build:
+    name: Build
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - name: Install pnpm
@@ -28,9 +28,5 @@ jobs:
             ${{ runner.os }}-pnpm-store-
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      - name: Lint
-        run: pnpm lint
-      - name: Typecheck
-        run: pnpm typecheck
-      - name: Lint CSS
-        run: pnpm lint:css
+      - name: Build
+        run: pnpm build
