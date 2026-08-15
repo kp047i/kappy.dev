@@ -67,6 +67,16 @@ pnpm exec prettier --write .  # フォーマット
 - 画像は `public/blog-images/` に配置
 - 機密情報は `.env.local` に保存 (コミット不可)
 
+## AI エージェント向けセットアップ (`.claude/`)
+
+- `hooks/session-start.sh` — Claude Code on the web のセッション開始時に `pnpm install` と Playwright ブラウザの解決を行う。ローカルの Claude Code では何もしない
+- `settings.json` — 上記フックの登録、Write/Edit 後の prettier 自動整形、頻出コマンド (lint / build / test / git) の権限許可
+
+### 既知の制約
+
+- `pnpm test:storybook` は現状失敗する。`@storybook/nextjs-vite` (9.2.0-alpha 系) が Next.js 16 で削除された `next/config` を import しているため。Storybook の更新が必要
+- `e2e/theme.spec.ts` の「ブログ記事でコンソールエラーが発生しない」は、外部ホスト (`voicy.jp` など) への通信が遮断された環境では失敗する。記事内の外部リンクカードがリソース取得に失敗するのが原因で、コード側の不具合ではない
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 # This is NOT the Next.js you know
