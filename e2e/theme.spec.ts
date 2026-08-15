@@ -51,12 +51,24 @@ test.describe("テーマトグル", () => {
 });
 
 test.describe("ハイドレーション安定性", () => {
-  test("ブログ記事でコンソールエラーが発生しない", async ({ page }) => {
+  test("ブログ記事でコンソールエラーが発生しない", async ({ page, baseURL }) => {
+    const origin = new URL(baseURL ?? "http://127.0.0.1:3000").origin;
     const errorMessages: string[] = [];
+
     page.on("console", (message) => {
-      if (message.type() === "error") {
-        errorMessages.push(message.text());
+      if (message.type() !== "error") {
+        return;
       }
+
+      // 記事ページは Prism の CSS や Cloudinary の画像、Vercel Analytics など
+      // 外部オリジンのリソースを読み込む。これらの取得失敗はハイドレーションとは
+      // 無関係なので検証対象から外し、外部通信ができない環境でも結果を安定させる。
+      const source = message.location().url;
+      if (source && !source.startsWith(origin)) {
+        return;
+      }
+
+      errorMessages.push(message.text());
     });
 
     await page.goto("/blog/explore-theme-trip");

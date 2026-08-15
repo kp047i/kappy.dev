@@ -72,10 +72,16 @@ pnpm exec prettier --write .  # フォーマット
 - `hooks/session-start.sh` — Claude Code on the web のセッション開始時に `pnpm install` と Playwright ブラウザの解決を行う。ローカルの Claude Code では何もしない
 - `settings.json` — 上記フックの登録、Write/Edit 後の prettier 自動整形、頻出コマンド (lint / build / test / git) の権限許可
 
-### 既知の制約
+## Storybook と Next.js 16 の互換パッチ
 
-- `pnpm test:storybook` は現状失敗する。`@storybook/nextjs-vite` (9.2.0-alpha 系) が Next.js 16 で削除された `next/config` を import しているため。Storybook の更新が必要
-- `e2e/theme.spec.ts` の「ブログ記事でコンソールエラーが発生しない」は、外部ホスト (`voicy.jp` など) への通信が遮断された環境では失敗する。記事内の外部リンクカードがリソース取得に失敗するのが原因で、コード側の不具合ではない
+`@storybook/nextjs-vite` (9.2.0-alpha 系) は Next.js 16 と噛み合わない箇所が 2 つあり、
+それぞれ暫定対応を入れている。上流が直ったら両方とも削除できる。
+
+- **`next/config` の削除** — Storybook の preview モジュールが削除済みの `next/config` を
+  静的 import している (10.6.0-alpha 時点でも未修正)。`.storybook/next-config-stub.ts` を
+  用意し、`.storybook/main.ts` の `viteFinal` と `vitest.config.ts` でエイリアスしている
+- **SWC の `disablePageConfig`** — 依存の `vite-plugin-storybook-nextjs` v2 が Next.js 16 の
+  SWC が受け付けないオプションを渡す。`package.json` の `pnpm.overrides` で v3 系に固定して回避
 
 <!-- BEGIN:nextjs-agent-rules -->
 
