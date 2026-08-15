@@ -1,4 +1,3 @@
-import fs from "fs";
 import { MDXContent } from "mdx/types";
 import path from "path";
 
@@ -12,54 +11,46 @@ type BlogFilterOptions = {
   tag?: string;
 };
 
-function getMDXFiles(dir: string) {
-  return fs.readdirSync(dir).filter((file) => path.extname(file) === ".mdx");
-}
+type MDXModule = {
+  metadata: Metadata;
+  default: MDXContent;
+};
 
-async function getMDXData(dir: string): Promise<Post[]> {
-  const mdxFiles = getMDXFiles(dir);
+const postModules = import.meta.glob("./posts/*.mdx", {
+  eager: true,
+}) as Record<string, MDXModule>;
 
-  const result = mdxFiles.map(async (file) => {
-    const slug = path.basename(file, path.extname(file));
-    const { metadata, content } = await readMDXFile(file);
+function getMDXData(): Post[] {
+  return Object.entries(postModules).map(
+    ([filePath, { metadata, default: content }]) => {
+      const slug = path.basename(filePath, path.extname(filePath));
 
-    if (
-      metadata.tags.some((tag) => !TAGS.map((tag) => tag.key).includes(tag))
-    ) {
-      throw new Error(`Invalid tag: ${metadata.tags}`);
+      if (
+        metadata.tags.some((tag) => !TAGS.map((tag) => tag.key).includes(tag))
+      ) {
+        throw new Error(`Invalid tag: ${metadata.tags}`);
+      }
+
+      if (
+        !CATEGORIES.map((category) => category.key).includes(metadata.category)
+      ) {
+        throw new Error(`Invalid category: ${metadata.category}`);
+      }
+
+      return {
+        metadata,
+        slug,
+        content,
+      };
     }
-
-    if (
-      !CATEGORIES.map((category) => category.key).includes(metadata.category)
-    ) {
-      throw new Error(`Invalid category: ${metadata.category}`);
-    }
-
-    return {
-      metadata,
-      slug,
-      content,
-    };
-  });
-
-  return Promise.all(result);
-}
-
-async function readMDXFile(fileName: string) {
-  const result = await import(`./posts/${fileName}`);
-  return {
-    metadata: result.metadata as Metadata,
-    content: result.default as MDXContent,
-  };
+  );
 }
 
 export async function getBlogPostList({
   category,
   tag,
 }: BlogFilterOptions = {}) {
-  const posts = await getMDXData(
-    path.resolve(process.cwd(), "features/blog/posts")
-  );
+  const posts = getMDXData();
   const validCategories = new Set(
     CATEGORIES.map((categoryOption) => categoryOption.key)
   );
