@@ -15,9 +15,10 @@
     "storybook": "storybook dev -p 6006",
     "storybook:ci": "storybook dev -p 6006 --ci --no-open --disable-telemetry",
     "build-storybook": "storybook build",
+    "test:unit": "vitest --project=unit",
     "test:storybook": "vitest --project=storybook",
     "test:e2e": "pnpm exec playwright test",
-    "test": "pnpm lint && pnpm lint:css && pnpm format:check && pnpm typecheck && pnpm build && pnpm build-storybook && pnpm test:storybook && pnpm test:e2e"
+    "test": "pnpm lint && pnpm lint:css && pnpm format:check && pnpm typecheck && pnpm build && pnpm test:unit && pnpm build-storybook && pnpm test:storybook && pnpm test:e2e"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.0",

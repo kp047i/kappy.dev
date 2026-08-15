@@ -19,6 +19,7 @@ pnpm typecheck        # tsc --noEmit (build より速いので普段はこちら
 pnpm format           # Prettier で整形
 pnpm format:check     # 整形済みか検査 (CI と同じ)
 pnpm storybook        # Storybook 起動 (port 6006)
+pnpm test:unit        # ユニットテスト (Vitest, node 環境)
 pnpm test:storybook   # Storybook の Vitest テスト実行
 pnpm test:e2e         # Playwright E2E テスト実行
 pnpm test             # 上記をまとめて実行 (CI 相当)
@@ -31,7 +32,9 @@ pnpm test             # 上記をまとめて実行 (CI 相当)
   - `posts/` — MDX ブログ記事ファイル (frontmatter でメタデータ管理)
   - `components/` — BlogCard, ContentLinkCard, SpeakerDeck など記事用コンポーネント
   - `const/` — カテゴリ (tech/life/other) とタグの定義
-  - `utils.ts` — 記事の読み込み・フィルタリングロジック
+  - `utils.ts` — MDX の読み込み。`import.meta.glob` を使うため Vite 依存
+  - `filter.ts` — 記事の絞り込み・並べ替え・frontmatter 検証。`utils.ts` から
+    切り出した純粋関数で、`filter.test.ts` でユニットテストしている
 - **`components/`** — Header, Footer, ThemeToggle などページ共通レイアウト
 - **`utils/`** — useViewport など共有フック
 - **`e2e/`** — Playwright E2E テスト
