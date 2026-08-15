@@ -1,4 +1,4 @@
-#  Repository Guidelines
+# Repository Guidelines
 
 ## Language
 
@@ -50,6 +50,12 @@ pnpm exec prettier --write .  # フォーマット
 - Tailwind ユーティリティクラスは Prettier プラグインで自動ソート
 - `tailwind.config.js` のカラーパレットトークン (primary/secondary/base/overlay) に従う
 
+### コメントの書き方
+
+- コードコメントには、そのコードが何をしているかを書く
+- 「特定バージョンで削除された API」「ライブラリ側がまだ未対応」といった、時間が経つと古くなる外部事情はコードコメントに書かない。バージョン番号や依存パッケージの対応状況は AGENTS.md 側にまとめ、コメントからはそちらを参照させる
+- 「上流」「本家」のような曖昧な指示語は使わず、対象のパッケージ名やリポジトリを具体的に書く
+
 ## Commit Convention
 
 `type(scope): summary` 形式 (例: `feat(blog): 新しい記事を追加`, `fix(ui): ダークモード修正`)
@@ -66,6 +72,20 @@ pnpm exec prettier --write .  # フォーマット
 - Node 22.13.0 (Volta で固定)、pnpm でパッケージ管理
 - 画像は `public/blog-images/` に配置
 - 機密情報は `.env.local` に保存 (コミット不可)
+
+## AI エージェント向けセットアップ (`.claude/`)
+
+- `hooks/session-start.sh` — Claude Code on the web のセッション開始時に `pnpm install` と Playwright ブラウザの解決を行う。ローカルの Claude Code では何もしない
+- `settings.json` — 上記フックの登録、Write/Edit 後の prettier 自動整形、頻出コマンド (lint / build / test / git) の権限許可
+
+## Storybook
+
+- Storybook 10 系を使う。Next.js 16 対応は 10 系で入っており、9 系では
+  `next/config` の解決エラーと SWC の `disablePageConfig` で
+  `build-storybook` / `test:storybook` が動かない
+- `pnpm test:storybook` は `@storybook/addon-vitest` (Vitest browser mode) で走る。
+  `.storybook/test-runner.ts` と `scripts/test-storybook.mjs` は旧テストランナーの
+  残骸で、どの npm script からも参照されていない
 
 <!-- BEGIN:nextjs-agent-rules -->
 

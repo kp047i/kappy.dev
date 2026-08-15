@@ -50,13 +50,41 @@ test.describe("テーマトグル", () => {
   });
 });
 
+/**
+ * 外部ホストから読み込んだリソース由来のコンソールエラーかどうか。
+ *
+ * 判定できない location (空文字や http 以外のスキーム) はアプリ由来として扱う。
+ * ビルドツールがバンドルに独自スキームの sourceURL を付けた場合でも、
+ * 検出したいエラーを取りこぼさないようにするため。
+ */
+function isExternalResourceError(location: string, origin: string): boolean {
+  if (!location.startsWith("http://") && !location.startsWith("https://")) {
+    return false;
+  }
+  return new URL(location).origin !== origin;
+}
+
 test.describe("ハイドレーション安定性", () => {
-  test("ブログ記事でコンソールエラーが発生しない", async ({ page }) => {
+  test("ブログ記事でコンソールエラーが発生しない", async ({
+    page,
+    baseURL,
+  }) => {
+    const origin = new URL(baseURL ?? "http://127.0.0.1:3000").origin;
     const errorMessages: string[] = [];
+
     page.on("console", (message) => {
-      if (message.type() === "error") {
-        errorMessages.push(message.text());
+      if (message.type() !== "error") {
+        return;
       }
+
+      // 記事ページは外部ホストの CSS・画像・計測スクリプトを読み込む。
+      // その取得失敗はハイドレーションと無関係なので検証対象から外し、
+      // 外部通信ができない環境でも結果が変わらないようにする。
+      if (isExternalResourceError(message.location().url, origin)) {
+        return;
+      }
+
+      errorMessages.push(message.text());
     });
 
     await page.goto("/blog/explore-theme-trip");
