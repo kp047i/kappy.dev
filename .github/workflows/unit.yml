@@ -1,11 +1,11 @@
-name: Lint
+name: Unit Tests
 
 on:
   pull_request:
 
 jobs:
-  lint:
-    name: Lint
+  unit:
+    name: Unit Tests
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -28,11 +28,5 @@ jobs:
             ${{ runner.os }}-pnpm-store-
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      - name: Lint
-        run: pnpm lint
-      - name: Typecheck
-        run: pnpm typecheck
-      - name: Lint CSS
-        run: pnpm lint:css
-      - name: Format check
-        run: pnpm format:check
+      - name: Unit tests
+        run: pnpm test:unit

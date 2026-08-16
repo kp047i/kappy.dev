@@ -13,11 +13,16 @@ Next.js 15 (App Router) + TypeScript + Tailwind CSS で構築された個人ブ�
 ```bash
 pnpm dev              # 開発サーバー起動 (port 3000)
 pnpm build            # 本番ビルド
-pnpm lint             # ESLint (TypeScript + Tailwind クラス順序)
+pnpm lint             # ESLint
+pnpm lint:css         # stylelint
+pnpm typecheck        # tsc --noEmit (build より速いので普段はこちら)
+pnpm format           # Prettier で整形
+pnpm format:check     # 整形済みか検査 (CI と同じ)
 pnpm storybook        # Storybook 起動 (port 6006)
+pnpm test:unit        # ユニットテスト (Vitest, node 環境)
 pnpm test:storybook   # Storybook の Vitest テスト実行
 pnpm test:e2e         # Playwright E2E テスト実行
-pnpm exec prettier --write .  # フォーマット
+pnpm test             # 上記をまとめて実行 (CI 相当)
 ```
 
 ## Architecture
@@ -27,7 +32,9 @@ pnpm exec prettier --write .  # フォーマット
   - `posts/` — MDX ブログ記事ファイル (frontmatter でメタデータ管理)
   - `components/` — BlogCard, ContentLinkCard, SpeakerDeck など記事用コンポーネント
   - `const/` — カテゴリ (tech/life/other) とタグの定義
-  - `utils.ts` — 記事の読み込み・フィルタリングロジック
+  - `utils.ts` — MDX の読み込み。`import.meta.glob` を使うため Vite 依存
+  - `filter.ts` — 記事の絞り込み・並べ替え・frontmatter 検証。`utils.ts` から
+    切り出した純粋関数で、`filter.test.ts` でユニットテストしている
 - **`components/`** — Header, Footer, ThemeToggle などページ共通レイアウト
 - **`utils/`** — useViewport など共有フック
 - **`e2e/`** — Playwright E2E テスト
@@ -47,7 +54,9 @@ pnpm exec prettier --write .  # フォーマット
 - TypeScript strict モード
 - インデント: スペース 2 個、ダブルクォート、セミコロンあり、trailing comma (ES5)
 - コンポーネント/ディレクトリ: PascalCase、ヘルパー関数: camelCase、MDX スラッグ: kebab-case
-- Tailwind ユーティリティクラスは Prettier プラグインで自動ソート
+- Tailwind ユーティリティクラスは `prettier-plugin-tailwindcss` で自動ソート
+- MDX だけ `embeddedLanguageFormatting: "off"` を指定している。記事中のコードサンプルは
+  説明用に省略記号を含むことがあり、Tailwind のクラスソートで壊れるため
 - `tailwind.config.js` のカラーパレットトークン (primary/secondary/base/overlay) に従う
 
 ### コメントの書き方

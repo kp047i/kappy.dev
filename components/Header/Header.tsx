@@ -11,8 +11,8 @@ export function Header({ actionSlot }: HeaderProps) {
     "cursor-pointer rounded-md text-sm font-medium  opacity-70 transition-all duration-200 ease-in-out hover:opacity-100 dark:text-base-50";
 
   return (
-    <header className="flex justify-between items-center p-4 lg:p-8">
-      <Link href="/" className="flex gap-3 items-center cursor-pointer group">
+    <header className="flex items-center justify-between p-4 lg:p-8">
+      <Link href="/" className="group flex cursor-pointer items-center gap-3">
         <Image
           src="https://res.cloudinary.com/dlibdyano/image/upload/v1675685454/kp047i/avator.png"
           alt="kappyこのサイトのロゴ。"
@@ -24,17 +24,11 @@ export function Header({ actionSlot }: HeaderProps) {
           kappy.dev
         </span>
       </Link>
-      <nav className="flex gap-3 items-center">
-        <Link
-          href="/blog"
-          className={navLinkClass}
-        >
+      <nav className="flex items-center gap-3">
+        <Link href="/blog" className={navLinkClass}>
           Blog
         </Link>
-        <Link
-          href="/about"
-          className={navLinkClass}
-        >
+        <Link href="/about" className={navLinkClass}>
           About
         </Link>
         {actionSlot ? <div className="pl-1">{actionSlot}</div> : null}

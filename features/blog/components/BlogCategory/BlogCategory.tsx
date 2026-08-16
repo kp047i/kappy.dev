@@ -13,7 +13,7 @@ export function BlogCategory({ category }: { category: Metadata["category"] }) {
     >
       {/* ホバー時に開いたフォルダを表示、それ以外は閉じたフォルダ */}
       <FaFolderClosed className="transform text-current group-hover:hidden" />
-      <FaFolderOpen className="hidden transform text-current group-hover:block group-hover:m-0" />
+      <FaFolderOpen className="hidden transform text-current group-hover:m-0 group-hover:block" />
       <span>{CATEGORIES.find((c) => c.key === category)?.label}</span>
     </Link>
   );

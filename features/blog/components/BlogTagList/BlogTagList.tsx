@@ -8,13 +8,7 @@ type BlogTagListProps = {
   selectedCategory: string;
 };
 
-function buildHref({
-  category,
-  tag,
-}: {
-  category?: string;
-  tag?: string;
-}) {
+function buildHref({ category, tag }: { category?: string; tag?: string }) {
   const params = new URLSearchParams();
 
   if (category) {
