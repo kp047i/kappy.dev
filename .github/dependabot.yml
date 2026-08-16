@@ -1,0 +1,61 @@
+version: 2
+
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Tokyo"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+    # 関連するパッケージはまとめて 1 つの PR にする。
+    # 別々に上がると peer の食い違いで壊れるため。
+    groups:
+      next:
+        patterns:
+          - "next"
+          - "@next/*"
+          - "eslint-config-next"
+      storybook:
+        patterns:
+          - "storybook"
+          - "@storybook/*"
+          - "@chromatic-com/storybook"
+          - "eslint-plugin-storybook"
+      playwright:
+        patterns:
+          - "playwright"
+          - "@playwright/*"
+      vitest:
+        patterns:
+          - "vitest"
+          - "@vitest/*"
+      lint:
+        patterns:
+          - "eslint"
+          - "eslint-*"
+          - "typescript-eslint"
+          - "@typescript-eslint/*"
+          - "prettier"
+          - "prettier-*"
+          - "stylelint"
+          - "stylelint-*"
+      types:
+        patterns:
+          - "@types/*"
+      others:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "chore(ci)"
