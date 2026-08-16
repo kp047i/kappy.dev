@@ -1,4 +1,5 @@
 import { storybookTest } from "@storybook/addon-vitest/vitest-plugin";
+import { playwright } from "@vitest/browser-playwright";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitest/config";
@@ -24,7 +25,8 @@ export default defineConfig({
           browser: {
             enabled: true,
             headless: true,
-            provider: "playwright",
+            // ブラウザプロバイダは専用パッケージから関数で渡す
+            provider: playwright(),
             instances: [{ browser: "chromium" }],
           },
         },

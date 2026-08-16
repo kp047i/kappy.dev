@@ -90,7 +90,7 @@ importers:
         version: 10.5.8(storybook@10.5.8(@types/react@19.2.14)(prettier@3.7.4)(react@19.2.4))
       '@storybook/addon-vitest':
         specifier: 10.5.8
-        version: 10.5.8(@vitest/browser@4.1.10)(@vitest/runner@4.1.10)(react@19.2.4)(storybook@10.5.8(@types/react@19.2.14)(prettier@3.7.4)(react@19.2.4))(vitest@4.1.10)
+        version: 10.5.8(@vitest/browser-playwright@4.1.10)(@vitest/browser@4.1.10)(@vitest/runner@4.1.10)(react@19.2.4)(storybook@10.5.8(@types/react@19.2.14)(prettier@3.7.4)(react@19.2.4))(vitest@4.1.10)
       '@storybook/nextjs-vite':
         specifier: 10.5.8
         version: 10.5.8(@babel/core@7.29.6)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(esbuild@0.27.2)(next@16.3.0(@babel/core@7.29.6)(@playwright/test@1.55.1)(@types/node@20.19.28)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rollup@4.59.0)(storybook@10.5.8(@types/react@19.2.14)(prettier@3.7.4)(react@19.2.4))(typescript@6.0.3)(vite@7.3.6(@types/node@20.19.28)(jiti@1.21.7))
@@ -124,6 +124,9 @@ importers:
       '@vitest/browser':
         specifier: ^4.1.10
         version: 4.1.10(vite@7.3.6(@types/node@20.19.28)(jiti@1.21.7))(vitest@4.1.10)
+      '@vitest/browser-playwright':
+        specifier: 4.1.10
+        version: 4.1.10(playwright@1.55.1)(vite@7.3.6(@types/node@20.19.28)(jiti@1.21.7))(vitest@4.1.10)
       '@vitest/coverage-v8':
         specifier: ^4.1.10
         version: 4.1.10(@vitest/browser@4.1.10)(vitest@4.1.10)
@@ -183,7 +186,7 @@ importers:
         version: 7.3.6(@types/node@20.19.28)(jiti@1.21.7)
       vitest:
         specifier: ^4.1.10
-        version: 4.1.10(@types/node@20.19.28)(@vitest/coverage-v8@4.1.10)(jsdom@24.1.3)(vite@7.3.6(@types/node@20.19.28)(jiti@1.21.7))
+        version: 4.1.10(@types/node@20.19.28)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(jsdom@24.1.3)(vite@7.3.6(@types/node@20.19.28)(jiti@1.21.7))
 
 packages:
 
@@ -2334,6 +2337,12 @@ packages:
         optional: true
       vue-router:
         optional: true
+
+  '@vitest/browser-playwright@4.1.10':
+    resolution: {integrity: sha512-nMoXGEiRpT7m3W7NsbvrM2aKNwiNHZf+zEpUCvMteGjZFvfT96Q9fh7QyB98dvDWXiKvrLxA7bJ1mCOOv+JQPw==}
+    peerDependencies:
+      playwright: '*'
+      vitest: 4.1.10
 
   '@vitest/browser@4.1.10':
     resolution: {integrity: sha512-UDwuWGwXj646CBx/bQHOaJSX7np0I8JL/UKQYa1e4QrVHH8VdWtx8eaOuf8sy0ShwDgR6NjJAsp5eF6vjF6qng==}
@@ -5804,7 +5813,7 @@ snapshots:
 
   '@mdx-js/mdx@3.1.1':
     dependencies:
-      '@types/estree': 1.0.8
+      '@types/estree': 1.0.9
       '@types/estree-jsx': 1.0.5
       '@types/hast': 3.0.4
       '@types/mdx': 2.0.13
@@ -7102,7 +7111,7 @@ snapshots:
 
   '@rollup/pluginutils@5.3.0(rollup@4.59.0)':
     dependencies:
-      '@types/estree': 1.0.8
+      '@types/estree': 1.0.9
       estree-walker: 2.0.2
       picomatch: 4.0.5
     optionalDependencies:
@@ -7257,15 +7266,16 @@ snapshots:
     dependencies:
       storybook: 10.5.8(@types/react@19.2.14)(prettier@3.7.4)(react@19.2.4)
 
-  '@storybook/addon-vitest@10.5.8(@vitest/browser@4.1.10)(@vitest/runner@4.1.10)(react@19.2.4)(storybook@10.5.8(@types/react@19.2.14)(prettier@3.7.4)(react@19.2.4))(vitest@4.1.10)':
+  '@storybook/addon-vitest@10.5.8(@vitest/browser-playwright@4.1.10)(@vitest/browser@4.1.10)(@vitest/runner@4.1.10)(react@19.2.4)(storybook@10.5.8(@types/react@19.2.14)(prettier@3.7.4)(react@19.2.4))(vitest@4.1.10)':
     dependencies:
       '@storybook/global': 5.0.0
       '@storybook/icons': 2.1.0(react@19.2.4)
       storybook: 10.5.8(@types/react@19.2.14)(prettier@3.7.4)(react@19.2.4)
     optionalDependencies:
       '@vitest/browser': 4.1.10(vite@7.3.6(@types/node@20.19.28)(jiti@1.21.7))(vitest@4.1.10)
+      '@vitest/browser-playwright': 4.1.10(playwright@1.55.1)(vite@7.3.6(@types/node@20.19.28)(jiti@1.21.7))(vitest@4.1.10)
       '@vitest/runner': 4.1.10
-      vitest: 4.1.10(@types/node@20.19.28)(@vitest/coverage-v8@4.1.10)(jsdom@24.1.3)(vite@7.3.6(@types/node@20.19.28)(jiti@1.21.7))
+      vitest: 4.1.10(@types/node@20.19.28)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(jsdom@24.1.3)(vite@7.3.6(@types/node@20.19.28)(jiti@1.21.7))
     transitivePeerDependencies:
       - react
 
@@ -7454,7 +7464,7 @@ snapshots:
 
   '@types/estree-jsx@1.0.5':
     dependencies:
-      '@types/estree': 1.0.8
+      '@types/estree': 1.0.9
 
   '@types/estree@1.0.8': {}
 
@@ -7665,6 +7675,19 @@ snapshots:
       next: 16.3.0(@babel/core@7.29.6)(@playwright/test@1.55.1)(@types/node@20.19.28)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react: 19.2.4
 
+  '@vitest/browser-playwright@4.1.10(playwright@1.55.1)(vite@7.3.6(@types/node@20.19.28)(jiti@1.21.7))(vitest@4.1.10)':
+    dependencies:
+      '@vitest/browser': 4.1.10(vite@7.3.6(@types/node@20.19.28)(jiti@1.21.7))(vitest@4.1.10)
+      '@vitest/mocker': 4.1.10(vite@7.3.6(@types/node@20.19.28)(jiti@1.21.7))
+      playwright: 1.55.1
+      tinyrainbow: 3.1.1
+      vitest: 4.1.10(@types/node@20.19.28)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(jsdom@24.1.3)(vite@7.3.6(@types/node@20.19.28)(jiti@1.21.7))
+    transitivePeerDependencies:
+      - bufferutil
+      - msw
+      - utf-8-validate
+      - vite
+
   '@vitest/browser@4.1.10(vite@7.3.6(@types/node@20.19.28)(jiti@1.21.7))(vitest@4.1.10)':
     dependencies:
       '@blazediff/core': 1.9.1
@@ -7674,7 +7697,7 @@ snapshots:
       pngjs: 7.0.0
       sirv: 3.0.2
       tinyrainbow: 3.1.1
-      vitest: 4.1.10(@types/node@20.19.28)(@vitest/coverage-v8@4.1.10)(jsdom@24.1.3)(vite@7.3.6(@types/node@20.19.28)(jiti@1.21.7))
+      vitest: 4.1.10(@types/node@20.19.28)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(jsdom@24.1.3)(vite@7.3.6(@types/node@20.19.28)(jiti@1.21.7))
       ws: 8.21.3
     transitivePeerDependencies:
       - bufferutil
@@ -7694,7 +7717,7 @@ snapshots:
       obug: 2.1.4
       std-env: 4.2.0
       tinyrainbow: 3.1.1
-      vitest: 4.1.10(@types/node@20.19.28)(@vitest/coverage-v8@4.1.10)(jsdom@24.1.3)(vite@7.3.6(@types/node@20.19.28)(jiti@1.21.7))
+      vitest: 4.1.10(@types/node@20.19.28)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(jsdom@24.1.3)(vite@7.3.6(@types/node@20.19.28)(jiti@1.21.7))
     optionalDependencies:
       '@vitest/browser': 4.1.10(vite@7.3.6(@types/node@20.19.28)(jiti@1.21.7))(vitest@4.1.10)
 
@@ -8594,7 +8617,7 @@ snapshots:
 
   estree-util-attach-comments@3.0.0:
     dependencies:
-      '@types/estree': 1.0.8
+      '@types/estree': 1.0.9
 
   estree-util-build-jsx@3.0.1:
     dependencies:
@@ -8607,7 +8630,7 @@ snapshots:
 
   estree-util-scope@1.0.0:
     dependencies:
-      '@types/estree': 1.0.8
+      '@types/estree': 1.0.9
       devlop: 1.1.0
 
   estree-util-to-js@2.0.0:
@@ -8887,7 +8910,7 @@ snapshots:
 
   hast-util-to-estree@3.1.3:
     dependencies:
-      '@types/estree': 1.0.8
+      '@types/estree': 1.0.9
       '@types/estree-jsx': 1.0.5
       '@types/hast': 3.0.4
       comma-separated-tokens: 2.0.3
@@ -8922,7 +8945,7 @@ snapshots:
 
   hast-util-to-jsx-runtime@2.3.6:
     dependencies:
-      '@types/estree': 1.0.8
+      '@types/estree': 1.0.9
       '@types/hast': 3.0.4
       '@types/unist': 3.0.3
       comma-separated-tokens: 2.0.3
@@ -9597,7 +9620,7 @@ snapshots:
 
   micromark-extension-mdx-expression@3.0.1:
     dependencies:
-      '@types/estree': 1.0.8
+      '@types/estree': 1.0.9
       devlop: 1.1.0
       micromark-factory-mdx-expression: 2.0.3
       micromark-factory-space: 2.0.1
@@ -9608,7 +9631,7 @@ snapshots:
 
   micromark-extension-mdx-jsx@3.0.2:
     dependencies:
-      '@types/estree': 1.0.8
+      '@types/estree': 1.0.9
       devlop: 1.1.0
       estree-util-is-identifier-name: 3.0.0
       micromark-factory-mdx-expression: 2.0.3
@@ -9625,7 +9648,7 @@ snapshots:
 
   micromark-extension-mdxjs-esm@3.0.0:
     dependencies:
-      '@types/estree': 1.0.8
+      '@types/estree': 1.0.9
       devlop: 1.1.0
       micromark-core-commonmark: 2.0.3
       micromark-util-character: 2.1.1
@@ -9661,7 +9684,7 @@ snapshots:
 
   micromark-factory-mdx-expression@2.0.3:
     dependencies:
-      '@types/estree': 1.0.8
+      '@types/estree': 1.0.9
       devlop: 1.1.0
       micromark-factory-space: 2.0.1
       micromark-util-character: 2.1.1
@@ -9725,7 +9748,7 @@ snapshots:
 
   micromark-util-events-to-acorn@2.0.3:
     dependencies:
-      '@types/estree': 1.0.8
+      '@types/estree': 1.0.9
       '@types/unist': 3.0.3
       devlop: 1.1.0
       estree-util-visit: 2.0.0
@@ -10357,7 +10380,7 @@ snapshots:
 
   recma-build-jsx@1.0.0:
     dependencies:
-      '@types/estree': 1.0.8
+      '@types/estree': 1.0.9
       estree-util-build-jsx: 3.0.1
       vfile: 6.0.3
 
@@ -10372,14 +10395,14 @@ snapshots:
 
   recma-parse@1.0.0:
     dependencies:
-      '@types/estree': 1.0.8
+      '@types/estree': 1.0.9
       esast-util-from-js: 2.0.1
       unified: 11.0.5
       vfile: 6.0.3
 
   recma-stringify@1.0.0:
     dependencies:
-      '@types/estree': 1.0.8
+      '@types/estree': 1.0.9
       estree-util-to-js: 2.0.0
       unified: 11.0.5
       vfile: 6.0.3
@@ -10437,7 +10460,7 @@ snapshots:
 
   rehype-recma@1.0.0:
     dependencies:
-      '@types/estree': 1.0.8
+      '@types/estree': 1.0.9
       '@types/hast': 3.0.4
       hast-util-to-estree: 3.1.3
     transitivePeerDependencies:
@@ -11268,7 +11291,7 @@ snapshots:
       fsevents: 2.3.3
       jiti: 1.21.7
 
-  vitest@4.1.10(@types/node@20.19.28)(@vitest/coverage-v8@4.1.10)(jsdom@24.1.3)(vite@7.3.6(@types/node@20.19.28)(jiti@1.21.7)):
+  vitest@4.1.10(@types/node@20.19.28)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(jsdom@24.1.3)(vite@7.3.6(@types/node@20.19.28)(jiti@1.21.7)):
     dependencies:
       '@vitest/expect': 4.1.10
       '@vitest/mocker': 4.1.10(vite@7.3.6(@types/node@20.19.28)(jiti@1.21.7))
@@ -11292,6 +11315,7 @@ snapshots:
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 20.19.28
+      '@vitest/browser-playwright': 4.1.10(playwright@1.55.1)(vite@7.3.6(@types/node@20.19.28)(jiti@1.21.7))(vitest@4.1.10)
       '@vitest/coverage-v8': 4.1.10(@vitest/browser@4.1.10)(vitest@4.1.10)
       jsdom: 24.1.3
     transitivePeerDependencies:
