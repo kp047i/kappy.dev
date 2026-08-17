@@ -9,7 +9,9 @@ export function BlogCategory({ category }: { category: Metadata["category"] }) {
   return (
     <Link
       href={`/blog?category=${category}`}
-      className="group inline-flex items-center gap-2 text-primary-700 opacity-80 transition-colors hover:opacity-100 dark:text-primary-300"
+      // opacity-80 と合成した状態でコントラスト比 4.5:1 を満たす必要があるため、
+      // primary-700 ではなく primary-800 を使う
+      className="group inline-flex items-center gap-2 text-primary-800 opacity-80 transition-colors hover:opacity-100 dark:text-primary-300"
     >
       {/* ホバー時に開いたフォルダを表示、それ以外は閉じたフォルダ */}
       <FaFolderClosed className="transform text-current group-hover:hidden" />

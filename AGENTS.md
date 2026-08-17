@@ -95,6 +95,9 @@ pnpm test             # 上記をまとめて実行 (CI 相当)
 - `pnpm test:storybook` は `@storybook/addon-vitest` (Vitest browser mode) で走る
 - コンポーネントの検証はストーリーの `play` 関数に書く。表示されるテキストや
   リンク先など、意味のある単位で assert する
+- 記事に埋め込むためのコンポーネント (`SpeakerDeck`、`ContentLinkCard`、
+  `ReactAriaExampleTable` など) にはストーリーを書かない。サイトの UI ではなく
+  記事の一部なので、Storybook で並べる意味が薄い
 - DOM 全文のスナップショットは採用しない。Tailwind のユーティリティクラスまで
   含めて記録されるため、スタイルを少し触っただけで差分が出て、中身を読まずに
   更新されるだけになる。見た目の退行を検出したい場合はビジュアルリグレッションを使う
