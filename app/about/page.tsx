@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { FaGithub } from "react-icons/fa";
+import { FaFacebook, FaGithub } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
 export const metadata: Metadata = {
@@ -47,6 +47,11 @@ export default function AboutPage() {
                   href: "https://github.com/kp047i",
                   label: "GitHub",
                   icon: <FaGithub aria-hidden className="h-4 w-4" />,
+                },
+                {
+                  href: "https://www.facebook.com/share/1CeGbyYMv1/",
+                  label: "Facebook",
+                  icon: <FaFacebook aria-hidden className="h-4 w-4" />,
                 },
               ].map((item) => (
                 <a
