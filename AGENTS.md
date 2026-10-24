@@ -82,18 +82,6 @@ pnpm test             # 上記をまとめて実行 (CI 相当)
 - 画像は `public/blog-images/` に配置
 - 機密情報は `.env.local` に保存 (コミット不可)
 
-## 依存パッケージの audit 対応
-
-- 2026-10-22 時点で、修正版が依存元に取り込まれていない推移依存は
-  `package.json` の `pnpm.overrides` で対象バージョンを限定して更新している。
-  `postcss-selector-parser` は 6 系にも影響する脆弱性の修正に 7.1.6 以上が必要。
-- `braces@3.0.3` の [GHSA-vfj7-8cjw-p6xm](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm)
-  は修正版未公開で、audit に High が 1 件残る。検出経路は
-  `eslint-config-next → @next/eslint-plugin-next → fast-glob → micromatch → braces`。
-  Next.js の ESLint プラグインは `settings.next.rootDir` の glob 解決に使用する。
-  現在この設定は指定しておらず、外部入力も渡していない。audit の除外はせず、
-  修正版または依存元の対応が公開されたら更新する。
-
 ## AI エージェント向けセットアップ (`.claude/`)
 
 - `hooks/session-start.sh` — Claude Code on the web のセッション開始時に `pnpm install` と Playwright ブラウザの解決を行う。ローカルの Claude Code では何もしない
@@ -116,7 +104,7 @@ pnpm test             # 上記をまとめて実行 (CI 相当)
 
 <!-- BEGIN:nextjs-agent-rules -->
 
-# This is NOT the Next.js you know
+## This is NOT the Next.js you know
 
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
 
