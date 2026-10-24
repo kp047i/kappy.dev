@@ -78,7 +78,7 @@ pnpm test             # 上記をまとめて実行 (CI 相当)
 
 ## Environment
 
-- Node 22.13.0 (Volta で固定)、pnpm でパッケージ管理
+- Node 24.19.0 (Volta で固定)、pnpm でパッケージ管理
 - 画像は `public/blog-images/` に配置
 - 機密情報は `.env.local` に保存 (コミット不可)
 
